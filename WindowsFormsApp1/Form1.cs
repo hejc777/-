@@ -1971,7 +1971,28 @@ namespace WindowsFormsApp1
                     dt_save.Rows.Add(dr.ItemArray);
                 }
             });
+            //2024-11-5
+            //对已保存的数据进行相似度筛选
+            listBox2.Items.Add("正在进行[" + dt_save.Rows.Count.ToString() + "]相似度筛选.");
 
+            for (int i = 0; i < dt_save.Rows.Count; i++)
+            {
+                int[] iirow = new int[6];
+                int[] iirow1 = new int[6];
+                for (int ii = i + 1; ii < dt_save.Rows.Count; ii++)
+                {
+                    Application.DoEvents();
+                    for (int iii = 0; iii < 6; iii++)
+                    {
+                        iirow[iii] = (int)dt_save.Rows[i][iii];
+                        iirow1[iii] = (int)dt_save.Rows[ii][iii];
+                    }
+                    if (Fzpcf(iirow, iirow1, 4, 6) == false) dt_save.Rows[ii].Delete();
+                }
+            }
+            dt_save.AcceptChanges();
+            dataGridView5.DataSource = dt_save;
+            listBox2.Items.Add("相似度筛选结束,共计[" + dt_save.Rows.Count.ToString() + "]条数据.");
 
             //在已生成的号码里面重新按以下规则进行筛选
             //先进行号码出现率的分析
