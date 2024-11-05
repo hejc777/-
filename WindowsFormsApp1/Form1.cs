@@ -1605,10 +1605,10 @@ namespace WindowsFormsApp1
                         Array.Copy(zbh, 0, left5w, 0, 5);
                         Array.Copy(zbh, 28, right5w, 0, 5);
 
-                        if (Fzpcf(iirows, xxnumtmp, jl[0], 6) == false) result++;
-                        if (Fzpcf(iirows, xxnumtmp1, jl[1], 6) == false) result++;
-                        if (Fzpcf(iirows, xxnumtmp2, jl[2], 6) == false) result++;
-                        if (Fzpcf(iirows, xxnumtmp3, jl[3], 6) == false) result++;
+                        //if (Fzpcf(iirows, xxnumtmp, jl[0], 6) == false) result++;
+                        //if (Fzpcf(iirows, xxnumtmp1, jl[1], 6) == false) result++;
+                        //if (Fzpcf(iirows, xxnumtmp2, jl[2], 6) == false) result++;
+                        //if (Fzpcf(iirows, xxnumtmp3, jl[3], 6) == false) result++;
 
 
                         int[][] xm1 =
@@ -1635,7 +1635,7 @@ namespace WindowsFormsApp1
                         if (ContinueNumLenth(iirows) < 3) result++;
                         //判断：一组号码里有二组或以上连续的号码，取消
                         //如  1，2，4，5，16，18+11 ，1-2，4-5就是二组连续号码
-                        if (QueueString(iirows) < 2) result++;
+                        //if (QueueString(iirows) < 2) result++;
 
                         if (Fzpcf(iirows, left5w, 1, 6) == false) result++;   //前五位出现机率至少1个号码
                         if (Fzpcf(iirows, right5w, 1, 6) == false) result++;  //后五位出现机率至少1个号码  
@@ -1643,7 +1643,7 @@ namespace WindowsFormsApp1
                         int hmsum = iirows[0] + iirows[1] + iirows[2] + iirows[3] + iirows[4] + iirows[5];
                         //if (hmsum > 70 && hmsum < 110) result++;
 
-                        if (result == 12) ibTrue = true; else ibTrue = false;
+                        if (result == 7) ibTrue = true; else ibTrue = false;
 
 
                     }
