@@ -1993,6 +1993,7 @@ namespace WindowsFormsApp1
             dt_save.AcceptChanges();
             dataGridView5.DataSource = dt_save;
             listBox2.Items.Add("相似度筛选结束,共计[" + dt_save.Rows.Count.ToString() + "]条数据.");
+            
 
             //在已生成的号码里面重新按以下规则进行筛选
             //先进行号码出现率的分析
