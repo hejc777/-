@@ -2020,6 +2020,7 @@ namespace WindowsFormsApp1
                 
                 for (int ii = i + 1; ii < dt_save.Rows.Count; ii++)
                 {
+                    if (dt_save.Rows[ii].RowState == DataRowState.Deleted) continue; //减少后面比较时间
                     for (int iii = 0; iii < 6; iii++)
                     {
                         //iirow[iii] = int.Parse(dt_save.Rows[i][iii].ToString());
