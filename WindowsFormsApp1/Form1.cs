@@ -1536,7 +1536,7 @@ namespace WindowsFormsApp1
                 //int[] tmp1 = { 2, 6, 8, 10, 12, 16, 18, 20, 21, 24, 26, 27, 29 };
                 //int[] tmp2 = { 3,4,7,11,12,15,17,24,27,29,30,33 };  //12码
                 //int[] tmp3 = { 1,3,4,8,12,13,17,18,24,25,28,32 };//12码
-                int[] tmp3 = { 1, 2, 3, 4, 5, 7, 10, 13, 14, 15, 17, 18, 19,20, 22,23,25, 26, 27, 30, 32,33 };  //16号中一等奖一期
+                int[] tmp3 = { 1, 2, 3, 4, 5, 7, 8, 10, 13, 14, 15, 17, 18, 19, 20, 22, 23, 24, 25, 26, 27, 30, 32,33 };  //24号中一等奖一期
                 ibTrue = Fzpcf(iirows, tmp3, 5, 6);
                 if (ibTrue == false) cgcs++; else ibTrueInfo += "[12码未通过]";
 
@@ -1549,10 +1549,10 @@ namespace WindowsFormsApp1
                 //    ibTrueInfo += "[历史号码未通过]";
                 //}
 
-                if (string.Join(",", iirows) == "1,8,13,18,20,26,16")
-                {
-                    MessageBox.Show("stop");
-                }
+                //if (string.Join(",", iirows) == "1,8,13,18,20,26,16")
+                //{
+                //    MessageBox.Show("stop");
+                //}
 
                 if (cgcs != 16) ibTrue = false;
                 else
@@ -1570,8 +1570,8 @@ namespace WindowsFormsApp1
                                                   bfltable[(int)GetIndexOfElement(bfltable, iirows[2])][1] +
                                                   bfltable[(int)GetIndexOfElement(bfltable, iirows[3])][1] +
                                                   bfltable[(int)GetIndexOfElement(bfltable, iirows[4])][1] +
-                                                  bfltable[(int)GetIndexOfElement(bfltable, iirows[5])][1] +
-                                                  bfltable[(int)GetIndexOfElement(bfltable, iirows[6])][1];
+                                                  bfltable[(int)GetIndexOfElement(bfltable, iirows[5])][1];// +
+                                                  //bfltable[(int)GetIndexOfElement(bfltable, iirows[6])][1];
 
                     //decimal n1 = bfltable[(int)GetIndexOfElement(bfltable, iirows[0])][1];
                     //decimal n2 = bfltable[(int)GetIndexOfElement(bfltable, iirows[1])][1];
@@ -1581,8 +1581,8 @@ namespace WindowsFormsApp1
                     //decimal n6 = bfltable[(int)GetIndexOfElement(bfltable, iirows[5])][1];
                     //decimal n7 = 
                     decimal decimal_myavg = decimal.Parse(label50.Text.ToString());
-                    decimal OK_myMAX = decimal_myavg + (decimal)0.025; //0.012
-                    decimal OK_myMIN = decimal_myavg - (decimal)0.025;
+                    decimal OK_myMAX = decimal_myavg + (decimal)0.035; //0.012
+                    decimal OK_myMIN = decimal_myavg - (decimal)0.035;
 
                     if (decimal_mysumresult > OK_myMIN && decimal_mysumresult < OK_myMAX)
                     {
@@ -1736,6 +1736,11 @@ namespace WindowsFormsApp1
             return dt_save;
         }
 
+        public void SetListboxTxt(string txt)
+        {
+            listBox2.Items.Add(txt);
+            listBox2.TopIndex = listBox2.Items.Count - 1;
+        }
 
         public DataTable doworkfx(int[] cf)
         {
@@ -1752,6 +1757,7 @@ namespace WindowsFormsApp1
             dt_save.Columns.Add("cf", typeof(string));
             dt_save.Columns.Add("numsum", typeof(string));
             dt_save.Columns.Add("js", typeof(string));
+            dt_save.Columns.Add("id", typeof(string));
 
 
             //int maxcf = 40;
@@ -1783,16 +1789,33 @@ namespace WindowsFormsApp1
                 
                 ljcount = ds.Tables["cppbase"].Rows.Count;
 
+                ds.Tables["cppbase"].DefaultView.Sort="id asc";
+                SetListboxTxt("读取重复率在[" + io.ToString() + "]的数据，共计[" + ljcount.ToString() + "]条.");
+
                 int iicl = ljcount;
                 int iiclTMP = iicl / 5;
-                int[][] vsFW = new int[][]
+                int[][] vsFW = null;
+                if (iicl > 1000)
                 {
+                    vsFW = new int[][]
+                    {
                      new int[2]{0, iiclTMP},
                      new int[2]{iiclTMP+1,iiclTMP * 2},
                      new int[2]{iiclTMP* 2+1, iiclTMP *3},
                      new int[2]{iiclTMP*3 +1, iiclTMP *4 },
                      new int[2]{iiclTMP*4+1, iicl }
-                };
+                    };
+                } else
+                {
+                    vsFW = new int[][]
+                    {
+                        new int[2]{0,iicl},
+                        new int[2]{0,0},
+                        new int[2]{0,0},
+                        new int[2]{0,0},
+                        new int[2]{0,0}
+                    };
+                }
                 DataTable ds_savexxx = null;
                 Parallel.For(0, 5, i =>
                {
@@ -1809,6 +1832,7 @@ namespace WindowsFormsApp1
                    dt_save1.Columns.Add("cf", typeof(string));
                    dt_save1.Columns.Add("numsum", typeof(string));
                    dt_save1.Columns.Add("js", typeof(string));
+                   dt_save1.Columns.Add("id", typeof(string));
 
                    for (int ii = vsFW[i][0]; ii < vsFW[i][1]; ii++)
                    {
@@ -1849,7 +1873,8 @@ namespace WindowsFormsApp1
                                        string.Format("{0:00}", iirows[2]) + "," + string.Format("{0:00}", iirows[3]) + "," +
                                        string.Format("{0:00}", iirows[4]) + "," + string.Format("{0:00}", iirows[5]) + "+" +
                                        string.Format("{0:00}", iirows[6]);
-                           dr["cf"] = ds.Tables["cppbase"].Rows[i]["cf"].ToString();
+                           dr["cf"] = ds.Tables["cppbase"].Rows[ii]["cf"].ToString();
+                           dr["id"] = ds.Tables["cppbase"].Rows[ii]["id"].ToString();
                            dt_save1.Rows.Add(dr);
                        }
                    }
@@ -1859,6 +1884,27 @@ namespace WindowsFormsApp1
                    //    dt_save.Rows.Add(dr.ItemArray);
                    //}
                });
+
+                //dt_save.DefaultView.Sort = "id asc";
+                //SetListboxTxt("正在准备对重复率[" + io.ToString() + "]进行第一次筛选.");
+                //for (int iio = 0; iio < dt_save.Rows.Count; iio++)
+                //{
+                //    int[] iirow = new int[6];
+                //    int[] iirow1 = new int[6];
+                //    for (int c = 0; c < 6; c++) iirow[c] = int.Parse(dt_save.Rows[iio][c].ToString());
+
+                //    for (int ii = iio + 1; ii < dt_save.Rows.Count; ii++)
+                //    {
+                //        for (int iii = 0; iii < 6; iii++)
+                //        {
+                //            //iirow[iii] = int.Parse(dt_save.Rows[i][iii].ToString());
+                //            iirow1[iii] = int.Parse(dt_save.Rows[ii][iii].ToString());
+                //        }
+                //        if (Fzpcf(iirow, iirow1, 2, 6) == false) dt_save.Rows[ii].Delete();
+                //    }
+                //}
+                //dt_save.AcceptChanges();
+                SetListboxTxt("正在【完成】重复率[" + io.ToString() + "]规则判断,最终有["+dt_save.Rows.Count.ToString()+"]条数据满足.");
             }
 
             return dt_save;
@@ -1882,6 +1928,7 @@ namespace WindowsFormsApp1
             dt_save.Columns.Add("cf", typeof(string));
             dt_save.Columns.Add("numsum", typeof(string));
             dt_save.Columns.Add("js", typeof(string));
+            dt_save.Columns.Add("id", typeof(string));
 
             dt_save1.Columns.Add("num1", typeof(string));
             dt_save1.Columns.Add("num2", typeof(string));
@@ -1894,6 +1941,7 @@ namespace WindowsFormsApp1
             dt_save1.Columns.Add("cf", typeof(string));
             dt_save1.Columns.Add("numsum", typeof(string));
             dt_save1.Columns.Add("js", typeof(string));
+            dt_save1.Columns.Add("id", typeof(string));
 
 
             int maxcf = 40;
@@ -1907,7 +1955,7 @@ namespace WindowsFormsApp1
             int[][] xx = new int[][]
             {
                 //new int[2]{13,14},
-                new int[2]{15,16},
+                //new int[2]{15,16},
                 //new int[2]{17,18},
                 //new int[2]{19,20},
                 //new int[2]{21,24},
@@ -1923,19 +1971,19 @@ namespace WindowsFormsApp1
                 //new int[2]{21,24},
                 //new int[2]{25,30},
                 //new int[2]{1,12},
-                //new int[2]{30,50},
-                //new int[2]{33,70},
-                //new int[2]{71,75},
-                //new int[2]{76,78},
-                //new int[2]{79,82},
-                //new int[2]{83,85},
-                //new int[2]{86,89},
-                //new int[2]{90,92},
-                //new int[2]{93,95},
-                //new int[2]{96,98},
-                //new int[2]{99,105},
-                //new int[2]{106,110},
-                //new int[2]{111,160}
+                new int[2]{30,50},
+                new int[2]{33,70},
+                new int[2]{71,75},
+                new int[2]{76,78},
+                new int[2]{79,82},
+                new int[2]{83,85},
+                new int[2]{86,89},
+                new int[2]{90,92},
+                new int[2]{93,95},
+                new int[2]{96,98},
+                new int[2]{99,105},
+                new int[2]{106,110},
+                new int[2]{111,160}
             };
             Parallel.For(0, xx.Length, i =>
             {
@@ -1962,7 +2010,8 @@ namespace WindowsFormsApp1
             //2024-11-5
             //对已保存的数据进行相似度筛选
             listBox2.Items.Add("正在进行[" + dt_save.Rows.Count.ToString() + "]相似度筛选.");
-           
+            dt_save.DefaultView.Sort = "id asc";
+
             for (int i = 0; i < dt_save.Rows.Count; i++)
             {
                 int[] iirow = new int[6];
@@ -1976,13 +2025,13 @@ namespace WindowsFormsApp1
                         //iirow[iii] = int.Parse(dt_save.Rows[i][iii].ToString());
                         iirow1[iii] = int.Parse(dt_save.Rows[ii][iii].ToString());
                     }
-                    if (Fzpcf(iirow, iirow1, 3, 6) == false) dt_save.Rows[ii].Delete();
+                    if (Fzpcf(iirow, iirow1, 2, 6) == false) dt_save.Rows[ii].Delete();
                 }
             } 
             dt_save.AcceptChanges();
             dataGridView5.DataSource = dt_save;
             listBox2.Items.Add("相似度筛选结束,共计[" + dt_save.Rows.Count.ToString() + "]条数据.");
-            WriteTextFile(dt_save.DefaultView.ToTable(true, "num"), @"c:\\cp_xsdsx.txt", true);
+            WriteTextFile(dt_save.DefaultView.ToTable(true, new string[] { "num", "cf", "id" }), @"c:\\cp_xsdsx.txt", true);
 
 
             //在已生成的号码里面重新按以下规则进行筛选
@@ -2427,11 +2476,12 @@ namespace WindowsFormsApp1
                     xx11[i][cc] = hm10[i, cc];
                 }
             }
+            //若不减-1 ： (hm10.GetLength(1) -1)，则为7个号
             int[] build = new int[hm10.GetLength(0)*(hm10.GetLength(1) -1)];
             int buildint = 0;
             for (int co = 0; co < xx11.GetLength(0); co++)
             {
-                for (int co1 = 0; co1 < 6; co1++)
+                for (int co1 = 0; co1 < 6; co1++) //只取前6个号
                 {
                     build[buildint] = xx11[co][co1];
                     buildint++;
@@ -2471,7 +2521,7 @@ namespace WindowsFormsApp1
 
                 //**** 转换每个号码的出现百分率 ****
                 decimal n1 = kv.Value.RepeatNum;
-                decimal n2 = (hm10.GetLength(0) * 7);
+                decimal n2 = (hm10.GetLength(0) * 6);
 
                 decimal bfltmp = n1/n2;
                 string sql = "update cpp_bfl set bfl=" + bfltmp.ToString() +
