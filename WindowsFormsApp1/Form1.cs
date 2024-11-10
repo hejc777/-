@@ -1757,7 +1757,7 @@ namespace WindowsFormsApp1
             dt_save.Columns.Add("cf", typeof(string));
             dt_save.Columns.Add("numsum", typeof(string));
             dt_save.Columns.Add("js", typeof(string));
-            dt_save.Columns.Add("id", typeof(string));
+            dt_save.Columns.Add("id", typeof(int));
 
 
             //int maxcf = 40;
@@ -1776,7 +1776,7 @@ namespace WindowsFormsApp1
                 Application.DoEvents();
                 //取数据库到datatable
                 //string sql = "select num1,num2,num3,num4,num5,num6 from cpp_base where cf = "+cf.ToString()+" and js>70";
-                string sql = "select * from cpp_base where cf=" + io.ToString();// (num1 =2 and num2=15 and num3=22 and num4=26 and num5=30 and num6=33)"; // cf = " + cf.ToString() 
+                string sql = "select * from cpp_base where cf=" + io.ToString()+" order by id asc ";// (num1 =2 and num2=15 and num3=22 and num4=26 and num5=30 and num6=33)"; // cf = " + cf.ToString() 
                                                                                 //string sql = "select * from cpp_6hm ";
                                                                                 //Conn.Open();
                                                                                 //ConnValue = Conn;
@@ -1832,7 +1832,7 @@ namespace WindowsFormsApp1
                    dt_save1.Columns.Add("cf", typeof(string));
                    dt_save1.Columns.Add("numsum", typeof(string));
                    dt_save1.Columns.Add("js", typeof(string));
-                   dt_save1.Columns.Add("id", typeof(string));
+                   dt_save1.Columns.Add("id", typeof(int));
 
                    for (int ii = vsFW[i][0]; ii < vsFW[i][1]; ii++)
                    {
@@ -1874,7 +1874,7 @@ namespace WindowsFormsApp1
                                        string.Format("{0:00}", iirows[4]) + "," + string.Format("{0:00}", iirows[5]) + "+" +
                                        string.Format("{0:00}", iirows[6]);
                            dr["cf"] = ds.Tables["cppbase"].Rows[ii]["cf"].ToString();
-                           dr["id"] = ds.Tables["cppbase"].Rows[ii]["id"].ToString();
+                           dr["id"] = ds.Tables["cppbase"].Rows[ii]["id"];
                            dt_save1.Rows.Add(dr);
                        }
                    }
@@ -1928,7 +1928,7 @@ namespace WindowsFormsApp1
             dt_save.Columns.Add("cf", typeof(string));
             dt_save.Columns.Add("numsum", typeof(string));
             dt_save.Columns.Add("js", typeof(string));
-            dt_save.Columns.Add("id", typeof(string));
+            dt_save.Columns.Add("id", typeof(int));
 
             dt_save1.Columns.Add("num1", typeof(string));
             dt_save1.Columns.Add("num2", typeof(string));
@@ -1941,7 +1941,7 @@ namespace WindowsFormsApp1
             dt_save1.Columns.Add("cf", typeof(string));
             dt_save1.Columns.Add("numsum", typeof(string));
             dt_save1.Columns.Add("js", typeof(string));
-            dt_save1.Columns.Add("id", typeof(string));
+            dt_save1.Columns.Add("id", typeof(int));
 
 
             int maxcf = 40;
@@ -1985,39 +1985,74 @@ namespace WindowsFormsApp1
                 new int[2]{106,110},
                 new int[2]{111,160}
             };
-            Parallel.For(0, xx.Length, i =>
+
+            //一共执行5次相同的操作，然后把5次的操作取出来相同的取消，只留唯一的
+            for (int cc = 0; cc < 5; cc++)
             {
-                //object ob_Label;
-                //ob_Label = this.GetType().GetField("label49", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).GetValue(this);
+                label49.Text = "正在执行第[" + cc.ToString() + "]/[5]轮操作.";
 
-
-
-                listBox2.Items.Add("正在执行[" + i.ToString() + "重复率的数据.");
-                //doworkfx(i)
-                Application.DoEvents();
-                DataTable ds_savexx = doworkfx(xx[i]);
-                //object ob_Label;
-                //ob_Label = this.GetType().GetField("progressBarX" + (i + 1).ToString(), System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).GetValue(this);
-                //doWork(1, zc / 3, (DevComponents.DotNetBar.Controls.ProgressBarX)ob_Label);
-                WriteTextFile(ds_savexx.DefaultView.ToTable(true, "num"), @"c:\\cp.txt", true);
-                listBox2.Items.Add("结束[" + i.ToString() + "重复率的分析." + ds_savexx.Rows.Count.ToString());
-                listBox2.TopIndex = listBox2.Items.Count - 1;
-                foreach (DataRow dr in ds_savexx.Rows)
+                Parallel.For(0, xx.Length, i =>
                 {
-                    dt_save.Rows.Add(dr.ItemArray);
+                    //object ob_Label;
+                    //ob_Label = this.GetType().GetField("label49", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).GetValue(this);
+
+
+
+                    SetListboxTxt("正在执行[" + i.ToString() + "重复率的数据.");
+                    //doworkfx(i)
+                    Application.DoEvents();
+                    DataTable ds_savexx = doworkfx(xx[i]);
+                    //object ob_Label;
+                    //ob_Label = this.GetType().GetField("progressBarX" + (i + 1).ToString(), System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).GetValue(this);
+                    //doWork(1, zc / 3, (DevComponents.DotNetBar.Controls.ProgressBarX)ob_Label);
+                    WriteTextFile(ds_savexx.DefaultView.ToTable(true, "num"), @"c:\\cp.txt", true);
+                    SetListboxTxt("结束[" + i.ToString() + "重复率的分析." + ds_savexx.Rows.Count.ToString());
+
+                    dt_save = ds_savexx.Copy();
+                    //foreach (DataRow dr in ds_savexx.Rows)
+                    //{
+                    //    dt_save.Rows.Add(dr.ItemArray);
+                    //}
+                });
+
+                //2024-11-5
+                //对已保存的数据进行相似度筛选
+                listBox2.Items.Add("正在进行[" + dt_save.Rows.Count.ToString() + "]相似度筛选.");
+                dt_save.DefaultView.Sort = "id asc";
+
+                for (int i = 0; i < dt_save.Rows.Count; i++)
+                {
+                    int[] iirow = new int[6];
+                    int[] iirow1 = new int[6];
+                    for (int c = 0; c < 6; c++) iirow[c] = int.Parse(dt_save.Rows[i][c].ToString());
+
+                    for (int ii = i + 1; ii < dt_save.Rows.Count; ii++)
+                    {
+                        if (dt_save.Rows[ii].RowState == DataRowState.Deleted) continue; //减少后面比较时间
+                        for (int iii = 0; iii < 6; iii++)
+                        {
+                            //iirow[iii] = int.Parse(dt_save.Rows[i][iii].ToString());
+                            iirow1[iii] = int.Parse(dt_save.Rows[ii][iii].ToString());
+                        }
+                        if (Fzpcf(iirow, iirow1, 2, 6) == false) dt_save.Rows[ii].Delete();
+                    }
                 }
-            });
-            //2024-11-5
-            //对已保存的数据进行相似度筛选
-            listBox2.Items.Add("正在进行[" + dt_save.Rows.Count.ToString() + "]相似度筛选.");
+                dt_save.AcceptChanges();
+                dt_save.DefaultView.Sort = "id asc";
+                dataGridView5.DataSource = dt_save;
+                listBox2.Items.Add("相似度筛选结束,共计[" + dt_save.Rows.Count.ToString() + "]条数据.");
+                WriteTextFile(dt_save.DefaultView.ToTable(true, new string[] { "num", "cf", "id" }), @"c:\\cp_xsdsx.txt", true);
+            }
+            //最终检验
+            listBox2.Items.Add("正在进行最终检验[" + dt_save.Rows.Count.ToString() + "]相似度筛选.");
             dt_save.DefaultView.Sort = "id asc";
 
             for (int i = 0; i < dt_save.Rows.Count; i++)
             {
                 int[] iirow = new int[6];
                 int[] iirow1 = new int[6];
-                for (int c= 0;c<6;c++) iirow[c] = int.Parse(dt_save.Rows[i][c].ToString());
-                
+                for (int c = 0; c < 6; c++) iirow[c] = int.Parse(dt_save.Rows[i][c].ToString());
+
                 for (int ii = i + 1; ii < dt_save.Rows.Count; ii++)
                 {
                     if (dt_save.Rows[ii].RowState == DataRowState.Deleted) continue; //减少后面比较时间
@@ -2026,171 +2061,173 @@ namespace WindowsFormsApp1
                         //iirow[iii] = int.Parse(dt_save.Rows[i][iii].ToString());
                         iirow1[iii] = int.Parse(dt_save.Rows[ii][iii].ToString());
                     }
-                    if (Fzpcf(iirow, iirow1, 2, 6) == false) dt_save.Rows[ii].Delete();
+                    if (Fzpcf(iirow, iirow1, 6, 6) == false) dt_save.Rows[ii].Delete();
                 }
-            } 
+            }
             dt_save.AcceptChanges();
+            dt_save.DefaultView.Sort = "id asc";
             dataGridView5.DataSource = dt_save;
             listBox2.Items.Add("相似度筛选结束,共计[" + dt_save.Rows.Count.ToString() + "]条数据.");
-            WriteTextFile(dt_save.DefaultView.ToTable(true, new string[] { "num", "cf", "id" }), @"c:\\cp_xsdsx.txt", true);
+            WriteTextFile(dt_save.DefaultView.ToTable(true, new string[] { "num", "cf", "id" }), @"c:\\cp_xsdsx_success.txt", true);
+
 
 
             //在已生成的号码里面重新按以下规则进行筛选
             //先进行号码出现率的分析
-           // DataRow[] drTemp = dt_save.Select();
-           // var listTmp = drTemp.Select(x => x.Field<string>("num")).ToArray();
+            // DataRow[] drTemp = dt_save.Select();
+            // var listTmp = drTemp.Select(x => x.Field<string>("num")).ToArray();
 
-           // object[,] num = datatabletoarry(dt_save);
+            // object[,] num = datatabletoarry(dt_save);
 
-           // decimal[][] xx11 = new decimal[num.GetLength(0)][];
-           // for (int i = 0; i < num.GetLength(0); i++)
-           // {
-           //     xx11[i] = new decimal[num.GetLength(1)];
-           //     for (int cc = 0; cc < num.GetLength(1); cc++)
-           //     {
-           //         xx11[i][cc] = decimal.Parse(num[i, cc].ToString());
-           //     }
-           // }
+            // decimal[][] xx11 = new decimal[num.GetLength(0)][];
+            // for (int i = 0; i < num.GetLength(0); i++)
+            // {
+            //     xx11[i] = new decimal[num.GetLength(1)];
+            //     for (int cc = 0; cc < num.GetLength(1); cc++)
+            //     {
+            //         xx11[i][cc] = decimal.Parse(num[i, cc].ToString());
+            //     }
+            // }
 
-           // decimal[] build = new decimal[num.GetLength(0) * 6];
-           // int buildint = 0;
-           // for (int co = 0; co < xx11.GetLength(0); co++)
-           // {
-           //     for (int co1 = 0; co1 < 6; co1++)
-           //     {
-           //         build[buildint] = xx11[co][co1];
-           //         buildint++;
-           //     }
+            // decimal[] build = new decimal[num.GetLength(0) * 6];
+            // int buildint = 0;
+            // for (int co = 0; co < xx11.GetLength(0); co++)
+            // {
+            //     for (int co1 = 0; co1 < 6; co1++)
+            //     {
+            //         build[buildint] = xx11[co][co1];
+            //         buildint++;
+            //     }
 
-           // }
-           // // 集合 dic 用于存放统计结果
-           // Dictionary<int, ItemInfo> dic =
-           //     new Dictionary<int, ItemInfo>();
-           // Dictionary<int, ItemInfo> dic1 =
-           //    new Dictionary<int, ItemInfo>();
-           // // 开始统计每个元素重复次数
-           // foreach (int v in build)
-           // {
-           //     if (dic.ContainsKey(v))
-           //     {
-           //         // 数组元素再次，出现次数增加 1
-           //         dic[v].RepeatNum += 1;
-           //     }
-           //     else
-           //     {
-           //         // 数组元素首次出现，向集合中添加一个新项
-           //         // 注意 ItemInfo类构造函数中，已经将重复
-           //         // 次数设置为 1
-           //         dic.Add(v, new ItemInfo(v));
-           //     }
-           // }
+            // }
+            // // 集合 dic 用于存放统计结果
+            // Dictionary<int, ItemInfo> dic =
+            //     new Dictionary<int, ItemInfo>();
+            // Dictionary<int, ItemInfo> dic1 =
+            //    new Dictionary<int, ItemInfo>();
+            // // 开始统计每个元素重复次数
+            // foreach (int v in build)
+            // {
+            //     if (dic.ContainsKey(v))
+            //     {
+            //         // 数组元素再次，出现次数增加 1
+            //         dic[v].RepeatNum += 1;
+            //     }
+            //     else
+            //     {
+            //         // 数组元素首次出现，向集合中添加一个新项
+            //         // 注意 ItemInfo类构造函数中，已经将重复
+            //         // 次数设置为 1
+            //         dic.Add(v, new ItemInfo(v));
+            //     }
+            // }
 
-           // var tt = dic.OrderByDescending(r => r.Value.RepeatNum);
+            // var tt = dic.OrderByDescending(r => r.Value.RepeatNum);
 
-           // List<int> TmpZbh = new List<int>();
+            // List<int> TmpZbh = new List<int>();
 
-           // for (int i = 0; i < tt.Count(); i++)
-           // {
-           //     KeyValuePair<int, ItemInfo> kv = tt.ElementAt(i);
+            // for (int i = 0; i < tt.Count(); i++)
+            // {
+            //     KeyValuePair<int, ItemInfo> kv = tt.ElementAt(i);
 
-           //     //**** 转换每个号码的出现百分率 ****
-           //     decimal n1 = kv.Value.RepeatNum;
-           //     decimal n2 = (xx11.GetLength(0) * 7);
+            //     //**** 转换每个号码的出现百分率 ****
+            //     decimal n1 = kv.Value.RepeatNum;
+            //     decimal n2 = (xx11.GetLength(0) * 7);
 
-           //     decimal bfltmp = n1 / n2;
-           //     //string sql = "update cpp_bfl set bfl=" + bfltmp.ToString() +
-           //     //             " where num=" + kv.Key.ToString();
-           //     //OleDbCommand mysql = new OleDbCommand(sql, ConnValue);
-           //     //mysql.ExecuteNonQuery();
+            //     decimal bfltmp = n1 / n2;
+            //     //string sql = "update cpp_bfl set bfl=" + bfltmp.ToString() +
+            //     //             " where num=" + kv.Key.ToString();
+            //     //OleDbCommand mysql = new OleDbCommand(sql, ConnValue);
+            //     //mysql.ExecuteNonQuery();
 
-           //     bfltable[i][0] = kv.Key;
-           //     bfltable[i][1] = bfltmp;
-           //     //**********************************
-           // }
+            //     bfltable[i][0] = kv.Key;
+            //     bfltable[i][1] = bfltmp;
+            //     //**********************************
+            // }
 
-           // //OleDbCommand mydel = new OleDbCommand("delete from cpp_lskjhm", ConnValue);
-           // //mydel.ExecuteNonQuery();
+            // //OleDbCommand mydel = new OleDbCommand("delete from cpp_lskjhm", ConnValue);
+            // //mydel.ExecuteNonQuery();
 
-           // decimal sumbfl = 0.0000M;
-           // for (int i = 0; i < xx11.GetLength(0); i++)
-           // {
-           //     decimal bfl = 0.0000M;
-           //     for (int c = 0; c <  bfltable.GetLength(0); c++)
-           //     {
-           //         if (xx11[i][0] == bfltable[c][0]) bfl += bfltable[c][1];
-           //         if (xx11[i][1] == bfltable[c][0]) bfl += bfltable[c][1];
-           //         if (xx11[i][2] == bfltable[c][0]) bfl += bfltable[c][1];
-           //         if (xx11[i][3] == bfltable[c][0]) bfl += bfltable[c][1];
-           //         if (xx11[i][4] == bfltable[c][0]) bfl += bfltable[c][1];
-           //         if (xx11[i][5] == bfltable[c][0]) bfl += bfltable[c][1];
-           //     }
-           //     sumbfl += bfl;
-           //     //xx11[i][7] = bfl;
-           //     //decimal bfl = 0.0000M;
-           //     //int[] hmlist = { xx11[i][0], xx11[i][1], xx11[i][2], xx11[i][3], xx11[i][4], xx11[i][5], xx11[i][6] };
-           //     //string sql = string.Format("select sum(bfl) from cpp_bfl where num in ({0},{1},{2},{3},{4},{5},{6})",
-           //     //                hmlist[0], hmlist[1], hmlist[2], hmlist[3], hmlist[4], hmlist[5], hmlist[6]);
-
-
-           //     //OleDbCommand mysql = new OleDbCommand(sql, ConnValue);
-           //     //bfl = (decimal)mysql.ExecuteScalar();
-
-           //     //string sql1 = string.Format("insert into cpp_lskjhm values ({0},{1},{2},{3},{4},{5},{6},{7})",
-           //     //                            hmlist[0], hmlist[1], hmlist[2], hmlist[3], hmlist[4], hmlist[5], hmlist[6], bfl);
-
-           //     //OleDbCommand mysql1 = new OleDbCommand(sql1, ConnValue);
-           //     //mysql1.ExecuteScalar();
-           // }
-
-           // //OleDbCommand myAvg = new OleDbCommand("select avg(bfl) from cpp_lskjhm", ConnValue);
-           // //$"{((xxsum[0] / sum) * 100):F2}%";
-           // label50.Text = $"{(sumbfl / xx11.GetLength(0)):F2}";// myAvg.ExecuteScalar().ToString();
-
-           // for (int i = 0; i <= tt.Count(); i++)
-           // {
-           //     KeyValuePair<int, ItemInfo> kv = tt.ElementAt(i);
-
-           //     TmpZbh.Add(kv.Key);
-
-           //     //i = i + 2;
-           //     //if (i%2== 0) i=i+3;
-           // }
+            // decimal sumbfl = 0.0000M;
+            // for (int i = 0; i < xx11.GetLength(0); i++)
+            // {
+            //     decimal bfl = 0.0000M;
+            //     for (int c = 0; c <  bfltable.GetLength(0); c++)
+            //     {
+            //         if (xx11[i][0] == bfltable[c][0]) bfl += bfltable[c][1];
+            //         if (xx11[i][1] == bfltable[c][0]) bfl += bfltable[c][1];
+            //         if (xx11[i][2] == bfltable[c][0]) bfl += bfltable[c][1];
+            //         if (xx11[i][3] == bfltable[c][0]) bfl += bfltable[c][1];
+            //         if (xx11[i][4] == bfltable[c][0]) bfl += bfltable[c][1];
+            //         if (xx11[i][5] == bfltable[c][0]) bfl += bfltable[c][1];
+            //     }
+            //     sumbfl += bfl;
+            //     //xx11[i][7] = bfl;
+            //     //decimal bfl = 0.0000M;
+            //     //int[] hmlist = { xx11[i][0], xx11[i][1], xx11[i][2], xx11[i][3], xx11[i][4], xx11[i][5], xx11[i][6] };
+            //     //string sql = string.Format("select sum(bfl) from cpp_bfl where num in ({0},{1},{2},{3},{4},{5},{6})",
+            //     //                hmlist[0], hmlist[1], hmlist[2], hmlist[3], hmlist[4], hmlist[5], hmlist[6]);
 
 
-           // //build =  build.Distinct().ToArray();
-           // int[] build1 = TmpZbh.ToArray();
-           // //Array.Sort(build1);
-           // zbh = new int[33];
-           // Array.Copy(build1, zbh, 33);
-           // //Array.Copy(build1, 10, zbh, 0, 10);
-           // listBox1.Items.Add(string.Join(",", build1));
-           // listBox1.Items.Add("最大连续次数:" + ContinueNumLenth(zbh));
+            //     //OleDbCommand mysql = new OleDbCommand(sql, ConnValue);
+            //     //bfl = (decimal)mysql.ExecuteScalar();
 
-           // int iicl = dt_save.Rows.Count;
-           // int iiclTMP = iicl / 5; 
-           // int[][] vsFW = new int[][]
-           // {
-           //     new int[2]{0, iiclTMP},
-           //     new int[2]{iiclTMP+1,iiclTMP * 2},
-           //     new int[2]{iiclTMP* 2+1, iiclTMP *3},
-           //     new int[2]{iiclTMP*3 +1, iiclTMP *4 },
-           //     new int[2]{iiclTMP*4+1, iicl }
-           // };
-           // DataTable ds_savexxx = null;
-           // Parallel.For(0, 5, i =>
-           //{
-           //    Application.DoEvents();
-           //    ds_savexxx = doworkfx(dt_save,vsFW[i]);
-           //    listBox2.Items.Add("最终["+i.ToString()+"]筛选结果:" + ds_savexxx.Rows.Count.ToString());
-           //    listBox2.TopIndex = listBox2.Items.Count - 1;
+            //     //string sql1 = string.Format("insert into cpp_lskjhm values ({0},{1},{2},{3},{4},{5},{6},{7})",
+            //     //                            hmlist[0], hmlist[1], hmlist[2], hmlist[3], hmlist[4], hmlist[5], hmlist[6], bfl);
 
-           //    foreach(DataRow dr in ds_savexxx.Rows)
-           //    {
-           //        dt_save1.Rows.Add(dr.ItemArray);
-           //    }
-               
-           //});
-           //WriteTextFile(dt_save1.DefaultView.ToTable(true, "num"), @"c:\\cpsxjg.txt", true);
+            //     //OleDbCommand mysql1 = new OleDbCommand(sql1, ConnValue);
+            //     //mysql1.ExecuteScalar();
+            // }
+
+            // //OleDbCommand myAvg = new OleDbCommand("select avg(bfl) from cpp_lskjhm", ConnValue);
+            // //$"{((xxsum[0] / sum) * 100):F2}%";
+            // label50.Text = $"{(sumbfl / xx11.GetLength(0)):F2}";// myAvg.ExecuteScalar().ToString();
+
+            // for (int i = 0; i <= tt.Count(); i++)
+            // {
+            //     KeyValuePair<int, ItemInfo> kv = tt.ElementAt(i);
+
+            //     TmpZbh.Add(kv.Key);
+
+            //     //i = i + 2;
+            //     //if (i%2== 0) i=i+3;
+            // }
+
+
+            // //build =  build.Distinct().ToArray();
+            // int[] build1 = TmpZbh.ToArray();
+            // //Array.Sort(build1);
+            // zbh = new int[33];
+            // Array.Copy(build1, zbh, 33);
+            // //Array.Copy(build1, 10, zbh, 0, 10);
+            // listBox1.Items.Add(string.Join(",", build1));
+            // listBox1.Items.Add("最大连续次数:" + ContinueNumLenth(zbh));
+
+            // int iicl = dt_save.Rows.Count;
+            // int iiclTMP = iicl / 5; 
+            // int[][] vsFW = new int[][]
+            // {
+            //     new int[2]{0, iiclTMP},
+            //     new int[2]{iiclTMP+1,iiclTMP * 2},
+            //     new int[2]{iiclTMP* 2+1, iiclTMP *3},
+            //     new int[2]{iiclTMP*3 +1, iiclTMP *4 },
+            //     new int[2]{iiclTMP*4+1, iicl }
+            // };
+            // DataTable ds_savexxx = null;
+            // Parallel.For(0, 5, i =>
+            //{
+            //    Application.DoEvents();
+            //    ds_savexxx = doworkfx(dt_save,vsFW[i]);
+            //    listBox2.Items.Add("最终["+i.ToString()+"]筛选结果:" + ds_savexxx.Rows.Count.ToString());
+            //    listBox2.TopIndex = listBox2.Items.Count - 1;
+
+            //    foreach(DataRow dr in ds_savexxx.Rows)
+            //    {
+            //        dt_save1.Rows.Add(dr.ItemArray);
+            //    }
+
+            //});
+            //WriteTextFile(dt_save1.DefaultView.ToTable(true, "num"), @"c:\\cpsxjg.txt", true);
 
             // DataTable ds_savexxx = doworkfx(dt_save);
 
