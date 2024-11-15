@@ -1603,9 +1603,9 @@ namespace WindowsFormsApp1
 
         public void zjhmgz(string hm, string info)
         {
-            if (hm == "9,10,13,19,24,32,1")
+            if (hm == "4,5,11,15,20,32,13")
             {
-                listBox3.Items.Add("进入号码验证09,10,13,19,24,32+01");
+                listBox3.Items.Add("进入号码验证4,5,11,15,20,32,13");
                 listBox3.Items.Add(info);
                 listBox3.TopIndex = listBox3.Items.Count - (int)(listBox3.Height / listBox3.ItemHeight);
             }
@@ -1735,7 +1735,8 @@ namespace WindowsFormsApp1
                     decimal OK_myMAX = decimal_myavg + (decimal)0.035; //0.012
                     decimal OK_myMIN = decimal_myavg - (decimal)0.035;
 
-                    if (decimal_mysumresult > OK_myMIN && decimal_mysumresult < OK_myMAX)
+                    //if (decimal_mysumresult > OK_myMIN && decimal_mysumresult < OK_myMAX)
+                    if (true)
                     {
                         //ibTrue = true;
                         //int[] xm = { 1, 7, 14, 15, 16, 27, 28, 32, 33 };
@@ -1756,10 +1757,10 @@ namespace WindowsFormsApp1
                         Array.Copy(zbh, 0, left5w, 0, 5);
                         Array.Copy(zbh, 28, right5w, 0, 5);
 
-                        //if (Fzpcf(iirows, xxnumtmp, jl[0], 6) == false) result++;
-                        //if (Fzpcf(iirows, xxnumtmp1, jl[1], 6) == false) result++;
-                        //if (Fzpcf(iirows, xxnumtmp2, jl[2], 6) == false) result++;
-                        //if (Fzpcf(iirows, xxnumtmp3, jl[3], 6) == false) result++;
+                        if (Fzpcf(iirows, xxnumtmp, jl[0], 6) == false) result++;
+                        if (Fzpcf(iirows, xxnumtmp1, jl[1], 6) == false) result++;
+                        if (Fzpcf(iirows, xxnumtmp2, jl[2], 6) == false) result++;
+                        if (Fzpcf(iirows, xxnumtmp3, jl[3], 6) == false) result++;
 
                         int[][] xm1 =
                         {
@@ -1797,7 +1798,7 @@ namespace WindowsFormsApp1
                         //if (hmsum > 70 && hmsum < 110) result++;
 
                         zjhmgz(string.Join(",", iirows), ibTrueInfo);
-                        if (result == 6) ibTrue = true; else ibTrue = false;
+                        if (result == 10) ibTrue = true; else ibTrue = false;
 
 
 
@@ -2133,18 +2134,18 @@ namespace WindowsFormsApp1
 
             int[][] xx = new int[][]
             {
-                new int[2]{13,14},
-                new int[2]{15,16},
-                new int[2]{17,18},
-                new int[2]{19,20},
-                new int[2]{21,24},
-                new int[2]{25,28},
-                new int[2]{29,30 },
-                new int[2]{31,38 },
-                new int[2]{39,46 },
-                new int[2]{1,12},
+                //new int[2]{13,14},
+                //new int[2]{15,16},
+                //new int[2]{17,18},
+                //new int[2]{19,20},
+                //new int[2]{21,24},
+                //new int[2]{25,28},
+                //new int[2]{29,30 },
+                //new int[2]{31,38 },
+                //new int[2]{39,46 },
+                //new int[2]{1,12},
 
-                //new int[2]{0,0}
+                new int[2]{18,18}
 
                 //new int[2]{106,107}
                 //new int[2]{30,50},
