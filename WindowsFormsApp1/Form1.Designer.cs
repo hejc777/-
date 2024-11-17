@@ -38,13 +38,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.userControl17 = new WindowsFormsApp1.UserControl1();
-            this.userControl16 = new WindowsFormsApp1.UserControl1();
-            this.userControl15 = new WindowsFormsApp1.UserControl1();
-            this.userControl14 = new WindowsFormsApp1.UserControl1();
-            this.userControl13 = new WindowsFormsApp1.UserControl1();
-            this.userControl12 = new WindowsFormsApp1.UserControl1();
-            this.userControl11 = new WindowsFormsApp1.UserControl1();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.panel2 = new System.Windows.Forms.Panel();
@@ -186,6 +179,8 @@
             this.panel26 = new System.Windows.Forms.Panel();
             this.listBox2 = new System.Windows.Forms.ListBox();
             this.panel13 = new System.Windows.Forms.Panel();
+            this.cxcs = new System.Windows.Forms.TextBox();
+            this.label56 = new System.Windows.Forms.Label();
             this.label50 = new System.Windows.Forms.Label();
             this.textBox56 = new System.Windows.Forms.TextBox();
             this.button12 = new System.Windows.Forms.Button();
@@ -226,8 +221,19 @@
             this.panel17 = new System.Windows.Forms.Panel();
             this.panel16 = new System.Windows.Forms.Panel();
             this.panel15 = new System.Windows.Forms.Panel();
-            this.label56 = new System.Windows.Forms.Label();
-            this.cxcs = new System.Windows.Forms.TextBox();
+            this.tabPage9 = new System.Windows.Forms.TabPage();
+            this.panel28 = new System.Windows.Forms.Panel();
+            this.panel29 = new System.Windows.Forms.Panel();
+            this.button14 = new System.Windows.Forms.Button();
+            this.dataGridView6 = new System.Windows.Forms.DataGridView();
+            this.listBox4 = new System.Windows.Forms.ListBox();
+            this.userControl17 = new WindowsFormsApp1.UserControl1();
+            this.userControl16 = new WindowsFormsApp1.UserControl1();
+            this.userControl15 = new WindowsFormsApp1.UserControl1();
+            this.userControl14 = new WindowsFormsApp1.UserControl1();
+            this.userControl13 = new WindowsFormsApp1.UserControl1();
+            this.userControl12 = new WindowsFormsApp1.UserControl1();
+            this.userControl11 = new WindowsFormsApp1.UserControl1();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -266,6 +272,10 @@
             this.panel21.SuspendLayout();
             this.panel20.SuspendLayout();
             this.panel19.SuspendLayout();
+            this.tabPage9.SuspendLayout();
+            this.panel28.SuspendLayout();
+            this.panel29.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView6)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -374,69 +384,6 @@
             this.textBox1.Size = new System.Drawing.Size(79, 31);
             this.textBox1.TabIndex = 0;
             this.textBox1.Text = "5";
-            // 
-            // userControl17
-            // 
-            this.userControl17.Location = new System.Drawing.Point(372, 24);
-            this.userControl17.Margin = new System.Windows.Forms.Padding(156, 96, 156, 96);
-            this.userControl17.Name = "userControl17";
-            this.userControl17.Size = new System.Drawing.Size(43, 46);
-            this.userControl17.TabIndex = 7;
-            this.userControl17.unbuttontext = "0";
-            // 
-            // userControl16
-            // 
-            this.userControl16.Location = new System.Drawing.Point(282, 24);
-            this.userControl16.Margin = new System.Windows.Forms.Padding(72, 48, 72, 48);
-            this.userControl16.Name = "userControl16";
-            this.userControl16.Size = new System.Drawing.Size(43, 46);
-            this.userControl16.TabIndex = 5;
-            this.userControl16.unbuttontext = "0";
-            // 
-            // userControl15
-            // 
-            this.userControl15.Location = new System.Drawing.Point(228, 24);
-            this.userControl15.Margin = new System.Windows.Forms.Padding(72, 48, 72, 48);
-            this.userControl15.Name = "userControl15";
-            this.userControl15.Size = new System.Drawing.Size(43, 46);
-            this.userControl15.TabIndex = 4;
-            this.userControl15.unbuttontext = "0";
-            // 
-            // userControl14
-            // 
-            this.userControl14.Location = new System.Drawing.Point(171, 24);
-            this.userControl14.Margin = new System.Windows.Forms.Padding(72, 48, 72, 48);
-            this.userControl14.Name = "userControl14";
-            this.userControl14.Size = new System.Drawing.Size(43, 46);
-            this.userControl14.TabIndex = 3;
-            this.userControl14.unbuttontext = "0";
-            // 
-            // userControl13
-            // 
-            this.userControl13.Location = new System.Drawing.Point(118, 24);
-            this.userControl13.Margin = new System.Windows.Forms.Padding(33, 24, 33, 24);
-            this.userControl13.Name = "userControl13";
-            this.userControl13.Size = new System.Drawing.Size(43, 46);
-            this.userControl13.TabIndex = 2;
-            this.userControl13.unbuttontext = "0";
-            // 
-            // userControl12
-            // 
-            this.userControl12.Location = new System.Drawing.Point(67, 24);
-            this.userControl12.Margin = new System.Windows.Forms.Padding(15, 12, 15, 12);
-            this.userControl12.Name = "userControl12";
-            this.userControl12.Size = new System.Drawing.Size(43, 46);
-            this.userControl12.TabIndex = 1;
-            this.userControl12.unbuttontext = "0";
-            // 
-            // userControl11
-            // 
-            this.userControl11.Location = new System.Drawing.Point(16, 24);
-            this.userControl11.Margin = new System.Windows.Forms.Padding(7, 6, 7, 6);
-            this.userControl11.Name = "userControl11";
-            this.userControl11.Size = new System.Drawing.Size(43, 46);
-            this.userControl11.TabIndex = 0;
-            this.userControl11.unbuttontext = "0";
             // 
             // imageList1
             // 
@@ -565,6 +512,7 @@
             this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.Controls.Add(this.tabPage5);
             this.tabControl1.Controls.Add(this.tabPage6);
+            this.tabControl1.Controls.Add(this.tabPage9);
             this.tabControl1.Controls.Add(this.tabPage7);
             this.tabControl1.Controls.Add(this.tabPage8);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -1916,6 +1864,25 @@
             this.panel13.Size = new System.Drawing.Size(907, 30);
             this.panel13.TabIndex = 1;
             // 
+            // cxcs
+            // 
+            this.cxcs.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.cxcs.Location = new System.Drawing.Point(761, 1);
+            this.cxcs.Name = "cxcs";
+            this.cxcs.Size = new System.Drawing.Size(39, 29);
+            this.cxcs.TabIndex = 8;
+            this.cxcs.Text = "4";
+            this.cxcs.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label56
+            // 
+            this.label56.AutoSize = true;
+            this.label56.Location = new System.Drawing.Point(702, 8);
+            this.label56.Name = "label56";
+            this.label56.Size = new System.Drawing.Size(53, 12);
+            this.label56.TabIndex = 7;
+            this.label56.Text = "出现次数";
+            // 
             // label50
             // 
             this.label50.AutoSize = true;
@@ -2289,24 +2256,132 @@
             this.panel15.Size = new System.Drawing.Size(907, 49);
             this.panel15.TabIndex = 0;
             // 
-            // label56
+            // tabPage9
             // 
-            this.label56.AutoSize = true;
-            this.label56.Location = new System.Drawing.Point(702, 8);
-            this.label56.Name = "label56";
-            this.label56.Size = new System.Drawing.Size(53, 12);
-            this.label56.TabIndex = 7;
-            this.label56.Text = "出现次数";
+            this.tabPage9.Controls.Add(this.panel29);
+            this.tabPage9.Controls.Add(this.panel28);
+            this.tabPage9.Location = new System.Drawing.Point(4, 22);
+            this.tabPage9.Name = "tabPage9";
+            this.tabPage9.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage9.Size = new System.Drawing.Size(913, 374);
+            this.tabPage9.TabIndex = 8;
+            this.tabPage9.Text = "预测下期号码";
+            this.tabPage9.UseVisualStyleBackColor = true;
             // 
-            // cxcs
+            // panel28
             // 
-            this.cxcs.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.cxcs.Location = new System.Drawing.Point(761, 1);
-            this.cxcs.Name = "cxcs";
-            this.cxcs.Size = new System.Drawing.Size(39, 29);
-            this.cxcs.TabIndex = 8;
-            this.cxcs.Text = "4";
-            this.cxcs.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.panel28.Controls.Add(this.button14);
+            this.panel28.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel28.Location = new System.Drawing.Point(3, 3);
+            this.panel28.Name = "panel28";
+            this.panel28.Size = new System.Drawing.Size(907, 61);
+            this.panel28.TabIndex = 0;
+            // 
+            // panel29
+            // 
+            this.panel29.Controls.Add(this.listBox4);
+            this.panel29.Controls.Add(this.dataGridView6);
+            this.panel29.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel29.Location = new System.Drawing.Point(3, 64);
+            this.panel29.Name = "panel29";
+            this.panel29.Size = new System.Drawing.Size(907, 307);
+            this.panel29.TabIndex = 1;
+            // 
+            // button14
+            // 
+            this.button14.Location = new System.Drawing.Point(28, 17);
+            this.button14.Name = "button14";
+            this.button14.Size = new System.Drawing.Size(75, 23);
+            this.button14.TabIndex = 0;
+            this.button14.Text = "button14";
+            this.button14.UseVisualStyleBackColor = true;
+            this.button14.Click += new System.EventHandler(this.button14_Click);
+            // 
+            // dataGridView6
+            // 
+            this.dataGridView6.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView6.Dock = System.Windows.Forms.DockStyle.Left;
+            this.dataGridView6.Location = new System.Drawing.Point(0, 0);
+            this.dataGridView6.Name = "dataGridView6";
+            this.dataGridView6.RowTemplate.Height = 23;
+            this.dataGridView6.Size = new System.Drawing.Size(511, 307);
+            this.dataGridView6.TabIndex = 0;
+            // 
+            // listBox4
+            // 
+            this.listBox4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listBox4.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.listBox4.Font = new System.Drawing.Font("宋体", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.listBox4.FormattingEnabled = true;
+            this.listBox4.ItemHeight = 12;
+            this.listBox4.Location = new System.Drawing.Point(511, 0);
+            this.listBox4.Name = "listBox4";
+            this.listBox4.Size = new System.Drawing.Size(396, 307);
+            this.listBox4.TabIndex = 1;
+            this.listBox4.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listBox4_DrawItem);
+            // 
+            // userControl17
+            // 
+            this.userControl17.Location = new System.Drawing.Point(372, 24);
+            this.userControl17.Margin = new System.Windows.Forms.Padding(156, 96, 156, 96);
+            this.userControl17.Name = "userControl17";
+            this.userControl17.Size = new System.Drawing.Size(43, 46);
+            this.userControl17.TabIndex = 7;
+            this.userControl17.unbuttontext = "0";
+            // 
+            // userControl16
+            // 
+            this.userControl16.Location = new System.Drawing.Point(282, 24);
+            this.userControl16.Margin = new System.Windows.Forms.Padding(72, 48, 72, 48);
+            this.userControl16.Name = "userControl16";
+            this.userControl16.Size = new System.Drawing.Size(43, 46);
+            this.userControl16.TabIndex = 5;
+            this.userControl16.unbuttontext = "0";
+            // 
+            // userControl15
+            // 
+            this.userControl15.Location = new System.Drawing.Point(228, 24);
+            this.userControl15.Margin = new System.Windows.Forms.Padding(72, 48, 72, 48);
+            this.userControl15.Name = "userControl15";
+            this.userControl15.Size = new System.Drawing.Size(43, 46);
+            this.userControl15.TabIndex = 4;
+            this.userControl15.unbuttontext = "0";
+            // 
+            // userControl14
+            // 
+            this.userControl14.Location = new System.Drawing.Point(171, 24);
+            this.userControl14.Margin = new System.Windows.Forms.Padding(72, 48, 72, 48);
+            this.userControl14.Name = "userControl14";
+            this.userControl14.Size = new System.Drawing.Size(43, 46);
+            this.userControl14.TabIndex = 3;
+            this.userControl14.unbuttontext = "0";
+            // 
+            // userControl13
+            // 
+            this.userControl13.Location = new System.Drawing.Point(118, 24);
+            this.userControl13.Margin = new System.Windows.Forms.Padding(33, 24, 33, 24);
+            this.userControl13.Name = "userControl13";
+            this.userControl13.Size = new System.Drawing.Size(43, 46);
+            this.userControl13.TabIndex = 2;
+            this.userControl13.unbuttontext = "0";
+            // 
+            // userControl12
+            // 
+            this.userControl12.Location = new System.Drawing.Point(67, 24);
+            this.userControl12.Margin = new System.Windows.Forms.Padding(15, 12, 15, 12);
+            this.userControl12.Name = "userControl12";
+            this.userControl12.Size = new System.Drawing.Size(43, 46);
+            this.userControl12.TabIndex = 1;
+            this.userControl12.unbuttontext = "0";
+            // 
+            // userControl11
+            // 
+            this.userControl11.Location = new System.Drawing.Point(16, 24);
+            this.userControl11.Margin = new System.Windows.Forms.Padding(7, 6, 7, 6);
+            this.userControl11.Name = "userControl11";
+            this.userControl11.Size = new System.Drawing.Size(43, 46);
+            this.userControl11.TabIndex = 0;
+            this.userControl11.unbuttontext = "0";
             // 
             // Form1
             // 
@@ -2367,6 +2442,10 @@
             this.panel21.ResumeLayout(false);
             this.panel20.ResumeLayout(false);
             this.panel19.ResumeLayout(false);
+            this.tabPage9.ResumeLayout(false);
+            this.panel28.ResumeLayout(false);
+            this.panel29.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView6)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -2572,6 +2651,12 @@
         private System.Windows.Forms.Panel panel26;
         private System.Windows.Forms.TextBox cxcs;
         private System.Windows.Forms.Label label56;
+        private System.Windows.Forms.TabPage tabPage9;
+        private System.Windows.Forms.Panel panel29;
+        private System.Windows.Forms.Panel panel28;
+        private System.Windows.Forms.Button button14;
+        private System.Windows.Forms.DataGridView dataGridView6;
+        private System.Windows.Forms.ListBox listBox4;
     }
 }
 

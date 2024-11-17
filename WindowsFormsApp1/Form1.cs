@@ -3462,6 +3462,137 @@ namespace WindowsFormsApp1
             }
             return maxvalue;
         }
+        /// <summary>
+        /// a-b取个位数
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        public int DivideAndGetOnesPlace(int a, int b)
+        {
+            int result = (a - b);
+            return result >= 0 ? result % 10 : (result - 5) % 10 + 10; // 确保负数转换为正数的个位数
+        }
+
+        int[][] twsbase =
+        {
+            new int[]{10,20,30},
+            new int[]{11,21,31},
+            new int[]{12,22,32},
+            new int[]{13,23,33},
+            new int[]{14,24},
+            new int[]{15,25},
+            new int[]{16,26},
+            new int[]{17,27},
+            new int[]{18,28},
+            new int[]{19,29},
+        };
+        int[] tsbase = { 5, 6, 7, 8, 9, 0, 1, 2, 3, 4 };
+        int[] csbase = { 5, 4, 3, 2, 1, 0, 9, 8, 7, 6 };
+
+
+        private void button14_Click(object sender, EventArgs e)
+        {
+            for (int i = hm10.GetLength(0) -1; i > hm10.GetLength(0)-15; i--)
+            {
+                int hm1, hm2, hm3, hm4, hm5, hm6, hm7;
+                int 差数1,差数2;    //差数
+                int 同尾数1, 同尾数2,同尾数22; //同尾数
+                string 补数1同尾数; //存在多个string.join(",",xx)方法
+                int 邻数1, 邻数2;   //邻数
+                int 替数1, 替数11, 替数2, 替数22;   //替数
+                int 凑数1, 凑数2;//凑数
+                int 补数1, 补数2;//补数
+                int tws3;
+                string hmDisplay = "";
+
+                hm1 = hm10[i, 0];
+                hm2 = hm10[i, 1];
+                hm3 = hm10[i, 2];
+                hm4 = hm10[i, 3];
+                hm5 = hm10[i, 4];
+                hm6 = hm10[i, 5];
+                hm7 = hm10[i, 6];
+                //第一步：第六位减去第一位，取值的个位数，第一行
+                差数1 = DivideAndGetOnesPlace(hm6, hm1);
+                //第二步：第六位减去第四位，取值的个位数，第二行
+                差数2 = DivideAndGetOnesPlace(hm6, hm4);
+
+                //第三步：取第一次的邻数
+                邻数1 = 差数1 - 1 <= 0 ? 0 : 差数1 - 1;
+                //第四步：取第一次的替数
+                替数1 = tsbase[差数1];
+                //第五步：取第一次的补数
+                补数1 = 10 - 差数1 == 10 ? 1 : 10 - 差数1;
+                //第六步：取多个同位数
+                补数1同尾数 = string.Join(",", twsbase[补数1]);
+                //第七步：取第二次差值的同尾数
+                同尾数2 = twsbase[差数2][twsbase[差数2].Length - 1];
+                ////第三步：取第一次的凑数
+                //凑数1 = csbase[差数1];
+                ////第四步：取第一次的同尾数，最大的一个同尾数
+                //同尾数1 = twsbase[差数1][twsbase[差数1].Length -1];
+
+                ////第五步：第二行,取第二次的凑数
+                //凑数2 = csbase[差数2];
+                ////第六步：取第二次的同尾数，但取第一个，即10-19位同尾数
+                //同尾数2 = twsbase[差数2][1];
+                ////第七步：取第二次的补数
+                //补数2 = 10 - 差数2;
+                ////第八步：取第二次补数的同尾数，取第二个，即20-29位同尾数
+                //同尾数22 = twsbase[差数2][2];
+
+                ////同尾数1 = 差数1 < 3 ? 差数1 * 10 + 差数1 : 差数1 + 10;
+                邻数1 = 差数1 - 1 <= 0 ? 0 : 差数1 - 1;
+                替数1 = tsbase[邻数1];
+                替数11 = 替数1 + 10;
+
+                //同尾数2 = 差数2 < 3 ? 差数2 * 10 + 差数2 : 差数2 + 10;
+                邻数2 = 差数2 - 1 <= 0 ? 0 : 差数2 - 1;
+                替数2 = tsbase[邻数2];
+                替数22 = 替数2 + 10;
+                //凑数2 = csbase[替数2];
+                //tws3 = 凑数2 < 3 ? 凑数2 * 10 + 凑数2 : 凑数2 + 10;
+                //补数2 = 10 - 差数2;
+                listBox4.Items.Add("当期号码:"+hm1 + "," + hm2 + "," + hm3 + "," + hm4 + "," + hm5 + "," + hm6 + "+" + hm7);
+                listBox4.Items.Add("");
+                listBox4.Items.Add("推荐号码[" + 邻数1.ToString() + "," + 替数1.ToString() + "," + 补数1.ToString() + "," + 补数1同尾数.ToString() + "," + 同尾数2.ToString() + "]");
+                //listBox4.Items.Add("差值[" + 差数1.ToString() + "].同尾数[" + 同尾数1.ToString() + "].邻数[" + 邻数1.ToString() + "].替数[" + 替数1.ToString() + "][" + 替数11.ToString() + "].");
+                //listBox4.Items.Add("差值[" + 差数2.ToString() + "].同尾数[" + 同尾数2.ToString() + "].邻数[" + 邻数2.ToString() + "].替数[" + 替数2.ToString() + "][" + 替数22.ToString() + "].");
+                //listBox4.Items.Add("推荐号码[" + 差数1.ToString() + "," + 凑数1.ToString() + "," + 同尾数1.ToString() + "," + 同尾数2.ToString() + "," + 补数2.ToString() + "," + 同尾数22.ToString() + "]");
+                //listBox4.Items.Add("推荐号码[" + 同尾数1.ToString() + "," + 差数2.ToString() + "," + 替数22.ToString() + "," + 同尾数2.ToString() + "," + tws3.ToString() + "," + 补数2.ToString() + "]");
+            }
+        }
+
+        private void listBox4_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            if (e.Index >= 0)
+            {
+                e.DrawBackground();
+                Brush mybsh = Brushes.Black;
+                Font font = e.Font;
+                // 判断是什么类型的标签  
+                if (listBox4.Items[e.Index].ToString().IndexOf("差值") != -1)
+                {
+                    mybsh = Brushes.Green;
+                    //font = new Font("Arial", 9, FontStyle.Bold);
+                }
+                else if (listBox4.Items[e.Index].ToString().IndexOf("推荐号码") != -1)
+                {
+                    mybsh = Brushes.Red;
+                    font = new Font("宋体", 9, FontStyle.Bold);
+                }
+                else if (listBox4.Items[e.Index].ToString().IndexOf("当期号码") != -1)
+                {
+                    mybsh = Brushes.Blue;
+                    font = new Font("宋体", 9, FontStyle.Bold);
+                }
+                    // 焦点框  
+                    e.DrawFocusRectangle();
+                //文本   
+                e.Graphics.DrawString(listBox4.Items[e.Index].ToString(), font, mybsh, e.Bounds, StringFormat.GenericDefault);
+            }
+        }
         #region 获取表中所有列名
         public static string[] GetTableColumnName(DataTable dt)
         {
