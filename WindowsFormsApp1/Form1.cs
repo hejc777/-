@@ -39,6 +39,8 @@ namespace WindowsFormsApp1
             public int RepeatNum { get; set; }
         }
 
+
+
         
 
         public Form1()
@@ -222,6 +224,9 @@ namespace WindowsFormsApp1
 
         int[,] hm10 = new int[,]
         {
+            {1,4,25,27,28,33,3 },
+            {4,5,11,15,20,32,13 },
+            {1,8,12,17,19,24,16 },
             {9,10,13,19,24,32,1 },//---
             {1,8,13,18,20,26,16 },
             {2,5,13,20,27,32,10 },
@@ -1876,9 +1881,15 @@ namespace WindowsFormsApp1
                 //int[] tmp = { 1, 3, 4, 5, 7, 9, 11, 13, 14, 15, 17, 19, 22, 23, 25, 28, 30, 31, 32, 33 };
                 //int[] tmp1 = { 2, 6, 8, 10, 12, 16, 18, 20, 21, 24, 26, 27, 29 };
                 //int[] tmp2 = { 3,4,7,11,12,15,17,24,27,29,30,33 };  //12码
-                //int[] tmp3 = { 1,3,4,8,12,13,17,18,24,25,28,32 };//12码
-                int[] tmp3 = { 1, 2, 3, 4, 5, 7, 8, 10,11, 13, 14, 15, 17, 18, 19, 20, 22, 23, 24, 25, 26, 27, 30, 32, 33 };  //24号中一等奖一期
-                ibTrue = Fzpcf(iirows, tmp3, 5, 6);
+
+                
+
+
+                //int[] tmp3 = { 01, 04, 09, 10, 11, 18, 19, 20, 25, 28, 32, 33 };//12码
+
+
+                //int[] tmp3 = { 1, 2, 3, 4, 5, 7, 8, 10,11, 13, 14, 15, 17, 18, 19, 20, 22, 23, 24, 25, 26, 27, 30, 32, 33 };  //24号中一等奖一期
+                ibTrue = Fzpcf(iirows, zbh, 5, 6);
                 if (ibTrue == false) cgcs++; else ibTrueInfo += "[12码未通过]";
 
                 //历史号码比对
@@ -1978,10 +1989,10 @@ namespace WindowsFormsApp1
                         //if (QueueString(iirows) < 2) result++;
 
                         //号码相似度规则判断，用的规则表
-                        if (hmxsdArray(iirows,hmxsd,5,int.Parse(cxcs.Text.ToString()),6) == true) { result++; } else { ibTrueInfo += "号码相似度验证失败."; }
+                        if (hmxsdArray(iirows, hmxsd, 5, int.Parse(cxcs.Text.ToString()), 6) == true) { result++; } else { ibTrueInfo += "号码相似度验证失败."; }
 
                         //if (Fzpcf(iirows, left5w, 1, 6) == false) result++;   //前五位出现机率至少1个号码
-                        //if (Fzpcf(iirows, right5w, 1, 6) == false) result++;  //后五位出现机率至少1个号码  
+                        //if (Fzpcf(iirows, right5w, 1, 6) == false) result++;  //后五位出现机率至少1个号码 
 
                         int hmsum = iirows[0] + iirows[1] + iirows[2] + iirows[3] + iirows[4] + iirows[5];
                         //if (hmsum > 70 && hmsum < 110) result++;
@@ -2344,16 +2355,16 @@ namespace WindowsFormsApp1
 
             int[][] xx = new int[][]
             {
-                //new int[2]{13,14},
-                //new int[2]{15,16},
+                new int[2]{13,14},
+                new int[2]{15,16},
                 new int[2]{17,18},
-                //new int[2]{19,20},
-                //new int[2]{21,24},
-                //new int[2]{25,28},
-                //new int[2]{29,30 },
-                //new int[2]{31,38 },
-                //new int[2]{39,46 },
-                //new int[2]{1,12},
+                new int[2]{19,20},
+                new int[2]{21,24},
+                new int[2]{25,28},
+                new int[2]{29,30 },
+                new int[2]{31,38 },
+                new int[2]{39,46 },
+                new int[2]{1,12},
 
 
                 //new int[2]{106,107}
@@ -2464,7 +2475,7 @@ namespace WindowsFormsApp1
                         if (dt_save1.Rows[ii].RowState == DataRowState.Deleted) continue;
                         for (int c = 0; c < 6; c++) iirow1[c] = int.Parse(dt_save1.Rows[ii][c].ToString());
 
-                        if (Fzpcf(iirow, iirow1, 6, 6) == false)
+                        if (Fzpcf(iirow, iirow1, 4, 6) == false)
                         {
                             dt_save1.Rows[ii].Delete();
                         }
@@ -3214,6 +3225,8 @@ namespace WindowsFormsApp1
             }
 
 
+
+
             //号码相似度规则一
             hmxsd_gz1();
 
@@ -3462,6 +3475,31 @@ namespace WindowsFormsApp1
             }
             return maxvalue;
         }
+
+        /// <summary>
+        /// a/b取个位数
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        public int GetOnesDigitOfDivision(int a, int b)
+        {
+            if (b == 0)
+            {
+                throw new DivideByZeroException("分母不能为0");
+            }
+            return (a / b) % 10;
+        }
+
+        public int GetOnesDigitOfDivision(int a, int b, bool x)
+        {
+            if (b == 0)
+            {
+                throw new DivideByZeroException("分母不能为0");
+            }
+            if (x == true) return ((a - b) / b) % 10;else  return (a / b) % 10;
+        }
+
         /// <summary>
         /// a-b取个位数
         /// </summary>
@@ -3493,75 +3531,141 @@ namespace WindowsFormsApp1
 
         private void button14_Click(object sender, EventArgs e)
         {
-            for (int i = hm10.GetLength(0) -1; i > hm10.GetLength(0)-15; i--)
-            {
-                int hm1, hm2, hm3, hm4, hm5, hm6, hm7;
-                int 差数1,差数2;    //差数
-                int 同尾数1, 同尾数2,同尾数22; //同尾数
-                string 补数1同尾数; //存在多个string.join(",",xx)方法
-                int 邻数1, 邻数2;   //邻数
-                int 替数1, 替数11, 替数2, 替数22;   //替数
-                int 凑数1, 凑数2;//凑数
-                int 补数1, 补数2;//补数
-                int tws3;
-                string hmDisplay = "";
+            //取最后一期的双色球
+            int hm1, hm2, hm3, hm4, hm5, hm6, hm7;
+            int 合值;
+            int 差值1, 差值2, 差值3, 差值4, 差值5, 差值6, 差值7;
+            List<int> 同尾号集合 = new List<int>();
+            hm1 = hm10[0, 0];
+            hm2 = hm10[0, 1];
+            hm3 = hm10[0, 2];
+            hm4 = hm10[0, 3];
+            hm5 = hm10[0, 4];
+            hm6 = hm10[0, 5];
+            hm7 = hm10[0, 6];
+            合值 = hm1 + hm2 + hm3 + hm4 + hm5 + hm6 + hm7;
+            //取6个号的差值
+            差值1 = GetOnesDigitOfDivision(合值, hm1,true);
+            差值2= GetOnesDigitOfDivision(合值, hm2, true);
+            差值3 = GetOnesDigitOfDivision(合值, hm3, true);
+            差值4 = GetOnesDigitOfDivision(合值, hm4, true);
+            差值5 = GetOnesDigitOfDivision(合值, hm5, true);
+            差值6 = GetOnesDigitOfDivision(合值, hm6, true);
 
-                hm1 = hm10[i, 0];
-                hm2 = hm10[i, 1];
-                hm3 = hm10[i, 2];
-                hm4 = hm10[i, 3];
-                hm5 = hm10[i, 4];
-                hm6 = hm10[i, 5];
-                hm7 = hm10[i, 6];
-                //第一步：第六位减去第一位，取值的个位数，第一行
-                差数1 = DivideAndGetOnesPlace(hm6, hm1);
-                //第二步：第六位减去第四位，取值的个位数，第二行
-                差数2 = DivideAndGetOnesPlace(hm6, hm4);
+            if (差值1!=0) 同尾号集合.Add(差值1);
+            for (int i = 0; i < twsbase[差值1].Length; i++) 同尾号集合.Add(twsbase[差值1][i]);
+            if (差值2 != 0) 同尾号集合.Add(差值2);
+            for (int i = 0; i < twsbase[差值2].Length; i++) 同尾号集合.Add(twsbase[差值2][i]);
+            if (差值3 != 0) 同尾号集合.Add(差值3);
+            for (int i = 0; i < twsbase[差值3].Length; i++) 同尾号集合.Add(twsbase[差值3][i]);
+            if (差值4 != 0) 同尾号集合.Add(差值4);
+            for (int i = 0; i < twsbase[差值4].Length; i++) 同尾号集合.Add(twsbase[差值4][i]);
+            if (差值5 != 0) 同尾号集合.Add(差值5);
+            for (int i = 0; i < twsbase[差值5].Length; i++) 同尾号集合.Add(twsbase[差值5][i]);
+            if (差值6 != 0) 同尾号集合.Add(差值6);
+            for (int i = 0; i < twsbase[差值6].Length; i++) 同尾号集合.Add(twsbase[差值6][i]);
 
-                //第三步：取第一次的邻数
-                邻数1 = 差数1 - 1 <= 0 ? 0 : 差数1 - 1;
-                //第四步：取第一次的替数
-                替数1 = tsbase[差数1];
-                //第五步：取第一次的补数
-                补数1 = 10 - 差数1 == 10 ? 1 : 10 - 差数1;
-                //第六步：取多个同位数
-                补数1同尾数 = string.Join(",", twsbase[补数1]);
-                //第七步：取第二次差值的同尾数
-                同尾数2 = twsbase[差数2][twsbase[差数2].Length - 1];
-                ////第三步：取第一次的凑数
-                //凑数1 = csbase[差数1];
-                ////第四步：取第一次的同尾数，最大的一个同尾数
-                //同尾数1 = twsbase[差数1][twsbase[差数1].Length -1];
+            同尾号集合 = 同尾号集合.Distinct().ToList().OrderBy(o=>o).ToList();
+            listBox4.Items.Add(string.Join(",", 同尾号集合));
 
-                ////第五步：第二行,取第二次的凑数
-                //凑数2 = csbase[差数2];
-                ////第六步：取第二次的同尾数，但取第一个，即10-19位同尾数
-                //同尾数2 = twsbase[差数2][1];
-                ////第七步：取第二次的补数
-                //补数2 = 10 - 差数2;
-                ////第八步：取第二次补数的同尾数，取第二个，即20-29位同尾数
-                //同尾数22 = twsbase[差数2][2];
+            zbh = 同尾号集合.ToArray();
 
-                ////同尾数1 = 差数1 < 3 ? 差数1 * 10 + 差数1 : 差数1 + 10;
-                邻数1 = 差数1 - 1 <= 0 ? 0 : 差数1 - 1;
-                替数1 = tsbase[邻数1];
-                替数11 = 替数1 + 10;
+            //for (int i = hm10.GetLength(0) -1; i > 0; i--)
+            //{
+            //    int hm1, hm2, hm3, hm4, hm5, hm6, hm7;
+            //    int 差数1,差数2;    //差数
+            //    int 同尾数1, 同尾数2,同尾数22,同尾数222; //同尾数
+            //    string 补数1同尾数; //存在多个string.join(",",xx)方法
+            //    int 邻数1, 邻数2;   //邻数
+            //    int 替数1, 替数11, 替数2, 替数22;   //替数
+            //    int 凑数1, 凑数2;//凑数
+            //    int 补数1, 补数2;//补数
+            //    int tws3;
+            //    string hmDisplay = "";
 
-                //同尾数2 = 差数2 < 3 ? 差数2 * 10 + 差数2 : 差数2 + 10;
-                邻数2 = 差数2 - 1 <= 0 ? 0 : 差数2 - 1;
-                替数2 = tsbase[邻数2];
-                替数22 = 替数2 + 10;
-                //凑数2 = csbase[替数2];
-                //tws3 = 凑数2 < 3 ? 凑数2 * 10 + 凑数2 : 凑数2 + 10;
-                //补数2 = 10 - 差数2;
-                listBox4.Items.Add("当期号码:"+hm1 + "," + hm2 + "," + hm3 + "," + hm4 + "," + hm5 + "," + hm6 + "+" + hm7);
-                listBox4.Items.Add("");
-                listBox4.Items.Add("推荐号码[" + 邻数1.ToString() + "," + 替数1.ToString() + "," + 补数1.ToString() + "," + 补数1同尾数.ToString() + "," + 同尾数2.ToString() + "]");
-                //listBox4.Items.Add("差值[" + 差数1.ToString() + "].同尾数[" + 同尾数1.ToString() + "].邻数[" + 邻数1.ToString() + "].替数[" + 替数1.ToString() + "][" + 替数11.ToString() + "].");
-                //listBox4.Items.Add("差值[" + 差数2.ToString() + "].同尾数[" + 同尾数2.ToString() + "].邻数[" + 邻数2.ToString() + "].替数[" + 替数2.ToString() + "][" + 替数22.ToString() + "].");
-                //listBox4.Items.Add("推荐号码[" + 差数1.ToString() + "," + 凑数1.ToString() + "," + 同尾数1.ToString() + "," + 同尾数2.ToString() + "," + 补数2.ToString() + "," + 同尾数22.ToString() + "]");
-                //listBox4.Items.Add("推荐号码[" + 同尾数1.ToString() + "," + 差数2.ToString() + "," + 替数22.ToString() + "," + 同尾数2.ToString() + "," + tws3.ToString() + "," + 补数2.ToString() + "]");
-            }
+            //    hm1 = hm10[i, 0];
+            //    hm2 = hm10[i, 1];
+            //    hm3 = hm10[i, 2];
+            //    hm4 = hm10[i, 3];
+            //    hm5 = hm10[i, 4];
+            //    hm6 = hm10[i, 5];
+            //    hm7 = hm10[i, 6];
+            //    //第一步：第六位减去第一位，取值的个位数，第一行
+            //    差数1 = DivideAndGetOnesPlace(hm6, hm1);
+            //    //第二步：第六位减去第四位，取值的个位数，第二行
+            //    差数2 = DivideAndGetOnesPlace(hm6, hm3);
+
+            //    //第三步：取第一次差值的同尾数
+            //    同尾数1 = twsbase[差数1].Length == 3 ? twsbase[差数1][2] : twsbase[差数1][1];
+            //    //第四步：取第一次差值的邻数
+            //    邻数1 = 差数1 + 1 > 9 ? 10 : 差数1 + 1;
+            //    //第五步：取第二次差值的替数
+
+
+            //    替数2 = tsbase[差数2];
+            //    //第六步：取第二次替数的同尾数
+            //    同尾数2 = twsbase[替数2].Length == 3 ? twsbase[替数2][0] : twsbase[替数2][1];
+            //    //第七步：取第二次差值的邻数
+            //    邻数2 = 差数2 + 1 > 9 ? 1 : 差数2 + 1;
+            //    //第八步：取第二次邻数的同尾数
+            //    同尾数22 = twsbase[邻数2].Length == 3 ? twsbase[邻数2][1] : twsbase[邻数2][0];
+            //    //第九步：取第二次差值的凑数
+            //    凑数2 = csbase[邻数2];
+            //    //第十步：取第二次凑数的同尾数
+            //    同尾数222 = twsbase[凑数2].Length == 3 ? twsbase[凑数2][1] : twsbase[凑数2][0];
+            //    //第十一步：取第二次差值的补数
+            //    补数2 = 10 - 差数2;
+
+
+
+
+            //    ////第三步：取第一次的邻数
+            //    //邻数1 = 差数1 - 1 <= 0 ? 0 : 差数1 - 1;
+            //    ////第四步：取第一次的替数
+            //    //替数1 = tsbase[差数1];
+            //    ////第五步：取第一次的补数
+            //    //补数1 = 10 - 差数1 == 10 ? 0 : 10 - 差数1;
+            //    ////第六步：取多个同位数
+            //    //补数1同尾数 = string.Join(",", twsbase[补数1]);
+            //    ////第七步：取第二次差值的同尾数
+            //    //同尾数2 = twsbase[差数2][twsbase[差数2].Length - 1];
+
+
+            //    ////第三步：取第一次的凑数
+            //    //凑数1 = csbase[差数1];
+            //    ////第四步：取第一次的同尾数，最大的一个同尾数
+            //    //同尾数1 = twsbase[差数1][twsbase[差数1].Length -1];
+
+            //    ////第五步：第二行,取第二次的凑数
+            //    //凑数2 = csbase[差数2];
+            //    ////第六步：取第二次的同尾数，但取第一个，即10-19位同尾数
+            //    //同尾数2 = twsbase[差数2][1];
+            //    ////第七步：取第二次的补数
+            //    //补数2 = 10 - 差数2;
+            //    ////第八步：取第二次补数的同尾数，取第二个，即20-29位同尾数
+            //    //同尾数22 = twsbase[差数2][2];
+
+            //    ////同尾数1 = 差数1 < 3 ? 差数1 * 10 + 差数1 : 差数1 + 10;
+            //    //邻数1 = 差数1 - 1 <= 0 ? 0 : 差数1 - 1;
+            //    //替数1 = tsbase[邻数1];
+            //    //替数11 = 替数1 + 10;
+
+            //    //同尾数2 = 差数2 < 3 ? 差数2 * 10 + 差数2 : 差数2 + 10;
+            //    //邻数2 = 差数2 - 1 <= 0 ? 0 : 差数2 - 1;
+            //    //替数2 = tsbase[邻数2];
+            //    //替数22 = 替数2 + 10;
+            //    //凑数2 = csbase[替数2];
+            //    //tws3 = 凑数2 < 3 ? 凑数2 * 10 + 凑数2 : 凑数2 + 10;
+            //    //补数2 = 10 - 差数2;
+            //    listBox4.Items.Add("当期号码:"+hm1 + "," + hm2 + "," + hm3 + "," + hm4 + "," + hm5 + "," + hm6 + "+" + hm7);
+            //    listBox4.Items.Add("");
+            //    //listBox4.Items.Add("推荐号码[" + 邻数1.ToString() + "," + 替数1.ToString() + "," + 补数1.ToString() + "," + 补数1同尾数.ToString() + "," + 同尾数2.ToString() + "]");
+            //    listBox4.Items.Add("推荐号码[" + 同尾数1.ToString() + "," + 邻数1.ToString() + "," + 同尾数2.ToString() + "," + 同尾数22.ToString() + "," + 同尾数222.ToString() + "," + 补数2.ToString() + "]");
+            //    //listBox4.Items.Add("差值[" + 差数1.ToString() + "].同尾数[" + 同尾数1.ToString() + "].邻数[" + 邻数1.ToString() + "].替数[" + 替数1.ToString() + "][" + 替数11.ToString() + "].");
+            //    //listBox4.Items.Add("差值[" + 差数2.ToString() + "].同尾数[" + 同尾数2.ToString() + "].邻数[" + 邻数2.ToString() + "].替数[" + 替数2.ToString() + "][" + 替数22.ToString() + "].");
+            //    //listBox4.Items.Add("推荐号码[" + 差数1.ToString() + "," + 凑数1.ToString() + "," + 同尾数1.ToString() + "," + 同尾数2.ToString() + "," + 补数2.ToString() + "," + 同尾数22.ToString() + "]");
+            //    //listBox4.Items.Add("推荐号码[" + 同尾数1.ToString() + "," + 差数2.ToString() + "," + 替数22.ToString() + "," + 同尾数2.ToString() + "," + tws3.ToString() + "," + 补数2.ToString() + "]");
+            //}
         }
 
         private void listBox4_DrawItem(object sender, DrawItemEventArgs e)
