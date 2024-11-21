@@ -66,7 +66,9 @@ namespace WindowsFormsApp1
         DataTable dt3 = new DataTable();
         DataTable dt4 = new DataTable();
 
-
+        int 热码数量 = 2;
+        int 温码数量 = 3;
+        int 冷码数量 = 1;
         int iiReadRec = 0; //读取记录数
         int sumRec = 0;    //合值
         double iiCount = 0; //所有生成数据量
@@ -222,14 +224,20 @@ namespace WindowsFormsApp1
 
         int[][] hmxsd;
 
+        List<int> 温码 = new List<int>();
+        List<int> 热码 = new List<int>();
+        List<int> 冷码 = new List<int>();
+        List<int> 漏码 = new List<int>();
+
         int[,] hm10 = new int[,]
         {
+            {1,11,15,27,32,33,1 },
             {1,4,25,27,28,33,3 },
-            {4,5,11,15,20,32,13 },
-            {1,8,12,17,19,24,16 },
-            {9,10,13,19,24,32,1 },//---
-            {1,8,13,18,20,26,16 },
-            {2,5,13,20,27,32,10 },
+            {4,5,11,15,20,32,13 }, //最后一位 - 第一位 = 下期第五位
+            {1,8,12,17,19,24,16 }, //最后一位 + 第二位 = 下期第六位
+            {9,10,13,19,24,32,1 }, //最后一位 - 第五位 = 下期第二位
+            {1,8,13,18,20,26,16 }, //最后一位 - 第三位 = 下期第三位
+            {2,5,13,20,27,32,10 }, //最后三位 - 第一位 = 下期第四位
             {14,18,23,24,26,33,10 },
             {1,4,13,18,26,30,3 },
             {2,14,15,17,25,30,11 },
@@ -1681,6 +1689,29 @@ namespace WindowsFormsApp1
             }
             else { return true; }
         }
+        public Boolean 热温冷码判断(int[] hm, int[] grouphm, int findCount, int maxnum)
+        {
+            int bgzCount = 0;
+
+            int[] numtmp = new int[maxnum];
+            for (int i = 0; i < maxnum; i++)
+            {
+                numtmp[i] = hm[i];
+            }
+
+
+            for (int cc = 0; cc < grouphm.Length; cc++)
+            {
+                int tmp = Array.IndexOf(numtmp, grouphm[cc]);
+                if (tmp >= 0) bgzCount++;
+            }
+            if (bgzCount == findCount)
+            {
+                return false;
+            }
+            else { return true; }
+        }
+
         public Boolean Fzpcf(int[] hm, int[] grouphm, int findCount, int maxnum)
         {
             int bgzCount = 0;
@@ -1805,6 +1836,88 @@ namespace WindowsFormsApp1
             }
         }
 
+        public void 号码规则(int 计算期数)
+        {
+
+            //取10期数据放到build里
+            int[] build = new int[计算期数 * 6];
+            int buildint = 0;
+            for (int co = 0; co < 计算期数; co++)
+            {
+                for (int co1 = 0; co1 < 6; co1++)
+                {
+                    build[buildint] = hm10[co,co1];
+                    buildint++;
+                }
+            }
+            // 集合 dic 用于存放统计结果
+            Dictionary<int, ItemInfo> dic =
+                new Dictionary<int, ItemInfo>();
+            // 开始统计每个元素重复次数
+            foreach (int v in build)
+            {
+                if (dic.ContainsKey(v))
+                {
+                    // 数组元素再次，出现次数增加 1
+                    dic[v].RepeatNum += 1;
+                }
+                else
+                {
+                    // 数组元素首次出现，向集合中添加一个新项
+                    // 注意 ItemInfo类构造函数中，已经将重复
+                    // 次数设置为 1
+                    dic.Add(v, new ItemInfo(v));
+                }
+            }
+            var tt = dic.OrderByDescending(r => r.Value.RepeatNum);
+
+            int 规则标准 = 计算期数 / 4;
+            //以最近10期为数据标准，出现率高于3期的视为热码、等于3期的为温码、低于3期的为冷码
+            for (int i = 0; i < tt.Count(); i++)
+            {
+                KeyValuePair<int, ItemInfo> kv = tt.ElementAt(i);
+                if (kv.Value.RepeatNum > 规则标准) 热码.Add(kv.Value.Value);
+                if (kv.Value.RepeatNum == 规则标准) 温码.Add(kv.Value.Value);
+                if (kv.Value.RepeatNum < 规则标准) 冷码.Add(kv.Value.Value);
+            }
+
+            int[] numbers = { 1, 2, 3, 4, 5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33};
+
+            
+            HashSet<int> dictionaryKeys = new HashSet<int>(dic.Keys);
+            var numbersNotFound = numbers.Where(n => !dictionaryKeys.Contains(n)).ToList();
+
+            listBox4.Items.Add("热码："+string.Join(",", 热码));
+            listBox4.Items.Add("温码：" + string.Join(",", 温码));
+            listBox4.Items.Add("冷码：" + string.Join(",", 冷码));
+            listBox4.Items.Add("漏码：" + string.Join(",", numbersNotFound));
+
+            //转换最后10期号码温热显示列
+            string[][] 最后10期转换 = new string[计算期数][];
+            for (int i = 0; i < 计算期数; i++)
+            {
+                int[] hm=  new int[6];
+                hm[0] = hm10[i, 0];
+                hm[1] = hm10[i, 1];
+                hm[2] = hm10[i, 2];
+                hm[3] = hm10[i, 3];
+                hm[4] = hm10[i, 4];
+                hm[5] = hm10[i, 5];
+                最后10期转换[i] = new string[6];
+                for (int ii=0;ii<6;ii++)
+                {
+                    if (热码.Contains(hm[ii]) == true) 最后10期转换[i][ii] = "热码";
+                    if (温码.Contains(hm[ii]) == true) 最后10期转换[i][ii] = "温码";
+                    if (冷码.Contains(hm[ii]) == true) 最后10期转换[i][ii] = "冷码";
+                    if (漏码.Contains(hm[ii]) == true) 最后10期转换[i][ii] = "漏码";
+
+                }
+                string[] formattedNumbers = hm.Select(n => n.ToString("D2")).ToArray(); // 使用D2格式化为至少两位数
+                listBox4.Items.Add(string.Join(",", formattedNumbers) +
+                                   "," + string.Join(",", 最后10期转换[i].ToList()));
+            }
+            
+        }
 
         public int[] hmgzfx(int[] iirows, int[] jl)
         {
@@ -1888,8 +2001,8 @@ namespace WindowsFormsApp1
                 //int[] tmp3 = { 01, 04, 09, 10, 11, 18, 19, 20, 25, 28, 32, 33 };//12码
 
 
-                //int[] tmp3 = { 1, 2, 3, 4, 5, 7, 8, 10,11, 13, 14, 15, 17, 18, 19, 20, 22, 23, 24, 25, 26, 27, 30, 32, 33 };  //24号中一等奖一期
-                ibTrue = Fzpcf(iirows, zbh, 5, 6);
+                int[] tmp3 = { 1, 2, 3, 4, 5,6, 7, 8,9, 10,11,12, 13, 14, 15,16, 17, 18, 19, 20,21, 22, 23, 24, 25, 26, 27,28, 29, 30, 31,32, 33 };  //24号中一等奖一期
+                ibTrue = Fzpcf(iirows, tmp3, 4, 6);
                 if (ibTrue == false) cgcs++; else ibTrueInfo += "[12码未通过]";
 
                 //历史号码比对
@@ -1957,10 +2070,10 @@ namespace WindowsFormsApp1
                         Array.Copy(zbh, 0, left5w, 0, 5);
                         Array.Copy(zbh, 28, right5w, 0, 5);
 
-                        if (Fzpcf(iirows, xxnumtmp, jl[0], 6) == false) result++;
-                        if (Fzpcf(iirows, xxnumtmp1, jl[1], 6) == false) result++;
-                        if (Fzpcf(iirows, xxnumtmp2, jl[2], 6) == false) result++;
-                        if (Fzpcf(iirows, xxnumtmp3, jl[3], 6) == false) result++;
+                        //if (Fzpcf(iirows, xxnumtmp, jl[0], 6) == false) result++;
+                        //if (Fzpcf(iirows, xxnumtmp1, jl[1], 6) == false) result++;
+                        //if (Fzpcf(iirows, xxnumtmp2, jl[2], 6) == false) result++;
+                        //if (Fzpcf(iirows, xxnumtmp3, jl[3], 6) == false) result++;
 
                         int[][] xm1 =
                         {
@@ -1974,22 +2087,28 @@ namespace WindowsFormsApp1
                         //if (Fzpcf(iirows, xm1[2], 1, 6) == false) result++;
                         //if (Fzpcf(iirows, xm1[3], 1, 6) == false) result++;
 
+                        //判断:一组号码里有1-2个的热码，否则，取消
+                        if (热温冷码判断(iirows, 热码.ToArray(), 热码数量, 6) == false) { result++; } else { ibTrueInfo += "[热码数量不足]"; }
+                        //判断:一组号码里有2-4个的冷码，否则，取消
+                        if (热温冷码判断(iirows, 冷码.ToArray(), 冷码数量, 6) == false) { result++; } else { ibTrueInfo += "[冷码数量不足]"; }
+                        //判断:一组号码里有2-4个的温码，否则，取消
+                        if (热温冷码判断(iirows, 温码.ToArray(), 温码数量, 6) == false) { result++; } else { ibTrueInfo += "[温码数量不足]"; }
                         //判断：一组号码里有三个0-9小号的，取消
-                        if (Fzpcf(iirows, xm1[0], 3, 6) == true) { result++; } else { ibTrueInfo += "[0-9有3个]"; }
-                        ////判断：一组号码里有四个10-19号的，取消
-                        if (Fzpcf(iirows, xm1[1], 4, 6) == true) { result++; } else { ibTrueInfo += "[10-19有4个]"; }
-                        ////判断：一组号码里有四个20-29号的，取消
-                        if (Fzpcf(iirows, xm1[2], 4, 6) == true) { result++; } else { ibTrueInfo += "[20-29有4个]"; }
-                        ////判断：一组号码里有三个30-33号的，取消
-                        if (Fzpcf(iirows, xm1[3], 3, 6) == true) { result++; } else { ibTrueInfo += "[30-33有3个]"; }
-                        ////判断：一组号码里有三个或以上连续的号码，取消
-                        if (ContinueNumLenth(iirows) < 3) { result++; } else { ibTrueInfo += "[三个或以上连续的号码]"; }
+                        //if (Fzpcf(iirows, xm1[0], 3, 6) == true) { result++; } else { ibTrueInfo += "[0-9有3个]"; }
+                        //////判断：一组号码里有四个10-19号的，取消
+                        //if (Fzpcf(iirows, xm1[1], 4, 6) == true) { result++; } else { ibTrueInfo += "[10-19有4个]"; }
+                        //////判断：一组号码里有四个20-29号的，取消
+                        //if (Fzpcf(iirows, xm1[2], 4, 6) == true) { result++; } else { ibTrueInfo += "[20-29有4个]"; }
+                        //////判断：一组号码里有三个30-33号的，取消
+                        //if (Fzpcf(iirows, xm1[3], 3, 6) == true) { result++; } else { ibTrueInfo += "[30-33有3个]"; }
+                        //////判断：一组号码里有三个或以上连续的号码，取消
+                        //if (ContinueNumLenth(iirows) < 3) { result++; } else { ibTrueInfo += "[三个或以上连续的号码]"; }
                         //判断：一组号码里有二组或以上连续的号码，取消
                         //如  1，2，4，5，16，18+11 ，1-2，4-5就是二组连续号码
                         //if (QueueString(iirows) < 2) result++;
 
                         //号码相似度规则判断，用的规则表
-                        if (hmxsdArray(iirows, hmxsd, 5, int.Parse(cxcs.Text.ToString()), 6) == true) { result++; } else { ibTrueInfo += "号码相似度验证失败."; }
+                        //if (hmxsdArray(iirows, hmxsd, 5, int.Parse(cxcs.Text.ToString()), 6) == true) { result++; } else { ibTrueInfo += "号码相似度验证失败."; }
 
                         //if (Fzpcf(iirows, left5w, 1, 6) == false) result++;   //前五位出现机率至少1个号码
                         //if (Fzpcf(iirows, right5w, 1, 6) == false) result++;  //后五位出现机率至少1个号码 
@@ -1998,7 +2117,7 @@ namespace WindowsFormsApp1
                         //if (hmsum > 70 && hmsum < 110) result++;
 
                         zjhmgz(string.Join(",", iirows), ibTrueInfo);
-                        if (result == 10) ibTrue = true; else ibTrue = false;
+                        if (result == 3) ibTrue = true; else ibTrue = false;
 
 
 
@@ -3168,6 +3287,8 @@ namespace WindowsFormsApp1
         }
 
 
+        
+
         private void button12_Click(object sender, EventArgs e)
         {
             int[] b = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,
@@ -3224,6 +3345,7 @@ namespace WindowsFormsApp1
                 
             }
 
+            
 
 
 
@@ -3545,12 +3667,18 @@ namespace WindowsFormsApp1
             hm7 = hm10[0, 6];
             合值 = hm1 + hm2 + hm3 + hm4 + hm5 + hm6 + hm7;
             //取6个号的差值
-            差值1 = GetOnesDigitOfDivision(合值, hm1,true);
-            差值2= GetOnesDigitOfDivision(合值, hm2, true);
-            差值3 = GetOnesDigitOfDivision(合值, hm3, true);
-            差值4 = GetOnesDigitOfDivision(合值, hm4, true);
-            差值5 = GetOnesDigitOfDivision(合值, hm5, true);
-            差值6 = GetOnesDigitOfDivision(合值, hm6, true);
+            差值1 = GetOnesDigitOfDivision(合值, hm1);
+            差值2 = GetOnesDigitOfDivision(合值, hm2);
+            差值3 = GetOnesDigitOfDivision(合值, hm3);
+            差值4 = GetOnesDigitOfDivision(合值, hm4);
+            差值5 = GetOnesDigitOfDivision(合值, hm5);
+            差值6 = GetOnesDigitOfDivision(合值, hm6);
+            //差值1 = GetOnesDigitOfDivision(合值, hm1,true);
+            //差值2= GetOnesDigitOfDivision(合值, hm2, true);
+            //差值3 = GetOnesDigitOfDivision(合值, hm3, true);
+            //差值4 = GetOnesDigitOfDivision(合值, hm4, true);
+            //差值5 = GetOnesDigitOfDivision(合值, hm5, true);
+            //差值6 = GetOnesDigitOfDivision(合值, hm6, true);
 
             if (差值1!=0) 同尾号集合.Add(差值1);
             for (int i = 0; i < twsbase[差值1].Length; i++) 同尾号集合.Add(twsbase[差值1][i]);
@@ -3566,7 +3694,11 @@ namespace WindowsFormsApp1
             for (int i = 0; i < twsbase[差值6].Length; i++) 同尾号集合.Add(twsbase[差值6][i]);
 
             同尾号集合 = 同尾号集合.Distinct().ToList().OrderBy(o=>o).ToList();
+            listBox4.Items.Add("差值推荐红球："+(差值1 + 差值2 + 差值3 + 差值4 + 差值5 + 差值6).ToString());
             listBox4.Items.Add(string.Join(",", 同尾号集合));
+
+
+            号码规则(30);
 
             zbh = 同尾号集合.ToArray();
 
