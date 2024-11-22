@@ -14,7 +14,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 namespace WindowsFormsApp1
-{
+{  
     public partial class Form1 : Form
     {
 
@@ -66,9 +66,9 @@ namespace WindowsFormsApp1
         DataTable dt3 = new DataTable();
         DataTable dt4 = new DataTable();
 
-        int 热码数量 = 2;
-        int 温码数量 = 3;
-        int 冷码数量 = 1;
+        int 热码数量 = 3;
+        int 温码数量 = 1;
+        int 冷码数量 = 2;
         int iiReadRec = 0; //读取记录数
         int sumRec = 0;    //合值
         double iiCount = 0; //所有生成数据量
@@ -231,6 +231,7 @@ namespace WindowsFormsApp1
 
         int[,] hm10 = new int[,]
         {
+            {2,4,13,16,18,20,16 },
             {1,11,15,27,32,33,1 },
             {1,4,25,27,28,33,3 },
             {4,5,11,15,20,32,13 }, //最后一位 - 第一位 = 下期第五位
@@ -1836,6 +1837,8 @@ namespace WindowsFormsApp1
             }
         }
 
+ 
+
         public void 号码规则(int 计算期数)
         {
 
@@ -1881,11 +1884,13 @@ namespace WindowsFormsApp1
                 if (kv.Value.RepeatNum < 规则标准) 冷码.Add(kv.Value.Value);
             }
 
+            //取漏码
             int[] numbers = { 1, 2, 3, 4, 5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33};
 
-            
             HashSet<int> dictionaryKeys = new HashSet<int>(dic.Keys);
             var numbersNotFound = numbers.Where(n => !dictionaryKeys.Contains(n)).ToList();
+
+            //----
 
             listBox4.Items.Add("热码："+string.Join(",", 热码));
             listBox4.Items.Add("温码：" + string.Join(",", 温码));
@@ -1916,7 +1921,32 @@ namespace WindowsFormsApp1
                 listBox4.Items.Add(string.Join(",", formattedNumbers) +
                                    "," + string.Join(",", 最后10期转换[i].ToList()));
             }
-            
+
+            int[] hm1 = new int[7];
+            int[] hm2 = new int[7];
+            int index1 = 0;
+            int index2 = 7;
+            hm1[0] = hm10[index1, 0];
+            hm1[1] = hm10[index1, 1];
+            hm1[2] = hm10[index1, 2];
+            hm1[3] = hm10[index1, 3];
+            hm1[4] = hm10[index1, 4];
+            hm1[5] = hm10[index1, 5];
+            hm1[6] = hm10[index1, 6];
+
+            hm2[0] = hm10[index2, 0];
+            hm2[1] = hm10[index2, 1];
+            hm2[2] = hm10[index2, 2];
+            hm2[3] = hm10[index2, 3];
+            hm2[4] = hm10[index2, 4];
+            hm2[5] = hm10[index2, 5];
+            hm2[6] = hm10[index2, 6];
+
+            //new int[7]{ 21,8,9,15,2,7,3}, new int[7]{ 1,2,3,4,5,6,7}
+            //double similarity = NumberSimilarityComparer.CalculateSimilarity(new int[7] { 1,2,3,5,7,8,9 }, new int[7] { 1, 2, 3, 4, 5, 6, 7 });
+            decimal similarity = NumberSimilarityComparer.GetSimilarityWith(hm1,hm2); 
+            listBox4.Items.Add("相似度：" + (similarity*100).ToString());
+
         }
 
         public int[] hmgzfx(int[] iirows, int[] jl)
@@ -2393,7 +2423,49 @@ namespace WindowsFormsApp1
             WriteTextFile(dt_save, @"c:\\hmxsd.txt", false);
         }
 
-        
+
+        public class NumberSimilarityComparer
+        {
+            /// <summary>
+            /// 获取两个字符串的相似度
+            /// </summary>
+            /// <param name=”sourceString”>第一个字符串</param>
+            /// <param name=”str”>第二个字符串</param>
+            /// <returns></returns>
+            public static decimal GetSimilarityWith(int[] sourceString, int[] str)
+            {
+
+                decimal Kq = 2;
+                decimal Kr = 1;
+                decimal Ks = 1;
+
+                //char[] ss = sourceString.ToCharArray();
+                //char[] st = str.ToCharArray();
+
+                //获取交集数量
+                int q = sourceString.Intersect(str).Count();
+                int s = sourceString.Length - q;
+                int r = str.Length - q;
+
+                return Kq * q / (Kq * q + Kr * r + Ks * s);
+            }
+
+            public static double CalculateSimilarity(int[] set1, int[] set2)
+            {
+                // 计算两个集合的平均值
+                double avg1 = set1.Average();
+                double avg2 = set2.Average();
+
+                // 计算标准差
+                double stdDev1 = set1.Select(x => x - avg1).Sum(x => x * x) / set1.Length;
+                double stdDev2 = set2.Select(x => x - avg2).Sum(x => x * x) / set2.Length;
+
+                // 标准差越小，相似度越高
+                double xx=  1 - ((stdDev1 + stdDev2) / (2 * set1.Length * set2.Length));
+                return xx;
+            }
+        }
+
         /// <summary>
         /// 号码相似度规则一
         /// 号码验证程序
@@ -2475,15 +2547,15 @@ namespace WindowsFormsApp1
             int[][] xx = new int[][]
             {
                 new int[2]{13,14},
-                new int[2]{15,16},
-                new int[2]{17,18},
-                new int[2]{19,20},
-                new int[2]{21,24},
-                new int[2]{25,28},
-                new int[2]{29,30 },
-                new int[2]{31,38 },
-                new int[2]{39,46 },
-                new int[2]{1,12},
+                //new int[2]{15,16},
+                //new int[2]{17,18},
+                //new int[2]{19,20},
+                //new int[2]{21,24},
+                //new int[2]{25,28},
+                //new int[2]{29,30 },
+                //new int[2]{31,38 },
+                //new int[2]{39,46 },
+                //new int[2]{1,12},
 
 
                 //new int[2]{106,107}
@@ -2540,6 +2612,7 @@ namespace WindowsFormsApp1
 
                 for (int i = 0; i < dt_save.Rows.Count; i++)
                 {
+                    Application.DoEvents();
                     int[] iirow = new int[7];
                     iirow[0] = int.Parse(dt_save.Rows[i]["num1"].ToString());
                     iirow[1] = int.Parse(dt_save.Rows[i]["num2"].ToString());
@@ -2556,7 +2629,7 @@ namespace WindowsFormsApp1
                 }
                 dt_save.AcceptChanges();
 
-                WriteTextFile(dt_save.DefaultView.ToTable(true, new string[] { "num" }), @"c:\\cp_one_xsdsx.txt", true);
+               // WriteTextFile(dt_save.DefaultView.ToTable(true, new string[] { "num" }), @"c:\\cp_one_xsdsx.txt", true);
 
                 //lock (dt_save)
                 //{
@@ -2594,11 +2667,17 @@ namespace WindowsFormsApp1
                         if (dt_save1.Rows[ii].RowState == DataRowState.Deleted) continue;
                         for (int c = 0; c < 6; c++) iirow1[c] = int.Parse(dt_save1.Rows[ii][c].ToString());
 
-                        if (Fzpcf(iirow, iirow1, 4, 6) == false)
+                        //if (NumberSimilarityComparer.GetSimilarityWith(iirow,iirow1) * 100 >= 60)
+                        if (iirow.Intersect(iirow1).Count() >= 4) //两个数组间有四个相同则删除
                         {
                             dt_save1.Rows[ii].Delete();
                         }
+                        //if (Fzpcf(iirow, iirow1, 5, 6) == false)
+                        //{
+                        //    dt_save1.Rows[ii].Delete();
+                        //}
                     }
+                    
                 }
                 dt_save1.AcceptChanges();
                 dt_save = dt_save1;
