@@ -1613,6 +1613,40 @@ namespace WindowsFormsApp1
 
         }
 
+        /// <summary>
+        /// 判断 二个数字串 近似度
+        /// </summary>
+        /// <param name="group1">第一数字串</param>
+        /// <param name="group2">第二数字串</param>
+        /// <param name="tolerance">阀值，可以设置 例 0.02</param>
+        /// <returns></returns>
+        public static bool AreApproxEqual(double[] group1, double[] group2, double tolerance)
+        {
+            if (group1.Length != group2.Length)
+            {
+                return false;
+            }
+
+            double avg1 = group1.Average();
+            double avg2 = group2.Average();
+
+            for (int i = 0; i < group1.Length; i++)
+            {
+                double n1, n2;
+                n1 = Math.Abs(group1[i] - avg1);
+                n2 = Math.Abs(group2[i] - avg2);
+                if ( n1> tolerance && n2 > tolerance)
+                {
+                    // 如果任何一组的元素的差异超过容忍阈值，则不近似相等
+                    return false;
+                }
+            }
+
+            // 如果所有元素的差异都在容忍阈值以内，则认为这两组数字近似相等
+            return true;
+        }
+
+
         private void mutilTask()
         {
             throw new NotImplementedException();
@@ -2078,6 +2112,25 @@ namespace WindowsFormsApp1
                     decimal OK_myMAX = decimal_myavg + (decimal)0.035; //0.012
                     decimal OK_myMIN = decimal_myavg - (decimal)0.035;
 
+                    double[] currentNum = { double.Parse(iirows[0].ToString()),
+                        double.Parse(iirows[1].ToString()),
+                        double.Parse(iirows[2].ToString()),
+                        double.Parse(iirows[3].ToString()),
+                        double.Parse(iirows[4].ToString()),
+                        double.Parse(iirows[5].ToString()),
+                        double.Parse(iirows[6].ToString()),
+                    };
+                    double[] kjnum =
+                    {
+                        double.Parse(hm10[0,0].ToString()),
+                        double.Parse(hm10[0,1].ToString()),
+                        double.Parse(hm10[0,2].ToString()),
+                        double.Parse(hm10[0,3].ToString()),
+                        double.Parse(hm10[0,4].ToString()),
+                        double.Parse(hm10[0,5].ToString()),
+                        double.Parse(hm10[0,6].ToString()),
+                    };
+                    
                     //if (decimal_mysumresult > OK_myMIN && decimal_mysumresult < OK_myMAX)
                     if (true)
                     {
@@ -2117,6 +2170,8 @@ namespace WindowsFormsApp1
                         //if (Fzpcf(iirows, xm1[2], 1, 6) == false) result++;
                         //if (Fzpcf(iirows, xm1[3], 1, 6) == false) result++;
 
+                        if (AreApproxEqual(kjnum,currentNum,9.5)== true) { result++; }
+
                         //判断:一组号码里有1-2个的热码，否则，取消
                         if (热温冷码判断(iirows, 热码.ToArray(), 热码数量, 6) == false) { result++; } else { ibTrueInfo += "[热码数量不足]"; }
                         //判断:一组号码里有2-4个的冷码，否则，取消
@@ -2147,7 +2202,7 @@ namespace WindowsFormsApp1
                         //if (hmsum > 70 && hmsum < 110) result++;
 
                         zjhmgz(string.Join(",", iirows), ibTrueInfo);
-                        if (result == 3) ibTrue = true; else ibTrue = false;
+                        if (result == 4) ibTrue = true; else ibTrue = false;
 
 
 
@@ -3778,6 +3833,7 @@ namespace WindowsFormsApp1
 
 
             号码规则(30);
+
 
             zbh = 同尾号集合.ToArray();
 
