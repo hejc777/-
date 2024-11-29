@@ -12,9 +12,11 @@ using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace WindowsFormsApp1
-{  
+{
+
     public partial class Form1 : Form
     {
 
@@ -38,11 +40,6 @@ namespace WindowsFormsApp1
             /// </summary>
             public int RepeatNum { get; set; }
         }
-
-
-
-        
-
         public Form1()
         {
             InitializeComponent();
@@ -231,6 +228,9 @@ namespace WindowsFormsApp1
 
         int[,] hm10 = new int[,]
         {
+            {4,9,10,19,26,27,12 },
+            {3,11,15,21,25,26,3 },
+            {5,11,17,18,30,31,13 },
             {2,4,13,16,18,20,16 },
             {1,11,15,27,32,33,1 },
             {1,4,25,27,28,33,3 },
@@ -326,7 +326,7 @@ namespace WindowsFormsApp1
             {2,9,12,22,25,33,16},
             {11,14,18,19,23,26,2},
             {2,6,12,29,30,31,10},
-            {2,6,12,29,28,33,7},
+           //{2,6,12,29,28,33,7},
             {8,10,18,23,27,31,2},
             {1,4,5,6,12,14,13},
             {5,7,14,17,21,31,6},
@@ -571,6 +571,7 @@ namespace WindowsFormsApp1
             {4,5,10,13,30,31,14 },
             {3,16,17,19,25,33,7 },
             {4,13,14,18,20,28,8 },
+            {6,11,12,27,29,30,13 },
             {6,11,13,16,19,31,2 },
             {21,22,24,28,29,32,14 },
             {7,10,16,20,21,27,11 },
@@ -725,9 +726,11 @@ namespace WindowsFormsApp1
 
         private void Form1_Load(object sender, EventArgs e)
         {
+
+
             Control.CheckForIllegalCrossThreadCalls = false;
             userControl17.unbuttonbackcolor();
-
+            //tableLayoutPanel.GetType().GetProperty("DoubleBuffered", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).SetValue(tableLayoutPanel1, true, null);
             //创建数据列号码①②③④⑤⑥⑦
             dt.Columns.Add("num1", typeof(string));
             dt.Columns.Add("num2", typeof(string));
@@ -2170,7 +2173,7 @@ namespace WindowsFormsApp1
                         //if (Fzpcf(iirows, xm1[2], 1, 6) == false) result++;
                         //if (Fzpcf(iirows, xm1[3], 1, 6) == false) result++;
 
-                        if (AreApproxEqual(kjnum,currentNum,9.5)== true) { result++; }
+                        if (AreApproxEqual(kjnum,currentNum,10.8)== true) { result++; }
 
                         //判断:一组号码里有1-2个的热码，否则，取消
                         if (热温冷码判断(iirows, 热码.ToArray(), 热码数量, 6) == false) { result++; } else { ibTrueInfo += "[热码数量不足]"; }
@@ -2602,15 +2605,15 @@ namespace WindowsFormsApp1
             int[][] xx = new int[][]
             {
                 new int[2]{13,14},
-                //new int[2]{15,16},
-                //new int[2]{17,18},
-                //new int[2]{19,20},
-                //new int[2]{21,24},
-                //new int[2]{25,28},
-                //new int[2]{29,30 },
-                //new int[2]{31,38 },
-                //new int[2]{39,46 },
-                //new int[2]{1,12},
+                new int[2]{15,16},
+                new int[2]{17,18},
+                new int[2]{19,20},
+                new int[2]{21,24},
+                new int[2]{25,28},
+                new int[2]{29,30 },
+                new int[2]{31,38 },
+                new int[2]{39,46 },
+                new int[2]{1,12},
 
 
                 //new int[2]{106,107}
@@ -3963,6 +3966,300 @@ namespace WindowsFormsApp1
                 //文本   
                 e.Graphics.DrawString(listBox4.Items[e.Index].ToString(), font, mybsh, e.Bounds, StringFormat.GenericDefault);
             }
+        }
+        private int[] GetXAxisValues(int count)
+        {
+            int[] values = new int[count];
+            for (int i = 0; i < count; i++)
+            {
+                values[i] = i + 1; // X轴值
+            }
+            return values;
+        }
+
+        private int[] GetYAxisValues(int count)
+        {
+            Random random = new Random();
+            int[] values = new int[count];
+            for (int i = 0; i < 7; i++)
+            {
+                values[i] = random.Next(1, 33); // Y轴值，生成1到99之间的随机数
+            }
+            return values;
+        }
+
+
+        public TableLayoutPanel tableLayoutPanel;
+        public bool tableDisplay = false;
+
+        public class CircleLabel : Label
+        {
+            public string txt = "0";
+            public string name = "";
+            
+            protected override void OnPaint(PaintEventArgs e)
+            {
+                this.SuspendLayout();
+                base.OnPaint(e);
+                Graphics g = e.Graphics;
+                g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+
+                // 绘制圆形背景
+                g.FillEllipse(Brushes.Red, 0, 0, this.Width, this.Height);
+
+                // 绘制文本
+                StringFormat format = new StringFormat();
+                format.Alignment = StringAlignment.Center;
+                format.LineAlignment = StringAlignment.Center;
+                g.DrawString(txt, this.Font, new SolidBrush(this.ForeColor), new RectangleF(0, 1, this.Width, this.Height), format);
+                this.ResumeLayout(false);
+                //base.OnPaint(e);
+            }
+        }
+
+
+
+        /// <summary>
+        /// 递归方法,获取指定controlName的控件;如果控件未找到,则返回null,请注意判断null
+        /// </summary>
+        /// <param name="container">容器控件,可以是窗体form,也可以是panel,GroupBox等</param>
+        /// <param name="controlName">控件名称</param>
+        /// <returns>返回一个控件类型</returns>
+        private Control getControlFromName(Control container, string controlName)
+        {
+
+            foreach (Control c in container.Controls)
+            {
+                if (c.Name == controlName)
+                {
+                    return c;
+                }
+                if (c.HasChildren)
+                {
+                    //这里不能直接写return  getControlFromName(c, controlName);因为会导致只执行第一个子容器控件,如果未找到就提前返回了Null;
+                    Control myControl = getControlFromName(c, controlName);
+                    if (myControl != null)
+                    {
+                        return myControl;
+                    }
+                }
+            }
+            //并非所有的代码路径都返回值,未找到就返回null
+            return null;
+        }
+
+        private void tableLayoutPanel_resize(object sender,EventArgs e)
+        {
+            tableLayoutPanel.GetType()
+                .GetProperty("DoubleBuffered", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)
+                .SetValue(tableLayoutPanel, true, null);
+        }
+
+        private void lblFunc_Click(object sender, EventArgs e)
+        {
+            Control pnl = (Control)sender;
+            string stype = pnl.GetType().ToString();
+
+            if (stype.IndexOf("Panel") != -1)
+            {
+                string[] st1 = pnl.Name.Split('_');
+                Control nl =  getControlFromName(pnl, st1[1].ToString() + "_" + st1[2].ToString());
+                nl.Visible = true;
+            }else
+            {
+                CircleLabel lbl = (CircleLabel)sender;
+                string[] st = lbl.Name.Split('_');
+                lbl.Visible = lbl.Visible == false ? true : false;
+            }
+        }
+        /// <summary>
+        /// 构造双色球开奖展示牌
+        /// </summary>
+        /// <param name="rows">需要开奖的期数</param>
+        public void DoubleColorBallTrajectoryForm(int rows)
+        {
+            int 列数 = 36;
+            int 期数 = 2024137;
+            tableLayoutPanel = new TableLayoutPanel();
+            tableLayoutPanel.ColumnCount = 列数;
+            tableLayoutPanel.RowCount = rows +1;
+            tableLayoutPanel.CellBorderStyle = TableLayoutPanelCellBorderStyle.Single;
+            tableLayoutPanel.Resize += new System.EventHandler(this.tableLayoutPanel_resize);
+            tableLayoutPanel.Width = 22 * (列数+7);
+            tableLayoutPanel.Height = 22 * (rows+3);
+            tableLayoutPanel.AutoScroll = false;
+
+
+            tableLayoutPanel.GetType()
+                .GetProperty("DoubleBuffered", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)
+                .SetValue(tableLayoutPanel, true, null);
+            tableLayoutPanel.SuspendLayout();
+            for (int cc = 1; cc < 列数; cc++)
+            {
+                if(cc == 1)
+                {
+                    Label qs = new Label();
+                    qs.TextAlign = ContentAlignment.MiddleCenter;
+                    qs.Text = "期数";
+                    //circleLabel.ForeColor = Color.White;
+                    qs.Size = new Size(50, 20);
+                    tableLayoutPanel.Controls.Add(qs, cc, 0);
+                    continue;
+                }
+
+                Label circleLabel = new Label();
+                //circleLabel.BorderStyle = BorderStyle.FixedSingle;
+                //circleLabel.BackColor = Color.Red;
+                //label.Dock = DockStyle.Fill;
+                circleLabel.TextAlign = ContentAlignment.MiddleCenter;
+                circleLabel.Text =( cc -1).ToString();
+                //circleLabel.ForeColor = Color.White;
+                circleLabel.Size = new Size(20, 20);
+                tableLayoutPanel.Controls.Add(circleLabel, cc, 0);
+            }
+
+
+            期数 = 期数 - rows;
+            for (int i = 1; i < rows  ; i++)
+            {
+                Application.DoEvents();
+                for (int j = 1; j < 列数; j++)
+                {
+                    int qs = (rows ) - i;
+                    if (j == 1)
+                    {
+                        Label 期数内容 = new Label();
+                        期数内容.TextAlign = ContentAlignment.MiddleCenter;
+                        期数内容.Text =(期数 + i ).ToString();
+                        //circleLabel.ForeColor = Color.White;
+                        期数内容.Size = new Size(50, 20);
+                        tableLayoutPanel.Controls.Add(期数内容, j, i);
+                        continue;
+                    }
+
+                    if (hm10[qs, 0] == j -1 || hm10[qs, 1] == j -1|| hm10[qs, 2] == j-1 || hm10[qs, 3] == j -1 || hm10[qs, 4] == j -1
+                        || hm10[qs, 5] == j -1 )
+                    {
+                        CircleLabel circleLabel = new CircleLabel();
+                        //circleLabel.BorderStyle = BorderStyle.FixedSingle;
+                        //circleLabel.BackColor = Color.Red;
+                        circleLabel.AutoSize = false;
+                        //label.Dock = DockStyle.Fill;
+                        circleLabel.TextAlign = ContentAlignment.MiddleCenter;
+                        //circleLabel.Text = j.ToString();
+                        circleLabel.txt = (j - 1).ToString();
+                        circleLabel.ForeColor = Color.White;
+                        circleLabel.Size = new Size(20, 20);
+                        circleLabel.Name = "" + i.ToString() + "_" + j.ToString();
+                        circleLabel.Font = new Font(circleLabel.Font, FontStyle.Bold);
+
+                        tableLayoutPanel.Controls.Add(circleLabel, j, i);
+                    }
+                    else {
+                        Label circleLabel = new Label();
+                        //circleLabel.BorderStyle = BorderStyle.FixedSingle;
+                        //circleLabel.BackColor = Color.Red;
+                        //label.Dock = DockStyle.Fill;
+                        //circleLabel.TextAlign = ContentAlignment.MiddleCenter;
+                        ////circleLabel.Text = j.ToString();
+                        //circleLabel.ForeColor = Color.White;
+                        circleLabel.Name = "" + i.ToString() + "_" + j.ToString();
+                        circleLabel.Size = new Size(20, 20);
+                        tableLayoutPanel.Controls.Add(circleLabel, j, i); 
+
+                    }
+                }
+            }
+
+            for (int cc = 1; cc < 列数; cc++)
+            {
+                if (cc == 1)
+                {
+                    Label qs = new Label();
+                    qs.TextAlign = ContentAlignment.MiddleCenter;
+                    qs.Text = "期数";
+                    //circleLabel.ForeColor = Color.White;
+                    qs.Size = new Size(20, 20);
+                    tableLayoutPanel.Controls.Add(qs, cc, rows);
+                    continue;
+                }
+                Panel panel = new Panel();
+                panel.Size = new Size(20, 20);
+                panel.Name = "0_" + rows.ToString() + "_" + cc.ToString();
+                panel.Click += new System.EventHandler(this.lblFunc_Click);
+                tableLayoutPanel.Controls.Add(panel, cc, rows);
+
+                CircleLabel circleLabel = new CircleLabel();
+                //circleLabel.BorderStyle = BorderStyle.FixedSingle;
+                //circleLabel.BackColor = Color.Red;
+                //label.Dock = DockStyle.Fill;
+                circleLabel.TextAlign = ContentAlignment.MiddleCenter;
+                circleLabel.txt = (cc -1).ToString();
+                //circleLabel.Text = cc.ToString();
+                //circleLabel.ForeColor = Color.White;
+                circleLabel.AutoSize = false;
+                circleLabel.Size = new Size(20, 20);
+                circleLabel.ForeColor = Color.White;
+                circleLabel.Name = rows.ToString()+"_" + cc.ToString();
+                circleLabel.Click += new System.EventHandler(this.lblFunc_Click);
+                circleLabel.Visible = false;
+                panel.Controls.Add(circleLabel);
+
+            }
+
+            //tableLayoutPanel.Dock = DockStyle.Fill;
+            tableLayoutPanel.ResumeLayout();
+            panel31.Controls.Add(tableLayoutPanel);
+            tableDisplay = true;
+            //panel31.Size = new Size(600, 260);
+        }
+
+        private Color GetBallColor(int row, int column)
+        {
+            // 根据行列号和具体规则返回对应颜色
+            // 示例中简单返回红色和蓝色
+            if (row < 2)
+                return Color.Red;
+            else if (column < 3)
+                return Color.Blue;
+            else
+                return Color.White;
+        }
+
+        int 展示期数 = 100;
+        private void button15_Click_1(object sender, EventArgs e)
+        {
+            DoubleColorBallTrajectoryForm(展示期数);
+        }
+
+        private void button16_Click(object sender, EventArgs e)
+        {
+
+            for (int j = 0; j < tableLayoutPanel.ColumnCount; j++)
+            {
+                int lh = 1;
+                for (int i = 1; i < 展示期数; i++)
+                {
+                    
+                    Control control = tableLayoutPanel.GetControlFromPosition(j, i);
+
+                    if (control is Label label)
+                    {
+                        string type = label.GetType().ToString();
+                        if (type.IndexOf("CircleLabel") == -1 && label.Text == "")
+                        {
+                            // Label nlabel = new Label();
+                            label.ForeColor = Color.LightSlateGray;
+                            label.Name = "R" + j.ToString() + "_" + i.ToString();
+                            label.Text = lh.ToString();
+                            label.TextAlign = ContentAlignment.MiddleCenter;
+                            lh++;
+                            //tableLayoutPanel.Controls.Add(nlabel, j, i);
+                        }else { lh = 1; }
+                    }
+                }
+            }
+           
         }
         #region 获取表中所有列名
         public static string[] GetTableColumnName(DataTable dt)
