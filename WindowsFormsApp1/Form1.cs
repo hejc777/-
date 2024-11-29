@@ -285,6 +285,7 @@ namespace WindowsFormsApp1
             {3,9,14,29,32,33,15},
             {1,2,13,16,17,29,16},
             {1,6,12,17,23,25,4},
+            {6,11,12,27,29,30,13 },
             {2,3,6,7,16,26,4},
             {5,9,14,21,22,26,12},
             {1,4,6,14,17,22,8},
@@ -4078,51 +4079,79 @@ namespace WindowsFormsApp1
         /// <param name="rows">需要开奖的期数</param>
         public void DoubleColorBallTrajectoryForm(int rows)
         {
-            int 列数 = 36;
+            int 列数 = 36+3+16;//3行合值:奇偶:012 16行蓝球
             int 期数 = 2024137;
             tableLayoutPanel = new TableLayoutPanel();
             tableLayoutPanel.ColumnCount = 列数;
-            tableLayoutPanel.RowCount = rows +1;
+            tableLayoutPanel.RowCount = rows +2;
             tableLayoutPanel.CellBorderStyle = TableLayoutPanelCellBorderStyle.Single;
             tableLayoutPanel.Resize += new System.EventHandler(this.tableLayoutPanel_resize);
-            tableLayoutPanel.Width = 22 * (列数+7);
+            tableLayoutPanel.Width = 22 * (列数+13);
             tableLayoutPanel.Height = 22 * (rows+3);
             tableLayoutPanel.AutoScroll = false;
 
 
-            tableLayoutPanel.GetType()
-                .GetProperty("DoubleBuffered", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)
-                .SetValue(tableLayoutPanel, true, null);
+            //tableLayoutPanel.GetType()
+            //    .GetProperty("DoubleBuffered", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)
+            //    .SetValue(tableLayoutPanel, true, null);
             tableLayoutPanel.SuspendLayout();
+            int 蓝号 = 1;
             for (int cc = 1; cc < 列数; cc++)
             {
+                string 显示编号="";
                 if(cc == 1)
                 {
                     Label qs = new Label();
                     qs.TextAlign = ContentAlignment.MiddleCenter;
                     qs.Text = "期数";
-                    //circleLabel.ForeColor = Color.White;
                     qs.Size = new Size(50, 20);
                     tableLayoutPanel.Controls.Add(qs, cc, 0);
                     continue;
                 }
-
+                if (cc == 35)
+                {
+                    Label qs = new Label();
+                    qs.TextAlign = ContentAlignment.MiddleCenter;
+                    qs.Text = "合值";
+                    qs.Size = new Size(30, 20);
+                    tableLayoutPanel.Controls.Add(qs, cc, 0);
+                    continue;
+                }
+                if (cc == 36)
+                {
+                    Label qs = new Label();
+                    qs.TextAlign = ContentAlignment.MiddleCenter;
+                    qs.Text = "奇偶";
+                    qs.Size = new Size(30, 20);
+                    tableLayoutPanel.Controls.Add(qs, cc, 0);
+                    continue;
+                }
+                if (cc == 37)
+                {
+                    Label qs = new Label();
+                    qs.TextAlign = ContentAlignment.MiddleCenter;
+                    qs.Text = "012L";
+                    qs.Size = new Size(40, 20);
+                    tableLayoutPanel.Controls.Add(qs, cc, 0);
+                    continue;
+                }else if (cc>37 && cc<54)
+                {
+                    显示编号 = (蓝号++).ToString();
+                }else { 显示编号 = (cc - 1).ToString(); }
                 Label circleLabel = new Label();
-                //circleLabel.BorderStyle = BorderStyle.FixedSingle;
-                //circleLabel.BackColor = Color.Red;
-                //label.Dock = DockStyle.Fill;
                 circleLabel.TextAlign = ContentAlignment.MiddleCenter;
-                circleLabel.Text =( cc -1).ToString();
-                //circleLabel.ForeColor = Color.White;
+                circleLabel.Text = 显示编号.ToString();
                 circleLabel.Size = new Size(20, 20);
                 tableLayoutPanel.Controls.Add(circleLabel, cc, 0);
             }
 
 
             期数 = 期数 - rows;
-            for (int i = 1; i < rows  ; i++)
+            for (int i = 1; i < rows +1 ; i++)
             {
                 Application.DoEvents();
+                期数 = 期数 + 1;
+                List<int> red = new List<int>();
                 for (int j = 1; j < 列数; j++)
                 {
                     int qs = (rows ) - i;
@@ -4130,7 +4159,7 @@ namespace WindowsFormsApp1
                     {
                         Label 期数内容 = new Label();
                         期数内容.TextAlign = ContentAlignment.MiddleCenter;
-                        期数内容.Text =(期数 + i ).ToString();
+                        期数内容.Text =(期数).ToString();
                         //circleLabel.ForeColor = Color.White;
                         期数内容.Size = new Size(50, 20);
                         tableLayoutPanel.Controls.Add(期数内容, j, i);
@@ -4141,28 +4170,67 @@ namespace WindowsFormsApp1
                         || hm10[qs, 5] == j -1 )
                     {
                         CircleLabel circleLabel = new CircleLabel();
-                        //circleLabel.BorderStyle = BorderStyle.FixedSingle;
-                        //circleLabel.BackColor = Color.Red;
                         circleLabel.AutoSize = false;
-                        //label.Dock = DockStyle.Fill;
                         circleLabel.TextAlign = ContentAlignment.MiddleCenter;
-                        //circleLabel.Text = j.ToString();
                         circleLabel.txt = (j - 1).ToString();
                         circleLabel.ForeColor = Color.White;
                         circleLabel.Size = new Size(20, 20);
                         circleLabel.Name = "" + i.ToString() + "_" + j.ToString();
                         circleLabel.Font = new Font(circleLabel.Font, FontStyle.Bold);
-
+                        red.Add(j - 1);
                         tableLayoutPanel.Controls.Add(circleLabel, j, i);
                     }
-                    else {
+                    else 
+                    if (j==35)
+                    {
+                        int redsum = 0;
+                        foreach(int v in red)
+                        {
+                            redsum = redsum + v;
+                        }
                         Label circleLabel = new Label();
-                        //circleLabel.BorderStyle = BorderStyle.FixedSingle;
-                        //circleLabel.BackColor = Color.Red;
-                        //label.Dock = DockStyle.Fill;
-                        //circleLabel.TextAlign = ContentAlignment.MiddleCenter;
-                        ////circleLabel.Text = j.ToString();
-                        //circleLabel.ForeColor = Color.White;
+                        circleLabel.Text = redsum.ToString();
+                        circleLabel.TextAlign = ContentAlignment.MiddleCenter;
+                        circleLabel.ForeColor = Color.DarkSlateBlue;
+                        circleLabel.Size = new Size(30, 20);
+                        tableLayoutPanel.Controls.Add(circleLabel, j, i);
+                    }
+                    else if (j == 36)
+                    {
+                        int js = 0;
+                        int os = 0;
+                        foreach (int v in red)
+                        {
+                            if (v % 2 == 0) os++; else js++;
+                        }
+                        Label circleLabel = new Label();
+                        circleLabel.Text = js.ToString() + ":" + os.ToString();
+                        circleLabel.TextAlign = ContentAlignment.MiddleCenter;
+                        circleLabel.ForeColor = Color.DarkSlateBlue;
+                        circleLabel.Size = new Size(30, 20);
+                        tableLayoutPanel.Controls.Add(circleLabel, j, i);
+                    }
+                    else if (j == 37)
+                    {
+                        int 余0 = 0;
+                        int 余1 = 0;
+                        int 余2 = 0;
+                        foreach (int v in red)
+                        {
+                            if (v % 3 == 0) 余0++;
+                            if (v % 3 == 1) 余1++;
+                            if (v % 3 == 2) 余2++;
+                        }
+                        Label circleLabel = new Label();
+                        circleLabel.Text = 余0.ToString() + ":" + 余1.ToString() + ":" + 余2.ToString();
+                        circleLabel.TextAlign = ContentAlignment.MiddleCenter;
+                        circleLabel.ForeColor = Color.DarkSlateBlue;
+                        circleLabel.Size = new Size(40, 20);
+                        tableLayoutPanel.Controls.Add(circleLabel, j, i);
+                    }
+                    else 
+                    {
+                        Label circleLabel = new Label();
                         circleLabel.Name = "" + i.ToString() + "_" + j.ToString();
                         circleLabel.Size = new Size(20, 20);
                         tableLayoutPanel.Controls.Add(circleLabel, j, i); 
@@ -4177,26 +4245,20 @@ namespace WindowsFormsApp1
                 {
                     Label qs = new Label();
                     qs.TextAlign = ContentAlignment.MiddleCenter;
-                    qs.Text = "期数";
-                    //circleLabel.ForeColor = Color.White;
-                    qs.Size = new Size(20, 20);
-                    tableLayoutPanel.Controls.Add(qs, cc, rows);
+                    qs.Text = "自选列";
+                    qs.Size = new Size(50, 20);
+                    tableLayoutPanel.Controls.Add(qs, cc, rows+2);
                     continue;
                 }
                 Panel panel = new Panel();
                 panel.Size = new Size(20, 20);
                 panel.Name = "0_" + rows.ToString() + "_" + cc.ToString();
                 panel.Click += new System.EventHandler(this.lblFunc_Click);
-                tableLayoutPanel.Controls.Add(panel, cc, rows);
+                tableLayoutPanel.Controls.Add(panel, cc, rows+2);
 
                 CircleLabel circleLabel = new CircleLabel();
-                //circleLabel.BorderStyle = BorderStyle.FixedSingle;
-                //circleLabel.BackColor = Color.Red;
-                //label.Dock = DockStyle.Fill;
                 circleLabel.TextAlign = ContentAlignment.MiddleCenter;
                 circleLabel.txt = (cc -1).ToString();
-                //circleLabel.Text = cc.ToString();
-                //circleLabel.ForeColor = Color.White;
                 circleLabel.AutoSize = false;
                 circleLabel.Size = new Size(20, 20);
                 circleLabel.ForeColor = Color.White;
@@ -4207,7 +4269,6 @@ namespace WindowsFormsApp1
 
             }
 
-            //tableLayoutPanel.Dock = DockStyle.Fill;
             tableLayoutPanel.ResumeLayout();
             panel31.Controls.Add(tableLayoutPanel);
             tableDisplay = true;
@@ -4238,7 +4299,7 @@ namespace WindowsFormsApp1
             for (int j = 0; j < tableLayoutPanel.ColumnCount; j++)
             {
                 int lh = 1;
-                for (int i = 1; i < 展示期数; i++)
+                for (int i = 1; i < 展示期数+1; i++)
                 {
                     
                     Control control = tableLayoutPanel.GetControlFromPosition(j, i);
