@@ -3997,6 +3997,7 @@ namespace WindowsFormsApp1
         {
             public string txt = "0";
             public string name = "";
+            public int 颜色 = 1;
             
             protected override void OnPaint(PaintEventArgs e)
             {
@@ -4006,7 +4007,7 @@ namespace WindowsFormsApp1
                 g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
 
                 // 绘制圆形背景
-                g.FillEllipse(Brushes.Red, 0, 0, this.Width, this.Height);
+                g.FillEllipse(颜色==1?Brushes.Red:Brushes.Blue, 0, 0, this.Width, this.Height);
 
                 // 绘制文本
                 StringFormat format = new StringFormat();
@@ -4086,7 +4087,7 @@ namespace WindowsFormsApp1
             tableLayoutPanel.RowCount = rows +2;
             tableLayoutPanel.CellBorderStyle = TableLayoutPanelCellBorderStyle.Single;
             tableLayoutPanel.Resize += new System.EventHandler(this.tableLayoutPanel_resize);
-            tableLayoutPanel.Width = 22 * (列数+13);
+            tableLayoutPanel.Width = 22 * (列数+13) + 5;
             tableLayoutPanel.Height = 22 * (rows+3);
             tableLayoutPanel.AutoScroll = false;
 
@@ -4227,6 +4228,21 @@ namespace WindowsFormsApp1
                         circleLabel.ForeColor = Color.DarkSlateBlue;
                         circleLabel.Size = new Size(40, 20);
                         tableLayoutPanel.Controls.Add(circleLabel, j, i);
+                    }else if (j > 37 && j < 54)
+                    {
+                        if (hm10[qs, 6] == j - 37)
+                        {
+                            CircleLabel circleLabel = new CircleLabel();
+                            circleLabel.AutoSize = false;
+                            circleLabel.TextAlign = ContentAlignment.MiddleCenter;
+                            circleLabel.txt = (j - 37).ToString();
+                            circleLabel.ForeColor = Color.White;
+                            circleLabel.颜色 = 0;
+                            circleLabel.Size = new Size(20, 20);
+                            circleLabel.Name = "" + i.ToString() + "_" + j.ToString();
+                            circleLabel.Font = new Font(circleLabel.Font, FontStyle.Bold);
+                            tableLayoutPanel.Controls.Add(circleLabel, j, i);
+                        }
                     }
                     else 
                     {
