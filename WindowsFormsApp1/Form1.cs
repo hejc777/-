@@ -63,9 +63,9 @@ namespace WindowsFormsApp1
         DataTable dt3 = new DataTable();
         DataTable dt4 = new DataTable();
 
-        int 热码数量 = 3;
+        int 热码数量 = 2;
         int 温码数量 = 1;
-        int 冷码数量 = 2;
+        int 冷码数量 = 3;
         int iiReadRec = 0; //读取记录数
         int sumRec = 0;    //合值
         double iiCount = 0; //所有生成数据量
@@ -228,6 +228,7 @@ namespace WindowsFormsApp1
 
         int[,] hm10 = new int[,]
         {
+            {2,7,11,21,27,28,2 },
             {4,9,10,19,26,27,12 },
             {3,11,15,21,25,26,3 },
             {5,11,17,18,30,31,13 },
@@ -730,7 +731,6 @@ namespace WindowsFormsApp1
 
 
             Control.CheckForIllegalCrossThreadCalls = false;
-            userControl17.unbuttonbackcolor();
             //tableLayoutPanel.GetType().GetProperty("DoubleBuffered", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).SetValue(tableLayoutPanel1, true, null);
             //创建数据列号码①②③④⑤⑥⑦
             dt.Columns.Add("num1", typeof(string));
@@ -785,32 +785,6 @@ namespace WindowsFormsApp1
 
         Boolean timeEnd = true;
 
-
-        private void undisplay(int i, string vdisplay)
-        {
-            switch (i)
-            {
-                case 0:
-                    userControl11.unbuttontext = vdisplay;
-                    break;
-                case 1:
-                    userControl12.unbuttontext = vdisplay;
-                    break;
-                case 2:
-                    userControl13.unbuttontext = vdisplay;
-                    break;
-                case 3:
-                    userControl14.unbuttontext = vdisplay;
-                    break;
-                case 4:
-                    userControl15.unbuttontext = vdisplay;
-                    break;
-                case 5:
-                    userControl16.unbuttontext = vdisplay;
-                    break;
-
-            }
-        }
 
         static int GetRandomSeed()
         {
@@ -2063,13 +2037,14 @@ namespace WindowsFormsApp1
                 //int[] tmp1 = { 2, 6, 8, 10, 12, 16, 18, 20, 21, 24, 26, 27, 29 };
                 //int[] tmp2 = { 3,4,7,11,12,15,17,24,27,29,30,33 };  //12码
 
-                
 
 
+
+                //
                 //int[] tmp3 = { 01, 04, 09, 10, 11, 18, 19, 20, 25, 28, 32, 33 };//12码
+                int[] tmp3 = 号码资源.ToArray();
 
-
-                int[] tmp3 = { 1, 2, 3, 4, 5,6, 7, 8,9, 10,11,12, 13, 14, 15,16, 17, 18, 19, 20,21, 22, 23, 24, 25, 26, 27,28, 29, 30, 31,32, 33 };  //24号中一等奖一期
+                //int[] tmp3 = { 1, 2, 3, 4, 5,6, 7, 8,9, 10,11,12, 13, 14, 15,16, 17, 18, 19, 20,21, 22, 23, 24, 25, 26, 27,28, 29, 30, 31,32, 33 };  //24号中一等奖一期
                 ibTrue = Fzpcf(iirows, tmp3, 4, 6);
                 if (ibTrue == false) cgcs++; else ibTrueInfo += "[12码未通过]";
 
@@ -2135,8 +2110,8 @@ namespace WindowsFormsApp1
                         double.Parse(hm10[0,6].ToString()),
                     };
                     
-                    //if (decimal_mysumresult > OK_myMIN && decimal_mysumresult < OK_myMAX)
-                    if (true)
+                    if (decimal_mysumresult > OK_myMIN && decimal_mysumresult < OK_myMAX)
+                    //if (true)
                     {
                         //ibTrue = true;
                         //int[] xm = { 1, 7, 14, 15, 16, 27, 28, 32, 33 };
@@ -2174,7 +2149,7 @@ namespace WindowsFormsApp1
                         //if (Fzpcf(iirows, xm1[2], 1, 6) == false) result++;
                         //if (Fzpcf(iirows, xm1[3], 1, 6) == false) result++;
 
-                        if (AreApproxEqual(kjnum,currentNum,10.8)== true) { result++; }
+                        if (AreApproxEqual(kjnum,currentNum,12.8)== true) { result++; }
 
                         //判断:一组号码里有1-2个的热码，否则，取消
                         if (热温冷码判断(iirows, 热码.ToArray(), 热码数量, 6) == false) { result++; } else { ibTrueInfo += "[热码数量不足]"; }
@@ -2197,7 +2172,7 @@ namespace WindowsFormsApp1
                         //if (QueueString(iirows) < 2) result++;
 
                         //号码相似度规则判断，用的规则表
-                        //if (hmxsdArray(iirows, hmxsd, 5, int.Parse(cxcs.Text.ToString()), 6) == true) { result++; } else { ibTrueInfo += "号码相似度验证失败."; }
+                        if (hmxsdArray(iirows, hmxsd, 5, int.Parse(cxcs.Text.ToString()), 6) == true) { result++; } else { ibTrueInfo += "号码相似度验证失败."; }
 
                         //if (Fzpcf(iirows, left5w, 1, 6) == false) result++;   //前五位出现机率至少1个号码
                         //if (Fzpcf(iirows, right5w, 1, 6) == false) result++;  //后五位出现机率至少1个号码 
@@ -2206,7 +2181,7 @@ namespace WindowsFormsApp1
                         //if (hmsum > 70 && hmsum < 110) result++;
 
                         zjhmgz(string.Join(",", iirows), ibTrueInfo);
-                        if (result == 4) ibTrue = true; else ibTrue = false;
+                        if (result == 5) ibTrue = true; else ibTrue = false;
 
 
 
@@ -2727,7 +2702,7 @@ namespace WindowsFormsApp1
                         for (int c = 0; c < 6; c++) iirow1[c] = int.Parse(dt_save1.Rows[ii][c].ToString());
 
                         //if (NumberSimilarityComparer.GetSimilarityWith(iirow,iirow1) * 100 >= 60)
-                        if (iirow.Intersect(iirow1).Count() >= 4) //两个数组间有四个相同则删除
+                        if (iirow.Intersect(iirow1).Count() >= 5) //两个数组间有四个相同则删除
                         {
                             dt_save1.Rows[ii].Delete();
                         }
@@ -4057,6 +4032,7 @@ namespace WindowsFormsApp1
                 .SetValue(tableLayoutPanel, true, null);
         }
 
+        List<int> 号码资源 = new List<int>();
         private void lblFunc_Click(object sender, EventArgs e)
         {
             Control pnl = (Control)sender;
@@ -4067,13 +4043,22 @@ namespace WindowsFormsApp1
                 string[] st1 = pnl.Name.Split('_');
                 Control nl =  getControlFromName(pnl, st1[1].ToString() + "_" + st1[2].ToString());
                 nl.Visible = true;
+                //添加号码
+                号码资源.Add(int.Parse(st1[2]) -1);
             }else
             {
                 CircleLabel lbl = (CircleLabel)sender;
                 string[] st = lbl.Name.Split('_');
                 lbl.Visible = lbl.Visible == false ? true : false;
+                //删除号码
+                foreach(int v in 号码资源)
+                {
+                    if (v == int.Parse(st[1]) -1) { 号码资源.Remove(v); break; }
+                }
+
             }
         }
+
         /// <summary>
         /// 构造双色球开奖展示牌
         /// </summary>
@@ -4090,7 +4075,6 @@ namespace WindowsFormsApp1
             tableLayoutPanel.Width = 22 * (列数+13) + 5;
             tableLayoutPanel.Height = 22 * (rows+3);
             tableLayoutPanel.AutoScroll = false;
-
 
             //tableLayoutPanel.GetType()
             //    .GetProperty("DoubleBuffered", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)
@@ -4239,8 +4223,20 @@ namespace WindowsFormsApp1
                             circleLabel.ForeColor = Color.White;
                             circleLabel.颜色 = 0;
                             circleLabel.Size = new Size(20, 20);
-                            circleLabel.Name = "" + i.ToString() + "_" + j.ToString();
+                            circleLabel.Name = "B" + i.ToString() + "_" + j.ToString();
                             circleLabel.Font = new Font(circleLabel.Font, FontStyle.Bold);
+                            
+                            蓝号数组.Add(circleLabel);
+                            tableLayoutPanel.Controls.Add(circleLabel, j, i);
+
+                        }
+                        else
+                        {
+                            Label circleLabel = new Label();
+                            circleLabel.Name = "" + i.ToString() + "_" + j.ToString();
+                            circleLabel.AutoSize = false;
+                            circleLabel.Size = new Size(20, 20);
+                            circleLabel.Enabled = false;
                             tableLayoutPanel.Controls.Add(circleLabel, j, i);
                         }
                     }
@@ -4274,6 +4270,12 @@ namespace WindowsFormsApp1
 
                 CircleLabel circleLabel = new CircleLabel();
                 circleLabel.TextAlign = ContentAlignment.MiddleCenter;
+                if (cc > 37 && cc < 54)
+                {
+                    circleLabel.颜色 = 0;
+                    circleLabel.txt = (cc - 37).ToString();
+                }
+                else 
                 circleLabel.txt = (cc -1).ToString();
                 circleLabel.AutoSize = false;
                 circleLabel.Size = new Size(20, 20);
@@ -4284,12 +4286,70 @@ namespace WindowsFormsApp1
                 panel.Controls.Add(circleLabel);
 
             }
-
+           
             tableLayoutPanel.ResumeLayout();
             panel31.Controls.Add(tableLayoutPanel);
+
+            tableLayoutPanel.Paint += new PaintEventHandler(panel_Paint);
             tableDisplay = true;
             //panel31.Size = new Size(600, 260);
         }
+
+        /// <summary>
+        /// 绘制连线
+        /// </summary>
+        /// <param name="startBox"></param>
+        /// <param name="endBox"></param>
+        private void DrawLine(CircleLabel startBox, CircleLabel endBox)
+        {
+
+
+            using (Graphics g = panel31.CreateGraphics())
+            {
+                Pen pen = new Pen(Color.Blue, 1.5f);
+                pen.DashStyle = System.Drawing.Drawing2D.DashStyle.Solid;
+
+                float x1 = startBox.Location.X + startBox.Width / 2;
+                float y1 = startBox.Location.Y + startBox.Height / 2;
+                float x2 = endBox.Location.X + endBox.Width / 2;
+                float y2 = endBox.Location.Y + endBox.Height / 2;
+
+                g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+                g.DrawLine(pen, x1, y1, x2, y2);
+                g.Dispose();
+            }
+        }
+
+        private void panel_Paint(object sender, PaintEventArgs e)
+        {
+            //Graphics g = e.Graphics;
+            //g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+
+            //// 绘制一条斜直线
+            //Pen pen = new Pen(Color.Black, 2);
+            //g.DrawLine(pen, 10, 10, 100, 100);
+            for (int i = 0; i < 蓝号数组.Count; i++)
+            {
+                if (i > 0)
+                {
+                    Graphics g = e.Graphics;
+                    g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+
+                    // 绘制一条斜直线
+                    Pen pen = new Pen(Color.Red, 2);
+                    float x1 = 蓝号数组[i - 1].Location.X + 蓝号数组[i - 1].Width / 2;
+                    float y1 = 蓝号数组[i - 1].Location.Y + 蓝号数组[i - 1].Height / 2;
+                    float x2 = 蓝号数组[i].Location.X + 蓝号数组[i].Width / 2;
+                    float y2 = 蓝号数组[i].Location.Y + 蓝号数组[i].Height / 2;
+
+
+                    g.DrawLine(pen, x1, y1, x2, y2);
+                    //g.Dispose();
+                    //DrawLine(蓝号数组[i - 1], 蓝号数组[i]);
+                }
+            }
+        }
+
 
         private Color GetBallColor(int row, int column)
         {
@@ -4303,7 +4363,8 @@ namespace WindowsFormsApp1
                 return Color.White;
         }
 
-        int 展示期数 = 100;
+        public int 展示期数 = 50;
+        List<CircleLabel> 蓝号数组 = new List<CircleLabel>();
         private void button15_Click_1(object sender, EventArgs e)
         {
             DoubleColorBallTrajectoryForm(展示期数);
@@ -4315,29 +4376,45 @@ namespace WindowsFormsApp1
             for (int j = 0; j < tableLayoutPanel.ColumnCount; j++)
             {
                 int lh = 1;
-                for (int i = 1; i < 展示期数+1; i++)
+                for (int i = 1; i < 展示期数 + 1; i++)
                 {
-                    
-                    Control control = tableLayoutPanel.GetControlFromPosition(j, i);
 
+                    Control control = tableLayoutPanel.GetControlFromPosition(j, i);
                     if (control is Label label)
                     {
                         string type = label.GetType().ToString();
+                        if (label.Name.ToString() != "")
+                        {
+                            if (label.Name.Substring(0, 1) == "R")
+                            {
+                                label.Name = j.ToString() + "_" + i.ToString();
+                                label.Text = "";
+                                continue;
+                            }
+                        }
                         if (type.IndexOf("CircleLabel") == -1 && label.Text == "")
                         {
-                            // Label nlabel = new Label();
+
                             label.ForeColor = Color.LightSlateGray;
                             label.Name = "R" + j.ToString() + "_" + i.ToString();
                             label.Text = lh.ToString();
                             label.TextAlign = ContentAlignment.MiddleCenter;
                             lh++;
                             //tableLayoutPanel.Controls.Add(nlabel, j, i);
-                        }else { lh = 1; }
+                        }
+                        else { lh = 1; }
                     }
                 }
+                
             }
            
         }
+
+        private void button17_Click(object sender, EventArgs e)
+        {
+
+        }
+
         #region 获取表中所有列名
         public static string[] GetTableColumnName(DataTable dt)
         {

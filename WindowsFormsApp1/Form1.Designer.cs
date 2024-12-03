@@ -38,13 +38,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.userControl17 = new WindowsFormsApp1.UserControl1();
-            this.userControl16 = new WindowsFormsApp1.UserControl1();
-            this.userControl15 = new WindowsFormsApp1.UserControl1();
-            this.userControl14 = new WindowsFormsApp1.UserControl1();
-            this.userControl13 = new WindowsFormsApp1.UserControl1();
-            this.userControl12 = new WindowsFormsApp1.UserControl1();
-            this.userControl11 = new WindowsFormsApp1.UserControl1();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.panel2 = new System.Windows.Forms.Panel();
@@ -237,6 +230,7 @@
             this.tabPage10 = new System.Windows.Forms.TabPage();
             this.panel31 = new System.Windows.Forms.Panel();
             this.panel30 = new System.Windows.Forms.Panel();
+            this.button17 = new System.Windows.Forms.Button();
             this.button16 = new System.Windows.Forms.Button();
             this.button15 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
@@ -295,19 +289,12 @@
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.button1);
             this.panel1.Controls.Add(this.textBox1);
-            this.panel1.Controls.Add(this.userControl17);
-            this.panel1.Controls.Add(this.userControl16);
-            this.panel1.Controls.Add(this.userControl15);
-            this.panel1.Controls.Add(this.userControl14);
-            this.panel1.Controls.Add(this.userControl13);
-            this.panel1.Controls.Add(this.userControl12);
-            this.panel1.Controls.Add(this.userControl11);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Font = new System.Drawing.Font("宋体", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.panel1.ForeColor = System.Drawing.Color.White;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1128, 111);
+            this.panel1.Size = new System.Drawing.Size(872, 116);
             this.panel1.TabIndex = 0;
             // 
             // label7
@@ -392,69 +379,6 @@
             this.textBox1.TabIndex = 0;
             this.textBox1.Text = "5";
             // 
-            // userControl17
-            // 
-            this.userControl17.Location = new System.Drawing.Point(372, 24);
-            this.userControl17.Margin = new System.Windows.Forms.Padding(156, 96, 156, 96);
-            this.userControl17.Name = "userControl17";
-            this.userControl17.Size = new System.Drawing.Size(43, 46);
-            this.userControl17.TabIndex = 7;
-            this.userControl17.unbuttontext = "0";
-            // 
-            // userControl16
-            // 
-            this.userControl16.Location = new System.Drawing.Point(282, 24);
-            this.userControl16.Margin = new System.Windows.Forms.Padding(72, 48, 72, 48);
-            this.userControl16.Name = "userControl16";
-            this.userControl16.Size = new System.Drawing.Size(43, 46);
-            this.userControl16.TabIndex = 5;
-            this.userControl16.unbuttontext = "0";
-            // 
-            // userControl15
-            // 
-            this.userControl15.Location = new System.Drawing.Point(228, 24);
-            this.userControl15.Margin = new System.Windows.Forms.Padding(72, 48, 72, 48);
-            this.userControl15.Name = "userControl15";
-            this.userControl15.Size = new System.Drawing.Size(43, 46);
-            this.userControl15.TabIndex = 4;
-            this.userControl15.unbuttontext = "0";
-            // 
-            // userControl14
-            // 
-            this.userControl14.Location = new System.Drawing.Point(171, 24);
-            this.userControl14.Margin = new System.Windows.Forms.Padding(72, 48, 72, 48);
-            this.userControl14.Name = "userControl14";
-            this.userControl14.Size = new System.Drawing.Size(43, 46);
-            this.userControl14.TabIndex = 3;
-            this.userControl14.unbuttontext = "0";
-            // 
-            // userControl13
-            // 
-            this.userControl13.Location = new System.Drawing.Point(118, 24);
-            this.userControl13.Margin = new System.Windows.Forms.Padding(33, 24, 33, 24);
-            this.userControl13.Name = "userControl13";
-            this.userControl13.Size = new System.Drawing.Size(43, 46);
-            this.userControl13.TabIndex = 2;
-            this.userControl13.unbuttontext = "0";
-            // 
-            // userControl12
-            // 
-            this.userControl12.Location = new System.Drawing.Point(67, 24);
-            this.userControl12.Margin = new System.Windows.Forms.Padding(15, 12, 15, 12);
-            this.userControl12.Name = "userControl12";
-            this.userControl12.Size = new System.Drawing.Size(43, 46);
-            this.userControl12.TabIndex = 1;
-            this.userControl12.unbuttontext = "0";
-            // 
-            // userControl11
-            // 
-            this.userControl11.Location = new System.Drawing.Point(16, 24);
-            this.userControl11.Margin = new System.Windows.Forms.Padding(7, 6, 7, 6);
-            this.userControl11.Name = "userControl11";
-            this.userControl11.Size = new System.Drawing.Size(43, 46);
-            this.userControl11.TabIndex = 0;
-            this.userControl11.unbuttontext = "0";
-            // 
             // imageList1
             // 
             this.imageList1.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
@@ -471,7 +395,7 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel2.Location = new System.Drawing.Point(0, 504);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1128, 43);
+            this.panel2.Size = new System.Drawing.Size(872, 43);
             this.panel2.TabIndex = 1;
             // 
             // tableLayoutPanel1
@@ -492,7 +416,7 @@
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1128, 43);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(872, 43);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // progressBarX5
@@ -502,9 +426,9 @@
             // 
             this.progressBarX5.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.progressBarX5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.progressBarX5.Location = new System.Drawing.Point(453, 3);
+            this.progressBarX5.Location = new System.Drawing.Point(351, 3);
             this.progressBarX5.Name = "progressBarX5";
-            this.progressBarX5.Size = new System.Drawing.Size(219, 37);
+            this.progressBarX5.Size = new System.Drawing.Size(168, 37);
             this.progressBarX5.TabIndex = 4;
             this.progressBarX5.Text = "0/0";
             this.progressBarX5.TextVisible = true;
@@ -516,9 +440,9 @@
             // 
             this.progressBarX4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.progressBarX4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.progressBarX4.Location = new System.Drawing.Point(228, 3);
+            this.progressBarX4.Location = new System.Drawing.Point(177, 3);
             this.progressBarX4.Name = "progressBarX4";
-            this.progressBarX4.Size = new System.Drawing.Size(219, 37);
+            this.progressBarX4.Size = new System.Drawing.Size(168, 37);
             this.progressBarX4.TabIndex = 3;
             this.progressBarX4.Text = "0/0";
             this.progressBarX4.TextVisible = true;
@@ -530,9 +454,9 @@
             // 
             this.progressBarX3.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.progressBarX3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.progressBarX3.Location = new System.Drawing.Point(903, 3);
+            this.progressBarX3.Location = new System.Drawing.Point(699, 3);
             this.progressBarX3.Name = "progressBarX3";
-            this.progressBarX3.Size = new System.Drawing.Size(222, 37);
+            this.progressBarX3.Size = new System.Drawing.Size(170, 37);
             this.progressBarX3.TabIndex = 2;
             this.progressBarX3.Text = "0/0";
             this.progressBarX3.TextVisible = true;
@@ -544,9 +468,9 @@
             // 
             this.progressBarX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.progressBarX2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.progressBarX2.Location = new System.Drawing.Point(678, 3);
+            this.progressBarX2.Location = new System.Drawing.Point(525, 3);
             this.progressBarX2.Name = "progressBarX2";
-            this.progressBarX2.Size = new System.Drawing.Size(219, 37);
+            this.progressBarX2.Size = new System.Drawing.Size(168, 37);
             this.progressBarX2.TabIndex = 1;
             this.progressBarX2.Text = "0/0";
             this.progressBarX2.TextVisible = true;
@@ -560,7 +484,7 @@
             this.progressBarX1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.progressBarX1.Location = new System.Drawing.Point(3, 3);
             this.progressBarX1.Name = "progressBarX1";
-            this.progressBarX1.Size = new System.Drawing.Size(219, 37);
+            this.progressBarX1.Size = new System.Drawing.Size(168, 37);
             this.progressBarX1.TabIndex = 0;
             this.progressBarX1.Text = "0/0";
             this.progressBarX1.TextVisible = true;
@@ -569,9 +493,9 @@
             // 
             this.panel3.Controls.Add(this.tabControl1);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel3.Location = new System.Drawing.Point(0, 111);
+            this.panel3.Location = new System.Drawing.Point(0, 116);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(1128, 393);
+            this.panel3.Size = new System.Drawing.Size(872, 388);
             this.panel3.TabIndex = 2;
             // 
             // tabControl1
@@ -590,7 +514,7 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1128, 393);
+            this.tabControl1.Size = new System.Drawing.Size(872, 388);
             this.tabControl1.TabIndex = 1;
             // 
             // tabPage1
@@ -599,7 +523,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(913, 374);
+            this.tabPage1.Size = new System.Drawing.Size(864, 362);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "生成数据";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -611,7 +535,7 @@
             this.dataGridView1.Location = new System.Drawing.Point(3, 3);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(907, 368);
+            this.dataGridView1.Size = new System.Drawing.Size(858, 356);
             this.dataGridView1.TabIndex = 0;
             // 
             // tabPage2
@@ -622,7 +546,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(913, 374);
+            this.tabPage2.Size = new System.Drawing.Size(864, 362);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "读取数据";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -633,7 +557,7 @@
             this.panel6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel6.Location = new System.Drawing.Point(3, 41);
             this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(907, 298);
+            this.panel6.Size = new System.Drawing.Size(858, 286);
             this.panel6.TabIndex = 2;
             // 
             // dataGridView2
@@ -643,15 +567,15 @@
             this.dataGridView2.Location = new System.Drawing.Point(0, 0);
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.RowTemplate.Height = 23;
-            this.dataGridView2.Size = new System.Drawing.Size(907, 298);
+            this.dataGridView2.Size = new System.Drawing.Size(858, 286);
             this.dataGridView2.TabIndex = 0;
             // 
             // panel5
             // 
             this.panel5.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel5.Location = new System.Drawing.Point(3, 339);
+            this.panel5.Location = new System.Drawing.Point(3, 327);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(907, 32);
+            this.panel5.Size = new System.Drawing.Size(858, 32);
             this.panel5.TabIndex = 1;
             // 
             // panel4
@@ -670,7 +594,7 @@
             this.panel4.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel4.Location = new System.Drawing.Point(3, 3);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(907, 38);
+            this.panel4.Size = new System.Drawing.Size(858, 38);
             this.panel4.TabIndex = 0;
             // 
             // button8
@@ -769,7 +693,7 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(913, 374);
+            this.tabPage3.Size = new System.Drawing.Size(864, 362);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "分析数据";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -780,7 +704,7 @@
             this.panel8.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel8.Location = new System.Drawing.Point(3, 88);
             this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(907, 283);
+            this.panel8.Size = new System.Drawing.Size(858, 271);
             this.panel8.TabIndex = 1;
             // 
             // dataGridView3
@@ -790,7 +714,7 @@
             this.dataGridView3.Location = new System.Drawing.Point(0, 0);
             this.dataGridView3.Name = "dataGridView3";
             this.dataGridView3.RowTemplate.Height = 23;
-            this.dataGridView3.Size = new System.Drawing.Size(907, 283);
+            this.dataGridView3.Size = new System.Drawing.Size(858, 271);
             this.dataGridView3.TabIndex = 0;
             // 
             // panel7
@@ -810,7 +734,7 @@
             this.panel7.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel7.Location = new System.Drawing.Point(3, 3);
             this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(907, 85);
+            this.panel7.Size = new System.Drawing.Size(858, 85);
             this.panel7.TabIndex = 0;
             // 
             // label6
@@ -1013,7 +937,7 @@
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(913, 374);
+            this.tabPage4.Size = new System.Drawing.Size(864, 362);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "tabPage4";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -1651,7 +1575,7 @@
             this.textBox17.Location = new System.Drawing.Point(3, 46);
             this.textBox17.Multiline = true;
             this.textBox17.Name = "textBox17";
-            this.textBox17.Size = new System.Drawing.Size(907, 325);
+            this.textBox17.Size = new System.Drawing.Size(858, 313);
             this.textBox17.TabIndex = 1;
             // 
             // panel9
@@ -1661,7 +1585,7 @@
             this.panel9.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel9.Location = new System.Drawing.Point(3, 3);
             this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(907, 43);
+            this.panel9.Size = new System.Drawing.Size(858, 43);
             this.panel9.TabIndex = 0;
             this.panel9.Paint += new System.Windows.Forms.PaintEventHandler(this.panel9_Paint);
             // 
@@ -1692,7 +1616,7 @@
             this.tabPage5.Location = new System.Drawing.Point(4, 22);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(913, 374);
+            this.tabPage5.Size = new System.Drawing.Size(864, 362);
             this.tabPage5.TabIndex = 4;
             this.tabPage5.Text = "tabPage5";
             this.tabPage5.UseVisualStyleBackColor = true;
@@ -1703,7 +1627,7 @@
             this.panel11.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel11.Location = new System.Drawing.Point(3, 75);
             this.panel11.Name = "panel11";
-            this.panel11.Size = new System.Drawing.Size(907, 296);
+            this.panel11.Size = new System.Drawing.Size(858, 284);
             this.panel11.TabIndex = 1;
             // 
             // dataGridView4
@@ -1713,7 +1637,7 @@
             this.dataGridView4.Location = new System.Drawing.Point(0, 0);
             this.dataGridView4.Name = "dataGridView4";
             this.dataGridView4.RowTemplate.Height = 23;
-            this.dataGridView4.Size = new System.Drawing.Size(907, 296);
+            this.dataGridView4.Size = new System.Drawing.Size(858, 284);
             this.dataGridView4.TabIndex = 0;
             this.dataGridView4.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dataGridView4_RowPostPaint);
             // 
@@ -1733,7 +1657,7 @@
             this.panel10.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel10.Location = new System.Drawing.Point(3, 3);
             this.panel10.Name = "panel10";
-            this.panel10.Size = new System.Drawing.Size(907, 72);
+            this.panel10.Size = new System.Drawing.Size(858, 72);
             this.panel10.TabIndex = 0;
             // 
             // textBox55
@@ -1839,7 +1763,7 @@
             this.tabPage6.Location = new System.Drawing.Point(4, 22);
             this.tabPage6.Name = "tabPage6";
             this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage6.Size = new System.Drawing.Size(913, 374);
+            this.tabPage6.Size = new System.Drawing.Size(864, 362);
             this.tabPage6.TabIndex = 5;
             this.tabPage6.Text = "综合分析";
             this.tabPage6.UseVisualStyleBackColor = true;
@@ -1851,7 +1775,7 @@
             this.panel14.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel14.Location = new System.Drawing.Point(3, 49);
             this.panel14.Name = "panel14";
-            this.panel14.Size = new System.Drawing.Size(907, 292);
+            this.panel14.Size = new System.Drawing.Size(858, 280);
             this.panel14.TabIndex = 2;
             // 
             // panel25
@@ -1860,7 +1784,7 @@
             this.panel25.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel25.Location = new System.Drawing.Point(362, 0);
             this.panel25.Name = "panel25";
-            this.panel25.Size = new System.Drawing.Size(545, 292);
+            this.panel25.Size = new System.Drawing.Size(496, 280);
             this.panel25.TabIndex = 2;
             // 
             // dataGridView5
@@ -1870,7 +1794,7 @@
             this.dataGridView5.Location = new System.Drawing.Point(0, 0);
             this.dataGridView5.Name = "dataGridView5";
             this.dataGridView5.RowTemplate.Height = 23;
-            this.dataGridView5.Size = new System.Drawing.Size(545, 292);
+            this.dataGridView5.Size = new System.Drawing.Size(496, 280);
             this.dataGridView5.TabIndex = 0;
             // 
             // panel24
@@ -1880,7 +1804,7 @@
             this.panel24.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel24.Location = new System.Drawing.Point(0, 0);
             this.panel24.Name = "panel24";
-            this.panel24.Size = new System.Drawing.Size(362, 292);
+            this.panel24.Size = new System.Drawing.Size(362, 280);
             this.panel24.TabIndex = 1;
             // 
             // panel27
@@ -1889,7 +1813,7 @@
             this.panel27.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel27.Location = new System.Drawing.Point(0, 155);
             this.panel27.Name = "panel27";
-            this.panel27.Size = new System.Drawing.Size(362, 137);
+            this.panel27.Size = new System.Drawing.Size(362, 125);
             this.panel27.TabIndex = 1;
             // 
             // listBox3
@@ -1899,7 +1823,7 @@
             this.listBox3.ItemHeight = 12;
             this.listBox3.Location = new System.Drawing.Point(0, 0);
             this.listBox3.Name = "listBox3";
-            this.listBox3.Size = new System.Drawing.Size(362, 137);
+            this.listBox3.Size = new System.Drawing.Size(362, 125);
             this.listBox3.TabIndex = 0;
             // 
             // panel26
@@ -1930,9 +1854,9 @@
             this.panel13.Controls.Add(this.button12);
             this.panel13.Controls.Add(this.label47);
             this.panel13.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel13.Location = new System.Drawing.Point(3, 341);
+            this.panel13.Location = new System.Drawing.Point(3, 329);
             this.panel13.Name = "panel13";
-            this.panel13.Size = new System.Drawing.Size(907, 30);
+            this.panel13.Size = new System.Drawing.Size(858, 30);
             this.panel13.TabIndex = 1;
             // 
             // cxcs
@@ -2001,7 +1925,7 @@
             this.panel12.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel12.Location = new System.Drawing.Point(3, 3);
             this.panel12.Name = "panel12";
-            this.panel12.Size = new System.Drawing.Size(907, 46);
+            this.panel12.Size = new System.Drawing.Size(858, 46);
             this.panel12.TabIndex = 0;
             // 
             // label49
@@ -2059,7 +1983,7 @@
             this.tabPage9.Location = new System.Drawing.Point(4, 22);
             this.tabPage9.Name = "tabPage9";
             this.tabPage9.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage9.Size = new System.Drawing.Size(913, 374);
+            this.tabPage9.Size = new System.Drawing.Size(864, 362);
             this.tabPage9.TabIndex = 8;
             this.tabPage9.Text = "预测下期号码";
             this.tabPage9.UseVisualStyleBackColor = true;
@@ -2071,7 +1995,7 @@
             this.panel29.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel29.Location = new System.Drawing.Point(3, 64);
             this.panel29.Name = "panel29";
-            this.panel29.Size = new System.Drawing.Size(907, 307);
+            this.panel29.Size = new System.Drawing.Size(858, 295);
             this.panel29.TabIndex = 1;
             // 
             // listBox4
@@ -2083,7 +2007,7 @@
             this.listBox4.ItemHeight = 12;
             this.listBox4.Location = new System.Drawing.Point(511, 0);
             this.listBox4.Name = "listBox4";
-            this.listBox4.Size = new System.Drawing.Size(396, 307);
+            this.listBox4.Size = new System.Drawing.Size(347, 295);
             this.listBox4.TabIndex = 1;
             this.listBox4.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listBox4_DrawItem);
             // 
@@ -2094,7 +2018,7 @@
             this.dataGridView6.Location = new System.Drawing.Point(0, 0);
             this.dataGridView6.Name = "dataGridView6";
             this.dataGridView6.RowTemplate.Height = 23;
-            this.dataGridView6.Size = new System.Drawing.Size(511, 307);
+            this.dataGridView6.Size = new System.Drawing.Size(511, 295);
             this.dataGridView6.TabIndex = 0;
             // 
             // panel28
@@ -2103,7 +2027,7 @@
             this.panel28.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel28.Location = new System.Drawing.Point(3, 3);
             this.panel28.Name = "panel28";
-            this.panel28.Size = new System.Drawing.Size(907, 61);
+            this.panel28.Size = new System.Drawing.Size(858, 61);
             this.panel28.TabIndex = 0;
             // 
             // button14
@@ -2122,7 +2046,7 @@
             this.tabPage7.Location = new System.Drawing.Point(4, 22);
             this.tabPage7.Name = "tabPage7";
             this.tabPage7.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage7.Size = new System.Drawing.Size(913, 374);
+            this.tabPage7.Size = new System.Drawing.Size(864, 362);
             this.tabPage7.TabIndex = 6;
             this.tabPage7.Text = "日志信息";
             this.tabPage7.UseVisualStyleBackColor = true;
@@ -2135,7 +2059,7 @@
             this.listBox1.ItemHeight = 12;
             this.listBox1.Location = new System.Drawing.Point(3, 3);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(907, 368);
+            this.listBox1.Size = new System.Drawing.Size(858, 356);
             this.listBox1.TabIndex = 0;
             // 
             // tabPage8
@@ -2147,7 +2071,7 @@
             this.tabPage8.Location = new System.Drawing.Point(4, 22);
             this.tabPage8.Name = "tabPage8";
             this.tabPage8.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage8.Size = new System.Drawing.Size(913, 374);
+            this.tabPage8.Size = new System.Drawing.Size(864, 362);
             this.tabPage8.TabIndex = 7;
             this.tabPage8.Text = "tabPage8";
             this.tabPage8.UseVisualStyleBackColor = true;
@@ -2175,7 +2099,7 @@
             this.panel18.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel18.Location = new System.Drawing.Point(210, 52);
             this.panel18.Name = "panel18";
-            this.panel18.Size = new System.Drawing.Size(700, 256);
+            this.panel18.Size = new System.Drawing.Size(651, 244);
             this.panel18.TabIndex = 3;
             // 
             // panel23
@@ -2372,15 +2296,15 @@
             this.panel17.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel17.Location = new System.Drawing.Point(3, 52);
             this.panel17.Name = "panel17";
-            this.panel17.Size = new System.Drawing.Size(207, 256);
+            this.panel17.Size = new System.Drawing.Size(207, 244);
             this.panel17.TabIndex = 2;
             // 
             // panel16
             // 
             this.panel16.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel16.Location = new System.Drawing.Point(3, 308);
+            this.panel16.Location = new System.Drawing.Point(3, 296);
             this.panel16.Name = "panel16";
-            this.panel16.Size = new System.Drawing.Size(907, 63);
+            this.panel16.Size = new System.Drawing.Size(858, 63);
             this.panel16.TabIndex = 1;
             // 
             // panel15
@@ -2388,7 +2312,7 @@
             this.panel15.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel15.Location = new System.Drawing.Point(3, 3);
             this.panel15.Name = "panel15";
-            this.panel15.Size = new System.Drawing.Size(907, 49);
+            this.panel15.Size = new System.Drawing.Size(858, 49);
             this.panel15.TabIndex = 0;
             // 
             // tabPage10
@@ -2398,7 +2322,7 @@
             this.tabPage10.Location = new System.Drawing.Point(4, 22);
             this.tabPage10.Name = "tabPage10";
             this.tabPage10.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage10.Size = new System.Drawing.Size(1120, 367);
+            this.tabPage10.Size = new System.Drawing.Size(864, 362);
             this.tabPage10.TabIndex = 9;
             this.tabPage10.Text = "走势图";
             this.tabPage10.UseVisualStyleBackColor = true;
@@ -2410,18 +2334,29 @@
             this.panel31.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel31.Location = new System.Drawing.Point(3, 51);
             this.panel31.Name = "panel31";
-            this.panel31.Size = new System.Drawing.Size(1114, 313);
+            this.panel31.Size = new System.Drawing.Size(858, 308);
             this.panel31.TabIndex = 4;
             // 
             // panel30
             // 
+            this.panel30.Controls.Add(this.button17);
             this.panel30.Controls.Add(this.button16);
             this.panel30.Controls.Add(this.button15);
             this.panel30.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel30.Location = new System.Drawing.Point(3, 3);
             this.panel30.Name = "panel30";
-            this.panel30.Size = new System.Drawing.Size(1114, 48);
+            this.panel30.Size = new System.Drawing.Size(858, 48);
             this.panel30.TabIndex = 3;
+            // 
+            // button17
+            // 
+            this.button17.Location = new System.Drawing.Point(172, 13);
+            this.button17.Name = "button17";
+            this.button17.Size = new System.Drawing.Size(75, 23);
+            this.button17.TabIndex = 2;
+            this.button17.Text = "TMP3";
+            this.button17.UseVisualStyleBackColor = true;
+            this.button17.Click += new System.EventHandler(this.button17_Click);
             // 
             // button16
             // 
@@ -2447,7 +2382,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1128, 547);
+            this.ClientSize = new System.Drawing.Size(872, 547);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
@@ -2517,14 +2452,7 @@
 
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.ImageList imageList1;
-        private UserControl1 userControl11;
-        private UserControl1 userControl13;
-        private UserControl1 userControl12;
         private System.Windows.Forms.Button button1;
-        private UserControl1 userControl16;
-        private UserControl1 userControl15;
-        private UserControl1 userControl14;
-        private UserControl1 userControl17;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Label label1;
@@ -2725,6 +2653,7 @@
         private System.Windows.Forms.Panel panel30;
         private System.Windows.Forms.Button button15;
         private System.Windows.Forms.Button button16;
+        private System.Windows.Forms.Button button17;
     }
 }
 
