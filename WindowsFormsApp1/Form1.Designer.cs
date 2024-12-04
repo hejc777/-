@@ -29,6 +29,9 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend5 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label7 = new System.Windows.Forms.Label();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
@@ -233,6 +236,16 @@
             this.button17 = new System.Windows.Forms.Button();
             this.button16 = new System.Windows.Forms.Button();
             this.button15 = new System.Windows.Forms.Button();
+            this.tabPage11 = new System.Windows.Forms.TabPage();
+            this.panel32 = new System.Windows.Forms.Panel();
+            this.panel33 = new System.Windows.Forms.Panel();
+            this.button18 = new System.Windows.Forms.Button();
+            this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.textBox57 = new System.Windows.Forms.TextBox();
+            this.label57 = new System.Windows.Forms.Label();
+            this.label58 = new System.Windows.Forms.Label();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.label59 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -277,6 +290,10 @@
             this.panel19.SuspendLayout();
             this.tabPage10.SuspendLayout();
             this.panel30.SuspendLayout();
+            this.tabPage11.SuspendLayout();
+            this.panel32.SuspendLayout();
+            this.panel33.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -510,6 +527,7 @@
             this.tabControl1.Controls.Add(this.tabPage7);
             this.tabControl1.Controls.Add(this.tabPage8);
             this.tabControl1.Controls.Add(this.tabPage10);
+            this.tabControl1.Controls.Add(this.tabPage11);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
@@ -2339,6 +2357,7 @@
             // 
             // panel30
             // 
+            this.panel30.Controls.Add(this.label59);
             this.panel30.Controls.Add(this.button17);
             this.panel30.Controls.Add(this.button16);
             this.panel30.Controls.Add(this.button15);
@@ -2377,6 +2396,120 @@
             this.button15.Text = "显示号码表";
             this.button15.UseVisualStyleBackColor = true;
             this.button15.Click += new System.EventHandler(this.button15_Click_1);
+            // 
+            // tabPage11
+            // 
+            this.tabPage11.Controls.Add(this.panel33);
+            this.tabPage11.Controls.Add(this.panel32);
+            this.tabPage11.Location = new System.Drawing.Point(4, 22);
+            this.tabPage11.Name = "tabPage11";
+            this.tabPage11.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage11.Size = new System.Drawing.Size(864, 362);
+            this.tabPage11.TabIndex = 10;
+            this.tabPage11.Text = "tabPage11";
+            this.tabPage11.UseVisualStyleBackColor = true;
+            // 
+            // panel32
+            // 
+            this.panel32.Controls.Add(this.comboBox1);
+            this.panel32.Controls.Add(this.label58);
+            this.panel32.Controls.Add(this.label57);
+            this.panel32.Controls.Add(this.textBox57);
+            this.panel32.Controls.Add(this.button18);
+            this.panel32.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel32.Location = new System.Drawing.Point(3, 3);
+            this.panel32.Name = "panel32";
+            this.panel32.Size = new System.Drawing.Size(858, 39);
+            this.panel32.TabIndex = 0;
+            // 
+            // panel33
+            // 
+            this.panel33.Controls.Add(this.chart1);
+            this.panel33.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel33.Location = new System.Drawing.Point(3, 42);
+            this.panel33.Name = "panel33";
+            this.panel33.Size = new System.Drawing.Size(858, 317);
+            this.panel33.TabIndex = 1;
+            // 
+            // button18
+            // 
+            this.button18.Location = new System.Drawing.Point(5, 3);
+            this.button18.Name = "button18";
+            this.button18.Size = new System.Drawing.Size(75, 30);
+            this.button18.TabIndex = 0;
+            this.button18.Text = "button18";
+            this.button18.UseVisualStyleBackColor = true;
+            this.button18.Click += new System.EventHandler(this.button18_Click);
+            // 
+            // chart1
+            // 
+            chartArea5.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea5);
+            this.chart1.Dock = System.Windows.Forms.DockStyle.Fill;
+            legend5.Name = "Legend1";
+            this.chart1.Legends.Add(legend5);
+            this.chart1.Location = new System.Drawing.Point(0, 0);
+            this.chart1.Name = "chart1";
+            series5.ChartArea = "ChartArea1";
+            series5.Legend = "Legend1";
+            series5.Name = "Series1";
+            this.chart1.Series.Add(series5);
+            this.chart1.Size = new System.Drawing.Size(858, 317);
+            this.chart1.TabIndex = 0;
+            this.chart1.Text = "chart1";
+            // 
+            // textBox57
+            // 
+            this.textBox57.Location = new System.Drawing.Point(155, 9);
+            this.textBox57.Name = "textBox57";
+            this.textBox57.Size = new System.Drawing.Size(45, 21);
+            this.textBox57.TabIndex = 1;
+            this.textBox57.Text = "50";
+            this.textBox57.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label57
+            // 
+            this.label57.AutoSize = true;
+            this.label57.Location = new System.Drawing.Point(96, 12);
+            this.label57.Name = "label57";
+            this.label57.Size = new System.Drawing.Size(53, 12);
+            this.label57.TabIndex = 2;
+            this.label57.Text = "展示期数";
+            // 
+            // label58
+            // 
+            this.label58.AutoSize = true;
+            this.label58.Location = new System.Drawing.Point(220, 12);
+            this.label58.Name = "label58";
+            this.label58.Size = new System.Drawing.Size(53, 12);
+            this.label58.TabIndex = 3;
+            this.label58.Text = "展示号段";
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Items.AddRange(new object[] {
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7"});
+            this.comboBox1.Location = new System.Drawing.Point(280, 9);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(45, 20);
+            this.comboBox1.TabIndex = 4;
+            this.comboBox1.Text = "1";
+            // 
+            // label59
+            // 
+            this.label59.AutoSize = true;
+            this.label59.Location = new System.Drawing.Point(263, 18);
+            this.label59.Name = "label59";
+            this.label59.Size = new System.Drawing.Size(77, 12);
+            this.label59.TabIndex = 3;
+            this.label59.Text = "待选号码：无";
             // 
             // Form1
             // 
@@ -2444,6 +2577,12 @@
             this.tabPage10.ResumeLayout(false);
             this.tabPage10.PerformLayout();
             this.panel30.ResumeLayout(false);
+            this.panel30.PerformLayout();
+            this.tabPage11.ResumeLayout(false);
+            this.panel32.ResumeLayout(false);
+            this.panel32.PerformLayout();
+            this.panel33.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -2654,6 +2793,16 @@
         private System.Windows.Forms.Button button15;
         private System.Windows.Forms.Button button16;
         private System.Windows.Forms.Button button17;
+        private System.Windows.Forms.TabPage tabPage11;
+        private System.Windows.Forms.Panel panel33;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
+        private System.Windows.Forms.Panel panel32;
+        private System.Windows.Forms.Button button18;
+        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.Label label58;
+        private System.Windows.Forms.Label label57;
+        private System.Windows.Forms.TextBox textBox57;
+        private System.Windows.Forms.Label label59;
     }
 }
 

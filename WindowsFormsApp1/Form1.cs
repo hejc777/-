@@ -228,6 +228,7 @@ namespace WindowsFormsApp1
 
         int[,] hm10 = new int[,]
         {
+            {15,16,20,22,23,29,14 },
             {2,7,11,21,27,28,2 },
             {4,9,10,19,26,27,12 },
             {3,11,15,21,25,26,3 },
@@ -4033,6 +4034,7 @@ namespace WindowsFormsApp1
         }
 
         List<int> 号码资源 = new List<int>();
+        List<int> 蓝码资源 = new List<int>();
         private void lblFunc_Click(object sender, EventArgs e)
         {
             Control pnl = (Control)sender;
@@ -4041,19 +4043,29 @@ namespace WindowsFormsApp1
             if (stype.IndexOf("Panel") != -1)
             {
                 string[] st1 = pnl.Name.Split('_');
-                Control nl =  getControlFromName(pnl, st1[1].ToString() + "_" + st1[2].ToString());
+                Control nl = getControlFromName(pnl, st1[1].ToString() + "_" + st1[2].ToString());
                 nl.Visible = true;
                 //添加号码
-                号码资源.Add(int.Parse(st1[2]) -1);
-            }else
+                if (int.Parse(st1[2]) < 34) 号码资源.Add(int.Parse(st1[2]) - 1); else 蓝码资源.Add(int.Parse(st1[2]) - 37);
+            }
+            else
             {
                 CircleLabel lbl = (CircleLabel)sender;
                 string[] st = lbl.Name.Split('_');
                 lbl.Visible = lbl.Visible == false ? true : false;
                 //删除号码
-                foreach(int v in 号码资源)
+                if (int.Parse(st[1]) < 34)
                 {
-                    if (v == int.Parse(st[1]) -1) { 号码资源.Remove(v); break; }
+                    foreach (int v in 号码资源)
+                    {
+                        if (v == int.Parse(st[1]) - 1) { 号码资源.Remove(v); break; }
+                    }
+                } else
+                {
+                    foreach(int v in 蓝码资源)
+                    {
+                        if (v == int.Parse(st[1]) - 37) { 蓝码资源.Remove(v);break; }
+                    }
                 }
 
             }
@@ -4412,7 +4424,119 @@ namespace WindowsFormsApp1
 
         private void button17_Click(object sender, EventArgs e)
         {
+            if (号码资源.Count == 0) return;
+            string[] hm = 号码资源.Select(n => n.ToString("D2")).ToArray();
+            Array.Sort(hm);
+            label59.Text = "待选号码:" + String.Join(",",hm);//号码资源.Select(n => n.ToString("D2").ToArray());
+        }
 
+        private void chart1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        int 绑定期数 = 0;
+
+        private void button18_Click(object sender, EventArgs e)
+        {
+            绑定期数 = int.Parse(textBox57.Text.ToString());
+            List<int>[] red = new List<int>[7];
+            red[0] = new List<int>(绑定期数);
+            red[1] = new List<int>(绑定期数);
+            red[2] = new List<int>(绑定期数);
+            red[3] = new List<int>(绑定期数);
+            red[4] = new List<int>(绑定期数);
+            red[5] = new List<int>(绑定期数);
+            red[6] = new List<int>(绑定期数);
+            //List<int> red1 = new List<int>();
+            //List<int> red2 = new List<int>();
+            //List<int> red3 = new List<int>();
+            //List<int> red4 = new List<int>();
+            //List<int> red5 = new List<int>();
+            //List<int> red6 = new List<int>();
+            //List<int> blue = new List<int>();
+            for (int i = hm10.GetLength(0) - (hm10.GetLength(0) - 绑定期数); i > 0; i--)
+            {
+                red[0].Add(hm10[i -1, 0]); red[1].Add(hm10[i -1, 1]); red[2].Add(hm10[i - 1, 2]);
+                red[3].Add(hm10[i - 1, 3]); red[4].Add(hm10[i - 1, 4]); red[5].Add(hm10[i - 1, 5]);
+                red[6].Add(hm10[i - 1, 6]);
+            }
+
+            //初始化绑定xy
+            List<int> databindx = new List<int>();
+            List<int> databindy = new List<int>();
+            for (int i = 0; i < 绑定期数; i++)
+            {
+                databindx.Add(i);
+                databindy.Add(0);
+            }
+
+            chart1.ChartAreas.Clear();
+            
+
+            ChartArea chartarea = new ChartArea();
+            chart1.ChartAreas.Add(chartarea);
+            chart1.Series.Add(new Series());
+            chart1.Series.Add(new Series());
+            chart1.Series.Add(new Series());
+            chart1.Series.Add(new Series());
+            chart1.Series.Add(new Series());
+            chart1.Series.Add(new Series());
+
+
+
+            chartarea.AxisX.Minimum = 1;
+            chartarea.AxisX.Maximum = 绑定期数;
+            chartarea.AxisX.Interval = 1;
+            chartarea.AxisY.Interval = 1;
+
+            chart1.BackColor = Color.DimGray;
+            chart1.Series[0].BorderWidth = 3;
+            chart1.Series[0].BorderColor = Color.Red;
+            chart1.ChartAreas[0].AxisX.MajorGrid.LineColor = System.Drawing.Color.LightSlateGray;
+            chart1.ChartAreas[0].AxisY.MajorGrid.LineColor = System.Drawing.Color.LightSlateGray;
+            //chart1.ChartAreas[0].AxisX.MinorGrid.LineColor = System.Drawing.Color.Green;
+            chart1.Series[0].ChartType = SeriesChartType.Line;
+            chart1.Series[0].Points.DataBindXY(databindx.ToArray(),databindy.ToArray());
+            chart1.Series[1].ChartType = SeriesChartType.Line;
+            chart1.Series[1].Points.DataBindXY(databindx.ToArray(), databindy.ToArray());
+            chart1.Series[2].ChartType = SeriesChartType.Line;
+            chart1.Series[2].Points.DataBindXY(databindx.ToArray(), databindy.ToArray());
+            chart1.Series[3].ChartType = SeriesChartType.Line;
+            chart1.Series[3].Points.DataBindXY(databindx.ToArray(), databindy.ToArray());
+            chart1.Series[4].ChartType = SeriesChartType.Line;
+            chart1.Series[4].Points.DataBindXY(databindx.ToArray(), databindy.ToArray());
+            chart1.Series[5].ChartType = SeriesChartType.Line;
+            chart1.Series[5].Points.DataBindXY(databindx.ToArray(), databindy.ToArray());
+
+            for (int i = 0; i < 绑定期数; i++)
+            {
+                chart1.Series[0].Points[i].YValues[0] = red[int.Parse(comboBox1.Text.ToString()) -1][i];
+                chart1.Series[0].Points[i].Label = red[int.Parse(comboBox1.Text.ToString()) -1][i].ToString();
+                chart1.Series[0].Points[i].LabelForeColor = Color.Red;
+
+                chart1.Series[1].Points[i].YValues[0] = red[2 - 1][i];
+                chart1.Series[1].Points[i].Label = red[2 - 1][i].ToString();
+                chart1.Series[1].Points[i].LabelForeColor = Color.Red;
+
+                chart1.Series[2].Points[i].YValues[0] = red[3 - 1][i];
+                chart1.Series[2].Points[i].Label = red[3 - 1][i].ToString();
+                chart1.Series[2].Points[i].LabelForeColor = Color.Red;
+
+                chart1.Series[3].Points[i].YValues[0] = red[4 - 1][i];
+                chart1.Series[3].Points[i].Label = red[4 - 1][i].ToString();
+                chart1.Series[3].Points[i].LabelForeColor = Color.Red;
+
+                chart1.Series[4].Points[i].YValues[0] = red[5 - 1][i];
+                chart1.Series[4].Points[i].Label = red[5 - 1][i].ToString();
+                chart1.Series[4].Points[i].LabelForeColor = Color.Red;
+
+                chart1.Series[5].Points[i].YValues[0] = red[6 - 1][i];
+                chart1.Series[5].Points[i].Label = red[6 - 1][i].ToString();
+                chart1.Series[5].Points[i].LabelForeColor = Color.Red;
+                //chart1.Series[1].Points[i].YValues[0] = red2[i];
+                //chart1.Series[1].Points[i].Label = red2[i].ToString();
+            }
         }
 
         #region 获取表中所有列名
