@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend5 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label7 = new System.Windows.Forms.Label();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
@@ -233,19 +233,25 @@
             this.tabPage10 = new System.Windows.Forms.TabPage();
             this.panel31 = new System.Windows.Forms.Panel();
             this.panel30 = new System.Windows.Forms.Panel();
+            this.label59 = new System.Windows.Forms.Label();
             this.button17 = new System.Windows.Forms.Button();
             this.button16 = new System.Windows.Forms.Button();
             this.button15 = new System.Windows.Forms.Button();
             this.tabPage11 = new System.Windows.Forms.TabPage();
-            this.panel32 = new System.Windows.Forms.Panel();
             this.panel33 = new System.Windows.Forms.Panel();
-            this.button18 = new System.Windows.Forms.Button();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.textBox57 = new System.Windows.Forms.TextBox();
-            this.label57 = new System.Windows.Forms.Label();
+            this.panel32 = new System.Windows.Forms.Panel();
             this.label58 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.label59 = new System.Windows.Forms.Label();
+            this.label57 = new System.Windows.Forms.Label();
+            this.textBox57 = new System.Windows.Forms.TextBox();
+            this.button18 = new System.Windows.Forms.Button();
+            this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.checkBox3 = new System.Windows.Forms.CheckBox();
+            this.checkBox4 = new System.Windows.Forms.CheckBox();
+            this.checkBox5 = new System.Windows.Forms.CheckBox();
+            this.checkBox6 = new System.Windows.Forms.CheckBox();
+            this.checkBox7 = new System.Windows.Forms.CheckBox();
+            this.checkBox8 = new System.Windows.Forms.CheckBox();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -291,9 +297,9 @@
             this.tabPage10.SuspendLayout();
             this.panel30.SuspendLayout();
             this.tabPage11.SuspendLayout();
-            this.panel32.SuspendLayout();
             this.panel33.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
+            this.panel32.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -2367,6 +2373,15 @@
             this.panel30.Size = new System.Drawing.Size(858, 48);
             this.panel30.TabIndex = 3;
             // 
+            // label59
+            // 
+            this.label59.AutoSize = true;
+            this.label59.Location = new System.Drawing.Point(263, 18);
+            this.label59.Name = "label59";
+            this.label59.Size = new System.Drawing.Size(77, 12);
+            this.label59.TabIndex = 3;
+            this.label59.Text = "待选号码：无";
+            // 
             // button17
             // 
             this.button17.Location = new System.Drawing.Point(172, 13);
@@ -2409,9 +2424,41 @@
             this.tabPage11.Text = "tabPage11";
             this.tabPage11.UseVisualStyleBackColor = true;
             // 
+            // panel33
+            // 
+            this.panel33.Controls.Add(this.chart1);
+            this.panel33.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel33.Location = new System.Drawing.Point(3, 42);
+            this.panel33.Name = "panel33";
+            this.panel33.Size = new System.Drawing.Size(858, 317);
+            this.panel33.TabIndex = 1;
+            // 
+            // chart1
+            // 
+            chartArea2.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea2);
+            this.chart1.Dock = System.Windows.Forms.DockStyle.Fill;
+            legend2.Name = "Legend1";
+            this.chart1.Legends.Add(legend2);
+            this.chart1.Location = new System.Drawing.Point(0, 0);
+            this.chart1.Name = "chart1";
+            series2.ChartArea = "ChartArea1";
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            this.chart1.Series.Add(series2);
+            this.chart1.Size = new System.Drawing.Size(858, 317);
+            this.chart1.TabIndex = 0;
+            this.chart1.Text = "chart1";
+            // 
             // panel32
             // 
-            this.panel32.Controls.Add(this.comboBox1);
+            this.panel32.Controls.Add(this.checkBox8);
+            this.panel32.Controls.Add(this.checkBox7);
+            this.panel32.Controls.Add(this.checkBox6);
+            this.panel32.Controls.Add(this.checkBox5);
+            this.panel32.Controls.Add(this.checkBox4);
+            this.panel32.Controls.Add(this.checkBox3);
+            this.panel32.Controls.Add(this.checkBox2);
             this.panel32.Controls.Add(this.label58);
             this.panel32.Controls.Add(this.label57);
             this.panel32.Controls.Add(this.textBox57);
@@ -2422,14 +2469,32 @@
             this.panel32.Size = new System.Drawing.Size(858, 39);
             this.panel32.TabIndex = 0;
             // 
-            // panel33
+            // label58
             // 
-            this.panel33.Controls.Add(this.chart1);
-            this.panel33.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel33.Location = new System.Drawing.Point(3, 42);
-            this.panel33.Name = "panel33";
-            this.panel33.Size = new System.Drawing.Size(858, 317);
-            this.panel33.TabIndex = 1;
+            this.label58.AutoSize = true;
+            this.label58.Location = new System.Drawing.Point(220, 12);
+            this.label58.Name = "label58";
+            this.label58.Size = new System.Drawing.Size(53, 12);
+            this.label58.TabIndex = 3;
+            this.label58.Text = "展示号段";
+            // 
+            // label57
+            // 
+            this.label57.AutoSize = true;
+            this.label57.Location = new System.Drawing.Point(96, 12);
+            this.label57.Name = "label57";
+            this.label57.Size = new System.Drawing.Size(53, 12);
+            this.label57.TabIndex = 2;
+            this.label57.Text = "展示期数";
+            // 
+            // textBox57
+            // 
+            this.textBox57.Location = new System.Drawing.Point(155, 9);
+            this.textBox57.Name = "textBox57";
+            this.textBox57.Size = new System.Drawing.Size(45, 21);
+            this.textBox57.TabIndex = 1;
+            this.textBox57.Text = "50";
+            this.textBox57.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // button18
             // 
@@ -2441,75 +2506,89 @@
             this.button18.UseVisualStyleBackColor = true;
             this.button18.Click += new System.EventHandler(this.button18_Click);
             // 
-            // chart1
+            // checkBox2
             // 
-            chartArea5.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea5);
-            this.chart1.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend5.Name = "Legend1";
-            this.chart1.Legends.Add(legend5);
-            this.chart1.Location = new System.Drawing.Point(0, 0);
-            this.chart1.Name = "chart1";
-            series5.ChartArea = "ChartArea1";
-            series5.Legend = "Legend1";
-            series5.Name = "Series1";
-            this.chart1.Series.Add(series5);
-            this.chart1.Size = new System.Drawing.Size(858, 317);
-            this.chart1.TabIndex = 0;
-            this.chart1.Text = "chart1";
+            this.checkBox2.AutoSize = true;
+            this.checkBox2.Checked = true;
+            this.checkBox2.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox2.Location = new System.Drawing.Point(280, 12);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Size = new System.Drawing.Size(60, 16);
+            this.checkBox2.TabIndex = 5;
+            this.checkBox2.Text = "号码一";
+            this.checkBox2.UseVisualStyleBackColor = true;
             // 
-            // textBox57
+            // checkBox3
             // 
-            this.textBox57.Location = new System.Drawing.Point(155, 9);
-            this.textBox57.Name = "textBox57";
-            this.textBox57.Size = new System.Drawing.Size(45, 21);
-            this.textBox57.TabIndex = 1;
-            this.textBox57.Text = "50";
-            this.textBox57.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.checkBox3.AutoSize = true;
+            this.checkBox3.Checked = true;
+            this.checkBox3.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox3.Location = new System.Drawing.Point(347, 12);
+            this.checkBox3.Name = "checkBox3";
+            this.checkBox3.Size = new System.Drawing.Size(60, 16);
+            this.checkBox3.TabIndex = 6;
+            this.checkBox3.Text = "号码二";
+            this.checkBox3.UseVisualStyleBackColor = true;
             // 
-            // label57
+            // checkBox4
             // 
-            this.label57.AutoSize = true;
-            this.label57.Location = new System.Drawing.Point(96, 12);
-            this.label57.Name = "label57";
-            this.label57.Size = new System.Drawing.Size(53, 12);
-            this.label57.TabIndex = 2;
-            this.label57.Text = "展示期数";
+            this.checkBox4.AutoSize = true;
+            this.checkBox4.Checked = true;
+            this.checkBox4.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox4.Location = new System.Drawing.Point(414, 12);
+            this.checkBox4.Name = "checkBox4";
+            this.checkBox4.Size = new System.Drawing.Size(60, 16);
+            this.checkBox4.TabIndex = 7;
+            this.checkBox4.Text = "号码三";
+            this.checkBox4.UseVisualStyleBackColor = true;
             // 
-            // label58
+            // checkBox5
             // 
-            this.label58.AutoSize = true;
-            this.label58.Location = new System.Drawing.Point(220, 12);
-            this.label58.Name = "label58";
-            this.label58.Size = new System.Drawing.Size(53, 12);
-            this.label58.TabIndex = 3;
-            this.label58.Text = "展示号段";
+            this.checkBox5.AutoSize = true;
+            this.checkBox5.Checked = true;
+            this.checkBox5.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox5.Location = new System.Drawing.Point(481, 12);
+            this.checkBox5.Name = "checkBox5";
+            this.checkBox5.Size = new System.Drawing.Size(60, 16);
+            this.checkBox5.TabIndex = 8;
+            this.checkBox5.Text = "号码四";
+            this.checkBox5.UseVisualStyleBackColor = true;
             // 
-            // comboBox1
+            // checkBox6
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7"});
-            this.comboBox1.Location = new System.Drawing.Point(280, 9);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(45, 20);
-            this.comboBox1.TabIndex = 4;
-            this.comboBox1.Text = "1";
+            this.checkBox6.AutoSize = true;
+            this.checkBox6.Checked = true;
+            this.checkBox6.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox6.Location = new System.Drawing.Point(548, 12);
+            this.checkBox6.Name = "checkBox6";
+            this.checkBox6.Size = new System.Drawing.Size(60, 16);
+            this.checkBox6.TabIndex = 9;
+            this.checkBox6.Text = "号码五";
+            this.checkBox6.UseVisualStyleBackColor = true;
             // 
-            // label59
+            // checkBox7
             // 
-            this.label59.AutoSize = true;
-            this.label59.Location = new System.Drawing.Point(263, 18);
-            this.label59.Name = "label59";
-            this.label59.Size = new System.Drawing.Size(77, 12);
-            this.label59.TabIndex = 3;
-            this.label59.Text = "待选号码：无";
+            this.checkBox7.AutoSize = true;
+            this.checkBox7.Checked = true;
+            this.checkBox7.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox7.Location = new System.Drawing.Point(615, 12);
+            this.checkBox7.Name = "checkBox7";
+            this.checkBox7.Size = new System.Drawing.Size(60, 16);
+            this.checkBox7.TabIndex = 10;
+            this.checkBox7.Text = "号码六";
+            this.checkBox7.UseVisualStyleBackColor = true;
+            // 
+            // checkBox8
+            // 
+            this.checkBox8.AutoSize = true;
+            this.checkBox8.Checked = true;
+            this.checkBox8.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox8.Location = new System.Drawing.Point(682, 12);
+            this.checkBox8.Name = "checkBox8";
+            this.checkBox8.Size = new System.Drawing.Size(48, 16);
+            this.checkBox8.TabIndex = 11;
+            this.checkBox8.Text = "蓝号";
+            this.checkBox8.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -2579,10 +2658,10 @@
             this.panel30.ResumeLayout(false);
             this.panel30.PerformLayout();
             this.tabPage11.ResumeLayout(false);
-            this.panel32.ResumeLayout(false);
-            this.panel32.PerformLayout();
             this.panel33.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
+            this.panel32.ResumeLayout(false);
+            this.panel32.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -2798,11 +2877,17 @@
         private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
         private System.Windows.Forms.Panel panel32;
         private System.Windows.Forms.Button button18;
-        private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Label label58;
         private System.Windows.Forms.Label label57;
         private System.Windows.Forms.TextBox textBox57;
         private System.Windows.Forms.Label label59;
+        private System.Windows.Forms.CheckBox checkBox8;
+        private System.Windows.Forms.CheckBox checkBox7;
+        private System.Windows.Forms.CheckBox checkBox6;
+        private System.Windows.Forms.CheckBox checkBox5;
+        private System.Windows.Forms.CheckBox checkBox4;
+        private System.Windows.Forms.CheckBox checkBox3;
+        private System.Windows.Forms.CheckBox checkBox2;
     }
 }
 

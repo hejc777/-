@@ -228,6 +228,7 @@ namespace WindowsFormsApp1
 
         int[,] hm10 = new int[,]
         {
+            {4,7,8,17,22,26,15 },
             {15,16,20,22,23,29,14 },
             {2,7,11,21,27,28,2 },
             {4,9,10,19,26,27,12 },
@@ -4425,9 +4426,24 @@ namespace WindowsFormsApp1
         private void button17_Click(object sender, EventArgs e)
         {
             if (号码资源.Count == 0) return;
+            if (号码资源.Count < 6) return;
+            int 合值=0, 偶数=0, 奇数=0, L0=0, L1=0, L2=0;
+            foreach(int v in 号码资源)
+            {
+                合值 += v;
+                if (v % 2 == 0) 偶数 += 1; else 奇数 += 1;
+                if (v % 3 == 0) L0 += 1;
+                if (v % 3 == 1) L1 += 1;
+                if (v % 3 == 2) L2 += 1;
+
+            }
             string[] hm = 号码资源.Select(n => n.ToString("D2")).ToArray();
             Array.Sort(hm);
-            label59.Text = "待选号码:" + String.Join(",",hm);//号码资源.Select(n => n.ToString("D2").ToArray());
+            label59.Text = "待选号码:" + String.Join(",", hm) +
+                           "  [合值:" + 合值.ToString() +
+                           "] [偶数:" + 偶数.ToString() + " / 奇数:" + 奇数.ToString() +
+                           "] [012L:" + L0.ToString() + ":" + L1.ToString() + ":" + L2.ToString() +
+                           "]";
         }
 
         private void chart1_Click(object sender, EventArgs e)
@@ -4508,32 +4524,56 @@ namespace WindowsFormsApp1
             chart1.Series[4].Points.DataBindXY(databindx.ToArray(), databindy.ToArray());
             chart1.Series[5].ChartType = SeriesChartType.Line;
             chart1.Series[5].Points.DataBindXY(databindx.ToArray(), databindy.ToArray());
+            chart1.Series[6].ChartType = SeriesChartType.Line;
+            chart1.Series[6].Points.DataBindXY(databindx.ToArray(), databindy.ToArray());
+
+
+
 
             for (int i = 0; i < 绑定期数; i++)
             {
-                chart1.Series[0].Points[i].YValues[0] = red[int.Parse(comboBox1.Text.ToString()) -1][i];
-                chart1.Series[0].Points[i].Label = red[int.Parse(comboBox1.Text.ToString()) -1][i].ToString();
-                chart1.Series[0].Points[i].LabelForeColor = Color.Red;
-
-                chart1.Series[1].Points[i].YValues[0] = red[2 - 1][i];
-                chart1.Series[1].Points[i].Label = red[2 - 1][i].ToString();
-                chart1.Series[1].Points[i].LabelForeColor = Color.Red;
-
-                chart1.Series[2].Points[i].YValues[0] = red[3 - 1][i];
-                chart1.Series[2].Points[i].Label = red[3 - 1][i].ToString();
-                chart1.Series[2].Points[i].LabelForeColor = Color.Red;
-
-                chart1.Series[3].Points[i].YValues[0] = red[4 - 1][i];
-                chart1.Series[3].Points[i].Label = red[4 - 1][i].ToString();
-                chart1.Series[3].Points[i].LabelForeColor = Color.Red;
-
-                chart1.Series[4].Points[i].YValues[0] = red[5 - 1][i];
-                chart1.Series[4].Points[i].Label = red[5 - 1][i].ToString();
-                chart1.Series[4].Points[i].LabelForeColor = Color.Red;
-
-                chart1.Series[5].Points[i].YValues[0] = red[6 - 1][i];
-                chart1.Series[5].Points[i].Label = red[6 - 1][i].ToString();
-                chart1.Series[5].Points[i].LabelForeColor = Color.Red;
+                if (checkBox2.Checked == true)
+                {
+                    chart1.Series[0].Points[i].YValues[0] = red[1 - 1][i];
+                    chart1.Series[0].Points[i].Label = red[1 - 1][i].ToString();
+                    chart1.Series[0].Points[i].LabelForeColor = Color.Red;
+                }
+                if (checkBox3.Checked == true)
+                {
+                    chart1.Series[1].Points[i].YValues[0] = red[2 - 1][i];
+                    chart1.Series[1].Points[i].Label = red[2 - 1][i].ToString();
+                    chart1.Series[1].Points[i].LabelForeColor = Color.Red;
+                }
+                if (checkBox4.Checked == true)
+                {
+                    chart1.Series[2].Points[i].YValues[0] = red[3 - 1][i];
+                    chart1.Series[2].Points[i].Label = red[3 - 1][i].ToString();
+                    chart1.Series[2].Points[i].LabelForeColor = Color.Red;
+                }
+                if (checkBox5.Checked == true)
+                {
+                    chart1.Series[3].Points[i].YValues[0] = red[4 - 1][i];
+                    chart1.Series[3].Points[i].Label = red[4 - 1][i].ToString();
+                    chart1.Series[3].Points[i].LabelForeColor = Color.Red;
+                }
+                if (checkBox6.Checked == true)
+                {
+                    chart1.Series[4].Points[i].YValues[0] = red[5 - 1][i];
+                    chart1.Series[4].Points[i].Label = red[5 - 1][i].ToString();
+                    chart1.Series[4].Points[i].LabelForeColor = Color.Red;
+                }
+                if (checkBox7.Checked == true)
+                {
+                    chart1.Series[5].Points[i].YValues[0] = red[6 - 1][i];
+                    chart1.Series[5].Points[i].Label = red[6 - 1][i].ToString();
+                    chart1.Series[5].Points[i].LabelForeColor = Color.Red;
+                }
+                if (checkBox8.Checked ==true)
+                {
+                    chart1.Series[6].Points[i].YValues[0] = red[7 - 1][i];
+                    chart1.Series[6].Points[i].Label = red[7 - 1][i].ToString();//"●";
+                    chart1.Series[6].Points[i].LabelForeColor = Color.Blue;
+                }
                 //chart1.Series[1].Points[i].YValues[0] = red2[i];
                 //chart1.Series[1].Points[i].Label = red2[i].ToString();
             }
