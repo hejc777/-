@@ -228,6 +228,7 @@ namespace WindowsFormsApp1
 
         int[,] hm10 = new int[,]
         {
+            {1,2,7,15,24,29,12 },
             {4,7,8,17,22,26,15 },
             {15,16,20,22,23,29,14 },
             {2,7,11,21,27,28,2 },
@@ -3996,6 +3997,29 @@ namespace WindowsFormsApp1
             }
         }
 
+        public class CustomPanel : Panel
+        {
+            private Color borderColor = Color.Black;
+
+            public Color BorderColor
+            {
+                get { return borderColor; }
+                set { borderColor = value; }
+            }
+
+            protected override void OnPaint(PaintEventArgs e)
+            {
+                base.OnPaint(e);
+
+                // 绘制自定义边框
+                using (Pen pen = new Pen(borderColor))
+                {
+                    Rectangle rect = new Rectangle(0, 0, this.Width - 1, this.Height - 1);
+                    e.Graphics.DrawRectangle(pen, rect);
+                }
+            }
+        }
+
 
 
         /// <summary>
@@ -4172,11 +4196,11 @@ namespace WindowsFormsApp1
                         circleLabel.TextAlign = ContentAlignment.MiddleCenter;
                         circleLabel.txt = (j - 1).ToString();
                         circleLabel.ForeColor = Color.White;
-                        circleLabel.Size = new Size(20, 20);
+                        circleLabel.Size = new Size(19, 19);
                         circleLabel.Name = "" + i.ToString() + "_" + j.ToString();
                         circleLabel.Font = new Font(circleLabel.Font, FontStyle.Bold);
                         red.Add(j - 1);
-                        tableLayoutPanel.Controls.Add(circleLabel, j, i);
+                        tableLayoutPanel.Controls.Add(circleLabel,j,i);
                     }
                     else 
                     if (j==35)
@@ -4427,8 +4451,8 @@ namespace WindowsFormsApp1
         {
             if (号码资源.Count == 0) return;
             if (号码资源.Count < 6) return;
-            int 合值=0, 偶数=0, 奇数=0, L0=0, L1=0, L2=0;
-            foreach(int v in 号码资源)
+            int 合值 = 0, 偶数 = 0, 奇数 = 0, L0 = 0, L1 = 0, L2 = 0;
+            foreach (int v in 号码资源)
             {
                 合值 += v;
                 if (v % 2 == 0) 偶数 += 1; else 奇数 += 1;
@@ -4439,10 +4463,42 @@ namespace WindowsFormsApp1
             }
             string[] hm = 号码资源.Select(n => n.ToString("D2")).ToArray();
             Array.Sort(hm);
+
+            int[] hm1 = new int[6];
+            int index1 = 0;
+            hm1[0] = hm10[index1, 0];
+            hm1[1] = hm10[index1, 1];
+            hm1[2] = hm10[index1, 2];
+            hm1[3] = hm10[index1, 3];
+            hm1[4] = hm10[index1, 4];
+            hm1[5] = hm10[index1, 5];
+            //hm1[6] = hm10[index1, 6];
+            decimal similarity = NumberSimilarityComparer.GetSimilarityWith(hm1, 号码资源.ToArray());
+            //listBox4.Items.Add("相似度：" + (similarity * 100).ToString());
+            int c1 = 0, c2 = 0, c3 = 0, c4 = 0;
+            foreach (int v in 号码资源)
+            {
+                int count = 0;
+                count = 热码.Count(n => n == v);
+                if (count != 0) c1 += 1;
+                count = 温码.Count(n => n == v);
+                if (count != 0) c2 += 1;
+                count = 冷码.Count(n => n == v);
+                if (count != 0) c3 += 1;
+                count = 漏码.Count(n => n == v);
+                if (count != 0) c4 += 1;
+
+            }
+
             label59.Text = "待选号码:" + String.Join(",", hm) +
                            "  [合值:" + 合值.ToString() +
                            "] [偶数:" + 偶数.ToString() + " / 奇数:" + 奇数.ToString() +
                            "] [012L:" + L0.ToString() + ":" + L1.ToString() + ":" + L2.ToString() +
+                           "] [相似度:" + (similarity * 100).ToString() +
+                           "] [热码:" + c1.ToString() +
+                           "] [温码:" + c2.ToString() +
+                           "] [冷码:" + c3.ToString() +
+                           "] [漏码:" + c4.ToString() +
                            "]";
         }
 
@@ -4507,7 +4563,13 @@ namespace WindowsFormsApp1
             chartarea.AxisY.Interval = 1;
 
             chart1.BackColor = Color.DimGray;
-            chart1.Series[0].BorderWidth = 3;
+            chart1.Series[0].BorderWidth = 2;
+            chart1.Series[1].BorderWidth = 2;
+            chart1.Series[2].BorderWidth = 2;
+            chart1.Series[3].BorderWidth = 2;
+            chart1.Series[4].BorderWidth = 2;
+            chart1.Series[5].BorderWidth = 2;
+            chart1.Series[6].BorderWidth = 2;
             chart1.Series[0].BorderColor = Color.Red;
             chart1.ChartAreas[0].AxisX.MajorGrid.LineColor = System.Drawing.Color.LightSlateGray;
             chart1.ChartAreas[0].AxisY.MajorGrid.LineColor = System.Drawing.Color.LightSlateGray;
@@ -4577,6 +4639,288 @@ namespace WindowsFormsApp1
                 //chart1.Series[1].Points[i].YValues[0] = red2[i];
                 //chart1.Series[1].Points[i].Label = red2[i].ToString();
             }
+        }
+
+        struct 号码分析
+        {
+            public int 上期号码;
+            public int 本期号码;
+            public int 下期号码;
+            public int 间隔期数;
+            public int 遗漏期数;
+            public int 期数编号;
+        }
+
+        private void button20_Click(object sender, EventArgs e)
+        {
+            //重组开奖数据
+            int[][] 开奖数据 = new int[hm10.GetLength(0)][];
+            int maxCount = hm10.GetLength(0);
+            int maxLenght = hm10.GetLength(1);
+            for (int i = 0; i<maxCount; i++)
+            {
+                开奖数据[i] = new int[maxLenght+1];
+                for (int c = 0; c < maxLenght; c++)
+                {
+                    开奖数据[i][c] = hm10[i, c];
+                }
+                开奖数据[i][maxLenght] = maxCount - i; 
+            }
+                
+            //当期开奖号码
+            List<int> 当期开奖号码 = new List<int>();
+            当期开奖号码.Add(hm10[0, 0]);
+            当期开奖号码.Add(hm10[0, 1]);
+            当期开奖号码.Add(hm10[0, 2]);
+            当期开奖号码.Add(hm10[0, 3]);
+            当期开奖号码.Add(hm10[0, 4]);
+            当期开奖号码.Add(hm10[0, 5]);
+            当期开奖号码.Add(hm10[0, 6]); //特别号
+
+            List<int> 上期开奖号码 = new List<int>();
+            上期开奖号码.Add(hm10[1, 0]);
+            上期开奖号码.Add(hm10[1, 1]);
+            上期开奖号码.Add(hm10[1, 2]);
+            上期开奖号码.Add(hm10[1, 3]);
+            上期开奖号码.Add(hm10[1, 4]);
+            上期开奖号码.Add(hm10[1, 5]);
+            上期开奖号码.Add(hm10[1, 6]);
+
+            List<号码分析> 开奖分析1 = new List<号码分析>();
+            List<号码分析> 开奖分析2 = new List<号码分析>();
+            List<号码分析> 开奖分析3 = new List<号码分析>();
+            List<号码分析> 开奖分析4 = new List<号码分析>();
+            List<号码分析> 开奖分析5 = new List<号码分析>();
+            List<号码分析> 开奖分析6 = new List<号码分析>();
+            List<号码分析> 开奖分析7 = new List<号码分析>();
+            int 遗漏1 = 0, 遗漏2 = 0, 遗漏3 = 0, 遗漏4 = 0, 遗漏5 = 0, 遗漏6 = 0, 遗漏7 = 0;
+            int currhm = maxCount - 1;
+            //分析开奖数据
+            for (int i = maxCount; i>0;i--)
+            {
+                号码分析 fx = new 号码分析();
+
+                for (int c = 0;c<当期开奖号码.Count;c++)
+                {
+                    int xx = 当期开奖号码[c];
+
+                    if (c == 0 && 开奖数据[currhm][c] == xx)
+                    {
+                        fx.上期号码 = currhm +1 >= maxCount? 0 : 开奖数据[currhm + 1][c];
+                        fx.本期号码 = 开奖数据[currhm][c];
+                        fx.遗漏期数 = 遗漏1 -1;
+                        fx.间隔期数 = 遗漏1 -1;
+                        fx.下期号码 = currhm -1<0 ? 0:开奖数据[currhm -1][c];
+                        fx.期数编号 = 开奖数据[currhm][7];
+                        开奖分析1.Add(fx);
+                        遗漏1 = 0;
+                    }
+                    if (c == 1 && 开奖数据[currhm][c] == xx)
+                    {
+                        fx.上期号码 = currhm + 1 >= maxCount ? 0 : 开奖数据[currhm + 1][c];
+                        fx.本期号码 = 开奖数据[currhm][c];
+                        fx.遗漏期数 = 遗漏2 - 1;
+                        fx.间隔期数 = 遗漏2 - 1;
+                        fx.下期号码 = currhm - 1 < 0 ? 0 : 开奖数据[currhm - 1][c];
+                        fx.期数编号 = 开奖数据[currhm][7];
+                        开奖分析2.Add(fx);
+                        遗漏2 = 0;
+                    }
+                    if (c == 2 && 开奖数据[currhm][c] == xx)
+                    {
+                        fx.上期号码 = currhm + 1 >= maxCount ? 0 : 开奖数据[currhm + 1][c];
+                        fx.本期号码 = 开奖数据[currhm][c];
+                        fx.遗漏期数 = 遗漏3 - 1;
+                        fx.间隔期数 = 遗漏3 - 1;
+                        fx.下期号码 = currhm - 1 < 0 ? 0 : 开奖数据[currhm - 1][c];
+                        fx.期数编号 = 开奖数据[currhm][7];
+                        开奖分析3.Add(fx);
+                        遗漏3 = 0;
+                    }
+                    if (c == 3 && 开奖数据[currhm][c] == xx)
+                    {
+                        fx.上期号码 = currhm + 1 >= maxCount ? 0 : 开奖数据[currhm + 1][c];
+                        fx.本期号码 = 开奖数据[currhm][c];
+                        fx.遗漏期数 = 遗漏4 - 1;
+                        fx.间隔期数 = 遗漏4 - 1;
+                        fx.下期号码 = currhm - 1 < 0 ? 0 : 开奖数据[currhm - 1][c];
+                        fx.期数编号 = 开奖数据[currhm][7];
+                        开奖分析4.Add(fx);
+                        遗漏4 = 0;
+                    }
+                    if (c == 4 && 开奖数据[currhm][c] == xx)
+                    {
+                        fx.上期号码 = currhm + 1 >= maxCount ? 0 : 开奖数据[currhm + 1][c];
+                        fx.本期号码 = 开奖数据[currhm][c];
+                        fx.遗漏期数 = 遗漏5 - 1;
+                        fx.间隔期数 = 遗漏5 - 1;
+                        fx.下期号码 = currhm - 1 < 0 ? 0 : 开奖数据[currhm - 1][c];
+                        fx.期数编号 = 开奖数据[currhm][7];
+                        开奖分析5.Add(fx);
+                        遗漏5 = 0;
+                    }
+                    if (c == 5 && 开奖数据[currhm][c] == xx)
+                    {
+                        fx.上期号码 = currhm + 1 >= maxCount ? 0 : 开奖数据[currhm + 1][c];
+                        fx.本期号码 = 开奖数据[currhm][c];
+                        fx.遗漏期数 = 遗漏6 - 1;
+                        fx.间隔期数 = 遗漏6 - 1;
+                        fx.下期号码 = currhm - 1 < 0 ? 0 : 开奖数据[currhm - 1][c];
+                        fx.期数编号 = 开奖数据[currhm][7];
+                        开奖分析6.Add(fx);
+                        遗漏6 = 0;
+                    }
+                    if (c == 6 && 开奖数据[currhm][c] == xx)
+                    {
+                        fx.上期号码 = currhm + 1 >= maxCount ? 0 : 开奖数据[currhm + 1][c];
+                        fx.本期号码 = 开奖数据[currhm][c];
+                        fx.遗漏期数 = 遗漏7 - 1;
+                        fx.间隔期数 = 遗漏7 - 1;
+                        fx.下期号码 = currhm - 1 < 0 ? 0 : 开奖数据[currhm - 1][c];
+                        fx.期数编号 = 开奖数据[currhm][7];
+                        开奖分析7.Add(fx);
+                        遗漏7 = 0;
+                    }
+
+                }
+                遗漏1 += 1; 遗漏2 += 1; 遗漏3 += 1; 遗漏4 += 1; 遗漏5 += 1; 遗漏6 += 1; 遗漏7 += 1;
+                currhm--;
+            }
+
+            var ii =  开奖分析1.Where(n => n.上期号码 == 上期开奖号码[0]).Max(n=>n.下期号码);
+
+            var ii1 = 开奖分析1.Where(n => n.上期号码 == 上期开奖号码[0]).ToList();
+            var ii2 = 开奖分析2.Where(n => n.上期号码 == 上期开奖号码[1]).ToList();
+            var ii3 = 开奖分析3.Where(n => n.上期号码 == 上期开奖号码[2]).ToList().Count() == 1?
+                        开奖分析3.Where(n => n.上期号码 == 上期开奖号码[3]).ToList():
+                        开奖分析3.Where(n => n.上期号码 == 上期开奖号码[2]).ToList();
+            var ii4 = 开奖分析4.Where(n => n.上期号码 == 上期开奖号码[3]).ToList();
+            var ii5 = 开奖分析5.Where(n => n.上期号码 == 上期开奖号码[4]).ToList();
+            var ii6 = 开奖分析6.Where(n => n.上期号码 == 上期开奖号码[5]).ToList();
+            var ii7 = 开奖分析7.Where(n => n.上期号码 == 上期开奖号码[6]).ToList();
+
+            //var ii1 = 开奖分析1.ToList();
+            //var ii2 = 开奖分析2.ToList();
+            //var ii3 = 开奖分析3.ToList();
+            //var ii4 = 开奖分析4.ToList();
+            //var ii5 = 开奖分析5.ToList();
+            //var ii6 = 开奖分析6.ToList();
+            //var ii7 = 开奖分析7.ToList();
+
+            List<int> d1 = new List<int>();
+            List<int> d2 = new List<int>();
+            List<int> d3 = new List<int>();
+            List<int> d4 = new List<int>();
+            List<int> d5 = new List<int>();
+            List<int> d6 = new List<int>();
+            List<int> d7 = new List<int>();
+
+            List<int> 汇总 = new List<int>();
+
+            foreach (var v in ii1)
+            {
+                Boolean ibcf = false;
+                foreach (int i in d1)
+                {
+                    if (v.下期号码 == i || v.下期号码 == 0) ibcf = true;
+                }
+                if (ibcf == false) 汇总.Add(v.下期号码);
+            }
+            foreach (var v in ii2)
+            {
+                Boolean ibcf = false;
+                foreach (int i in d2)
+                {
+                    if (v.下期号码 == i || v.下期号码 == 0) ibcf = true;
+                }
+                if (ibcf == false) 汇总.Add(v.下期号码);
+            }
+            foreach (var v in ii3)
+            {
+                Boolean ibcf = false;
+                foreach (int i in d3)
+                {
+                    if (v.下期号码 == i || v.下期号码 == 0) ibcf = true;
+                }
+                if (ibcf == false) 汇总.Add(v.下期号码);
+            }
+            foreach (var v in ii4)
+            {
+                Boolean ibcf = false;
+                foreach (int i in d4)
+                {
+                    if (v.下期号码 == i || v.下期号码 == 0) ibcf = true;
+                }
+                if (ibcf == false) 汇总.Add(v.下期号码);
+            }
+            foreach (var v in ii5)
+            {
+                Boolean ibcf = false;
+                foreach (int i in d5)
+                {
+                    if (v.下期号码 == i || v.下期号码 == 0) ibcf = true;
+                }
+                if (ibcf == false) 汇总.Add(v.下期号码);
+            }
+            foreach (var v in ii6)
+            {
+                Boolean ibcf = false;
+                foreach (int i in d6)
+                {
+                    if (v.下期号码 == i || v.下期号码 == 0) ibcf = true;
+                }
+                if (ibcf == false) 汇总.Add(v.下期号码);
+            }
+            foreach (var v in ii7)
+            {
+                Boolean ibcf = false;
+                foreach (int i in d7)
+                {
+                    if (v.下期号码 == i || v.下期号码 == 0) ibcf = true;
+                }
+                if (ibcf == false) 汇总.Add(v.下期号码);
+            }
+
+            汇总 = 汇总.Distinct().ToList();
+            
+
+            listBox1.Items.Add("下期推荐一号球:" + string.Join(",",汇总.Sort()));
+
+            listBox1.Items.Add(开奖分析1.Where(n => n.上期号码 == 上期开奖号码[0]).Max(n=>n.下期号码));
+            listBox1.Items.Add(开奖分析1.Where(n => n.上期号码 == 上期开奖号码[0]).Min(n => n.下期号码));
+            listBox1.Items.Add(开奖分析1.Where(n => n.上期号码 == 上期开奖号码[0]).Average(n => n.下期号码));
+            listBox1.Items.Add("---------------------------------");
+
+            listBox1.Items.Add(开奖分析2.Where(n => n.上期号码 == 上期开奖号码[1]).Max(n => n.下期号码));
+            listBox1.Items.Add(开奖分析2.Where(n => n.上期号码 == 上期开奖号码[1]).Min(n => n.下期号码));
+            listBox1.Items.Add(开奖分析2.Where(n => n.上期号码 == 上期开奖号码[1]).Average(n => n.下期号码));
+            listBox1.Items.Add("---------------------------------");
+
+            listBox1.Items.Add(开奖分析3.Max(n => n.下期号码));
+            listBox1.Items.Add(开奖分析3.Min(n => n.下期号码));
+            listBox1.Items.Add(开奖分析3.Average(n => n.下期号码));
+            listBox1.Items.Add("---------------------------------");
+
+            listBox1.Items.Add(开奖分析4.Max(n => n.下期号码));
+            listBox1.Items.Add(开奖分析4.Min(n => n.下期号码));
+            listBox1.Items.Add(开奖分析4.Average(n => n.下期号码));
+            listBox1.Items.Add("---------------------------------");
+
+            listBox1.Items.Add(开奖分析5.Max(n => n.下期号码));
+            listBox1.Items.Add(开奖分析5.Min(n => n.下期号码));
+            listBox1.Items.Add(开奖分析5.Average(n => n.下期号码));
+            listBox1.Items.Add("---------------------------------");
+
+            listBox1.Items.Add(开奖分析6.Max(n => n.下期号码));
+            listBox1.Items.Add(开奖分析6.Min(n => n.下期号码));
+            listBox1.Items.Add(开奖分析6.Average(n => n.下期号码));
+            listBox1.Items.Add("---------------------------------");
+
+            listBox1.Items.Add(开奖分析7.Max(n => n.下期号码));
+            listBox1.Items.Add(开奖分析7.Min(n => n.下期号码));
+            listBox1.Items.Add(开奖分析7.Average(n => n.下期号码));
+            listBox1.Items.Add("---------------------------------");
+
         }
 
         #region 获取表中所有列名
