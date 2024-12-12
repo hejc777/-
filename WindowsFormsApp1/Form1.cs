@@ -63,9 +63,9 @@ namespace WindowsFormsApp1
         DataTable dt3 = new DataTable();
         DataTable dt4 = new DataTable();
 
-        int 热码数量 = 2;
-        int 温码数量 = 1;
-        int 冷码数量 = 3;
+        int[] 热码数量 = { 1, 2, 3 };
+        int[] 温码数量 = { 0, 1 };
+        int[] 冷码数量 = { 3, 4, 5 };
         int iiReadRec = 0; //读取记录数
         int sumRec = 0;    //合值
         double iiCount = 0; //所有生成数据量
@@ -228,6 +228,7 @@ namespace WindowsFormsApp1
 
         int[,] hm10 = new int[,]
         {
+            {4,6,13,21,22,25,6 },
             {1,2,7,15,24,29,12 },
             {4,7,8,17,22,26,15 },
             {15,16,20,22,23,29,14 },
@@ -1705,7 +1706,7 @@ namespace WindowsFormsApp1
             }
             else { return true; }
         }
-        public Boolean 热温冷码判断(int[] hm, int[] grouphm, int findCount, int maxnum)
+        public Boolean 热温冷码判断(int[] hm, int[] grouphm, int[] findCount, int maxnum)
         {
             int bgzCount = 0;
 
@@ -1721,7 +1722,7 @@ namespace WindowsFormsApp1
                 int tmp = Array.IndexOf(numtmp, grouphm[cc]);
                 if (tmp >= 0) bgzCount++;
             }
-            if (bgzCount == findCount)
+            if (findCount.Contains(bgzCount)==true)
             {
                 return false;
             }
@@ -2174,6 +2175,19 @@ namespace WindowsFormsApp1
                         //如  1，2，4，5，16，18+11 ，1-2，4-5就是二组连续号码
                         //if (QueueString(iirows) < 2) result++;
 
+                        //L012路判断
+                        //只留123；312
+                        int L0 = 0, L1 = 0, L2 = 0;
+                        for (int i=0;i<iirows.Length -1;i++)
+                        {
+                            if (iirows[i] % 3 == 0) L0 += 1;
+                            if (iirows[i] % 3 == 1) L1 += 1;
+                            if (iirows[i] % 3 == 2) L2 += 1;
+                        }
+                        string sL1 = "";
+                        sL1 = L0.ToString() + ":" + L1.ToString() + ":" + L2.ToString();
+
+                        if (sL1 == "1:2:3" || sL1 == "3:1:2" || sL1 == "2:1:3" || sL1 == "2:3:1" || sL1 == "1:3:2") result++;
                         //号码相似度规则判断，用的规则表
                         if (hmxsdArray(iirows, hmxsd, 5, int.Parse(cxcs.Text.ToString()), 6) == true) { result++; } else { ibTrueInfo += "号码相似度验证失败."; }
 
@@ -2181,10 +2195,10 @@ namespace WindowsFormsApp1
                         //if (Fzpcf(iirows, right5w, 1, 6) == false) result++;  //后五位出现机率至少1个号码 
 
                         int hmsum = iirows[0] + iirows[1] + iirows[2] + iirows[3] + iirows[4] + iirows[5];
-                        //if (hmsum > 70 && hmsum < 110) result++;
+                        if (hmsum > 70 && hmsum < 130) result++;
 
                         zjhmgz(string.Join(",", iirows), ibTrueInfo);
-                        if (result == 5) ibTrue = true; else ibTrue = false;
+                        if (result == 7) ibTrue = true; else ibTrue = false;
 
 
 
@@ -2687,42 +2701,42 @@ namespace WindowsFormsApp1
 
                 List<int> mydelid = new List<int>();
 
-                for (int i = 0; i < dt_save.Rows.Count; i++)
-                {
-                    Application.DoEvents();
-                    progressBarX1.Value = i;
-                    progressBarX1.Text = i.ToString() + "/ " + progressBarX1.Maximum.ToString();
-                    //if (dt_save.Rows[i].RowState == DataRowState.Deleted) continue;
-                    int[] iirow = new int[6];
-                    int[] iirow1 = new int[6];
-                    for (int c = 0; c < 6; c++) iirow[c] = int.Parse(dt_save.Rows[i][c].ToString());
+                //for (int i = 0; i < dt_save.Rows.Count; i++)
+                //{
+                //    Application.DoEvents();
+                //    progressBarX1.Value = i;
+                //    progressBarX1.Text = i.ToString() + "/ " + progressBarX1.Maximum.ToString();
+                //    //if (dt_save.Rows[i].RowState == DataRowState.Deleted) continue;
+                //    int[] iirow = new int[6];
+                //    int[] iirow1 = new int[6];
+                //    for (int c = 0; c < 6; c++) iirow[c] = int.Parse(dt_save.Rows[i][c].ToString());
 
-                    for (int ii = i+1; ii < dt_save1.Rows.Count; ii++)
-                    {
-                        Application.DoEvents();
-                        //if (ii == i) continue;
-                        if (dt_save1.Rows[ii].RowState == DataRowState.Deleted) continue;
-                        for (int c = 0; c < 6; c++) iirow1[c] = int.Parse(dt_save1.Rows[ii][c].ToString());
+                //    for (int ii = i+1; ii < dt_save1.Rows.Count; ii++)
+                //    {
+                //        Application.DoEvents();
+                //        //if (ii == i) continue;
+                //        if (dt_save1.Rows[ii].RowState == DataRowState.Deleted) continue;
+                //        for (int c = 0; c < 6; c++) iirow1[c] = int.Parse(dt_save1.Rows[ii][c].ToString());
 
-                        //if (NumberSimilarityComparer.GetSimilarityWith(iirow,iirow1) * 100 >= 60)
-                        if (iirow.Intersect(iirow1).Count() >= 5) //两个数组间有四个相同则删除
-                        {
-                            dt_save1.Rows[ii].Delete();
-                        }
-                        //if (Fzpcf(iirow, iirow1, 5, 6) == false)
-                        //{
-                        //    dt_save1.Rows[ii].Delete();
-                        //}
-                    }
+                //        //if (NumberSimilarityComparer.GetSimilarityWith(iirow,iirow1) * 100 >= 60)
+                //        if (iirow.Intersect(iirow1).Count() >= 5) //两个数组间有四个相同则删除
+                //        {
+                //            dt_save1.Rows[ii].Delete();
+                //        }
+                //        //if (Fzpcf(iirow, iirow1, 5, 6) == false)
+                //        //{
+                //        //    dt_save1.Rows[ii].Delete();
+                //        //}
+                //    }
                     
-                }
+                //}
                 dt_save1.AcceptChanges();
                 dt_save = dt_save1;
 
                 dt_save.DefaultView.Sort = "id asc";
                 dataGridView5.DataSource = dt_save;
                 SetListboxTxt("结束，共计[" + dt_save.Rows.Count.ToString() + "]条数据.");
-                WriteTextFile(dt_save.DefaultView.ToTable(true, new string[] { "num" }), @"c:\\cp_xsdsx.txt", true);
+                WriteTextFile(dt_save.DefaultView.ToTable(true, new string[] { "num","cf" }), @"c:\\cp_xsdsx.txt", true);
 
                 DataRow[] drTemp = dt_save.Select();
                 var listTmp = drTemp.Select(x => x.Field<string>("num")).ToArray();
@@ -4404,6 +4418,7 @@ namespace WindowsFormsApp1
         List<CircleLabel> 蓝号数组 = new List<CircleLabel>();
         private void button15_Click_1(object sender, EventArgs e)
         {
+            展示期数 = int.Parse(zsqs.Text);
             DoubleColorBallTrajectoryForm(展示期数);
         }
 
@@ -4882,9 +4897,8 @@ namespace WindowsFormsApp1
             }
 
             汇总 = 汇总.Distinct().ToList();
-            
 
-            listBox1.Items.Add("下期推荐一号球:" + string.Join(",",汇总.Sort()));
+            List<int> 号码 = new List<int>();
 
             listBox1.Items.Add(开奖分析1.Where(n => n.上期号码 == 上期开奖号码[0]).Max(n=>n.下期号码));
             listBox1.Items.Add(开奖分析1.Where(n => n.上期号码 == 上期开奖号码[0]).Min(n => n.下期号码));
@@ -4896,29 +4910,29 @@ namespace WindowsFormsApp1
             listBox1.Items.Add(开奖分析2.Where(n => n.上期号码 == 上期开奖号码[1]).Average(n => n.下期号码));
             listBox1.Items.Add("---------------------------------");
 
-            listBox1.Items.Add(开奖分析3.Max(n => n.下期号码));
-            listBox1.Items.Add(开奖分析3.Min(n => n.下期号码));
-            listBox1.Items.Add(开奖分析3.Average(n => n.下期号码));
+            listBox1.Items.Add(开奖分析3.Where(n => n.上期号码 == 上期开奖号码[2]).Max(n => n.下期号码));
+            listBox1.Items.Add(开奖分析3.Where(n => n.上期号码 == 上期开奖号码[2]).Min(n => n.下期号码));
+            listBox1.Items.Add(开奖分析3.Where(n => n.上期号码 == 上期开奖号码[2]).Average(n => n.下期号码));
             listBox1.Items.Add("---------------------------------");
 
-            listBox1.Items.Add(开奖分析4.Max(n => n.下期号码));
-            listBox1.Items.Add(开奖分析4.Min(n => n.下期号码));
-            listBox1.Items.Add(开奖分析4.Average(n => n.下期号码));
+            listBox1.Items.Add(开奖分析4.Where(n => n.上期号码 == 上期开奖号码[3]).Max(n => n.下期号码));
+            listBox1.Items.Add(开奖分析4.Where(n => n.上期号码 == 上期开奖号码[3]).Min(n => n.下期号码));
+            listBox1.Items.Add(开奖分析4.Where(n => n.上期号码 == 上期开奖号码[3]).Average(n => n.下期号码));
             listBox1.Items.Add("---------------------------------");
 
-            listBox1.Items.Add(开奖分析5.Max(n => n.下期号码));
-            listBox1.Items.Add(开奖分析5.Min(n => n.下期号码));
-            listBox1.Items.Add(开奖分析5.Average(n => n.下期号码));
+            listBox1.Items.Add(开奖分析5.Where(n => n.上期号码 == 上期开奖号码[4]).Max(n => n.下期号码));
+            listBox1.Items.Add(开奖分析5.Where(n => n.上期号码 == 上期开奖号码[4]).Min(n => n.下期号码));
+            listBox1.Items.Add(开奖分析5.Where(n => n.上期号码 == 上期开奖号码[4]).Average(n => n.下期号码));
             listBox1.Items.Add("---------------------------------");
 
-            listBox1.Items.Add(开奖分析6.Max(n => n.下期号码));
-            listBox1.Items.Add(开奖分析6.Min(n => n.下期号码));
-            listBox1.Items.Add(开奖分析6.Average(n => n.下期号码));
+            listBox1.Items.Add(开奖分析6.Where(n => n.上期号码 == 上期开奖号码[5]).Max(n => n.下期号码));
+            listBox1.Items.Add(开奖分析6.Where(n => n.上期号码 == 上期开奖号码[5]).Min(n => n.下期号码));
+            listBox1.Items.Add(开奖分析6.Where(n => n.上期号码 == 上期开奖号码[5]).Average(n => n.下期号码));
             listBox1.Items.Add("---------------------------------");
 
-            listBox1.Items.Add(开奖分析7.Max(n => n.下期号码));
-            listBox1.Items.Add(开奖分析7.Min(n => n.下期号码));
-            listBox1.Items.Add(开奖分析7.Average(n => n.下期号码));
+            listBox1.Items.Add(开奖分析7.Where(n => n.上期号码 == 上期开奖号码[6]).Max(n => n.下期号码));
+            listBox1.Items.Add(开奖分析7.Where(n => n.上期号码 == 上期开奖号码[6]).Min(n => n.下期号码));
+            listBox1.Items.Add(开奖分析7.Where(n => n.上期号码 == 上期开奖号码[6]).Average(n => n.下期号码));
             listBox1.Items.Add("---------------------------------");
 
         }

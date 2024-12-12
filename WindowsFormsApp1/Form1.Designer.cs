@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label7 = new System.Windows.Forms.Label();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
@@ -264,6 +264,8 @@
             this.label61 = new System.Windows.Forms.Label();
             this.panel39 = new System.Windows.Forms.Panel();
             this.button20 = new System.Windows.Forms.Button();
+            this.label62 = new System.Windows.Forms.Label();
+            this.zsqs = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -2382,6 +2384,8 @@
             // 
             // panel30
             // 
+            this.panel30.Controls.Add(this.zsqs);
+            this.panel30.Controls.Add(this.label62);
             this.panel30.Controls.Add(this.button19);
             this.panel30.Controls.Add(this.label59);
             this.panel30.Controls.Add(this.button17);
@@ -2396,7 +2400,7 @@
             // label59
             // 
             this.label59.AutoSize = true;
-            this.label59.Location = new System.Drawing.Point(342, 18);
+            this.label59.Location = new System.Drawing.Point(475, 17);
             this.label59.Name = "label59";
             this.label59.Size = new System.Drawing.Size(77, 12);
             this.label59.TabIndex = 3;
@@ -2455,17 +2459,17 @@
             // 
             // chart1
             // 
-            chartArea2.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea2);
+            chartArea1.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea1);
             this.chart1.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend2.Name = "Legend1";
-            this.chart1.Legends.Add(legend2);
+            legend1.Name = "Legend1";
+            this.chart1.Legends.Add(legend1);
             this.chart1.Location = new System.Drawing.Point(0, 0);
             this.chart1.Name = "chart1";
-            series2.ChartArea = "ChartArea1";
-            series2.Legend = "Legend1";
-            series2.Name = "Series1";
-            this.chart1.Series.Add(series2);
+            series1.ChartArea = "ChartArea1";
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.chart1.Series.Add(series1);
             this.chart1.Size = new System.Drawing.Size(858, 317);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
@@ -2728,6 +2732,24 @@
             this.button20.Text = "预测当期号码";
             this.button20.UseVisualStyleBackColor = true;
             this.button20.Click += new System.EventHandler(this.button20_Click);
+            // 
+            // label62
+            // 
+            this.label62.AutoSize = true;
+            this.label62.Location = new System.Drawing.Point(335, 17);
+            this.label62.Name = "label62";
+            this.label62.Size = new System.Drawing.Size(53, 12);
+            this.label62.TabIndex = 5;
+            this.label62.Text = "展示期数";
+            // 
+            // zsqs
+            // 
+            this.zsqs.Location = new System.Drawing.Point(395, 14);
+            this.zsqs.Name = "zsqs";
+            this.zsqs.Size = new System.Drawing.Size(41, 21);
+            this.zsqs.TabIndex = 6;
+            this.zsqs.Text = "50";
+            this.zsqs.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // Form1
             // 
@@ -3047,6 +3069,8 @@
         private System.Windows.Forms.Label label60;
         private System.Windows.Forms.Panel panel34;
         private System.Windows.Forms.Button button20;
+        private System.Windows.Forms.TextBox zsqs;
+        private System.Windows.Forms.Label label62;
     }
 }
 
