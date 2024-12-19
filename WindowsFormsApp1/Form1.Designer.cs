@@ -233,6 +233,9 @@
             this.tabPage10 = new System.Windows.Forms.TabPage();
             this.panel31 = new System.Windows.Forms.Panel();
             this.panel30 = new System.Windows.Forms.Panel();
+            this.zsqs = new System.Windows.Forms.TextBox();
+            this.label62 = new System.Windows.Forms.Label();
+            this.button19 = new System.Windows.Forms.Button();
             this.label59 = new System.Windows.Forms.Label();
             this.button17 = new System.Windows.Forms.Button();
             this.button16 = new System.Windows.Forms.Button();
@@ -252,20 +255,17 @@
             this.label57 = new System.Windows.Forms.Label();
             this.textBox57 = new System.Windows.Forms.TextBox();
             this.button18 = new System.Windows.Forms.Button();
-            this.button19 = new System.Windows.Forms.Button();
             this.tabPage12 = new System.Windows.Forms.TabPage();
-            this.panel34 = new System.Windows.Forms.Panel();
-            this.panel35 = new System.Windows.Forms.Panel();
             this.panel36 = new System.Windows.Forms.Panel();
-            this.panel37 = new System.Windows.Forms.Panel();
-            this.label60 = new System.Windows.Forms.Label();
-            this.listBox5 = new System.Windows.Forms.ListBox();
+            this.panel39 = new System.Windows.Forms.Panel();
             this.panel38 = new System.Windows.Forms.Panel();
             this.label61 = new System.Windows.Forms.Label();
-            this.panel39 = new System.Windows.Forms.Panel();
+            this.panel35 = new System.Windows.Forms.Panel();
+            this.listBox5 = new System.Windows.Forms.ListBox();
+            this.panel37 = new System.Windows.Forms.Panel();
+            this.label60 = new System.Windows.Forms.Label();
+            this.panel34 = new System.Windows.Forms.Panel();
             this.button20 = new System.Windows.Forms.Button();
-            this.label62 = new System.Windows.Forms.Label();
-            this.zsqs = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -315,11 +315,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.panel32.SuspendLayout();
             this.tabPage12.SuspendLayout();
-            this.panel34.SuspendLayout();
-            this.panel35.SuspendLayout();
             this.panel36.SuspendLayout();
-            this.panel37.SuspendLayout();
             this.panel38.SuspendLayout();
+            this.panel35.SuspendLayout();
+            this.panel37.SuspendLayout();
+            this.panel34.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -2397,6 +2397,34 @@
             this.panel30.Size = new System.Drawing.Size(858, 48);
             this.panel30.TabIndex = 3;
             // 
+            // zsqs
+            // 
+            this.zsqs.Location = new System.Drawing.Point(395, 14);
+            this.zsqs.Name = "zsqs";
+            this.zsqs.Size = new System.Drawing.Size(41, 21);
+            this.zsqs.TabIndex = 6;
+            this.zsqs.Text = "50";
+            this.zsqs.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label62
+            // 
+            this.label62.AutoSize = true;
+            this.label62.Location = new System.Drawing.Point(335, 17);
+            this.label62.Name = "label62";
+            this.label62.Size = new System.Drawing.Size(53, 12);
+            this.label62.TabIndex = 5;
+            this.label62.Text = "展示期数";
+            // 
+            // button19
+            // 
+            this.button19.Location = new System.Drawing.Point(253, 13);
+            this.button19.Name = "button19";
+            this.button19.Size = new System.Drawing.Size(75, 23);
+            this.button19.TabIndex = 4;
+            this.button19.Text = "预测";
+            this.button19.UseVisualStyleBackColor = true;
+            this.button19.Click += new System.EventHandler(this.button19_Click);
+            // 
             // label59
             // 
             this.label59.AutoSize = true;
@@ -2614,15 +2642,6 @@
             this.button18.UseVisualStyleBackColor = true;
             this.button18.Click += new System.EventHandler(this.button18_Click);
             // 
-            // button19
-            // 
-            this.button19.Location = new System.Drawing.Point(253, 13);
-            this.button19.Name = "button19";
-            this.button19.Size = new System.Drawing.Size(75, 23);
-            this.button19.TabIndex = 4;
-            this.button19.Text = "预测";
-            this.button19.UseVisualStyleBackColor = true;
-            // 
             // tabPage12
             // 
             this.tabPage12.Controls.Add(this.panel36);
@@ -2636,25 +2655,6 @@
             this.tabPage12.Text = "tabPage12";
             this.tabPage12.UseVisualStyleBackColor = true;
             // 
-            // panel34
-            // 
-            this.panel34.Controls.Add(this.button20);
-            this.panel34.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel34.Location = new System.Drawing.Point(3, 3);
-            this.panel34.Name = "panel34";
-            this.panel34.Size = new System.Drawing.Size(858, 54);
-            this.panel34.TabIndex = 0;
-            // 
-            // panel35
-            // 
-            this.panel35.Controls.Add(this.listBox5);
-            this.panel35.Controls.Add(this.panel37);
-            this.panel35.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panel35.Location = new System.Drawing.Point(3, 57);
-            this.panel35.Name = "panel35";
-            this.panel35.Size = new System.Drawing.Size(280, 302);
-            this.panel35.TabIndex = 1;
-            // 
             // panel36
             // 
             this.panel36.Controls.Add(this.panel39);
@@ -2665,35 +2665,13 @@
             this.panel36.Size = new System.Drawing.Size(578, 302);
             this.panel36.TabIndex = 2;
             // 
-            // panel37
+            // panel39
             // 
-            this.panel37.BackColor = System.Drawing.Color.LightGray;
-            this.panel37.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel37.Controls.Add(this.label60);
-            this.panel37.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel37.Location = new System.Drawing.Point(0, 0);
-            this.panel37.Name = "panel37";
-            this.panel37.Size = new System.Drawing.Size(280, 38);
-            this.panel37.TabIndex = 0;
-            // 
-            // label60
-            // 
-            this.label60.AutoSize = true;
-            this.label60.Location = new System.Drawing.Point(17, 11);
-            this.label60.Name = "label60";
-            this.label60.Size = new System.Drawing.Size(53, 12);
-            this.label60.TabIndex = 0;
-            this.label60.Text = "预测结果";
-            // 
-            // listBox5
-            // 
-            this.listBox5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listBox5.FormattingEnabled = true;
-            this.listBox5.ItemHeight = 12;
-            this.listBox5.Location = new System.Drawing.Point(0, 38);
-            this.listBox5.Name = "listBox5";
-            this.listBox5.Size = new System.Drawing.Size(280, 264);
-            this.listBox5.TabIndex = 1;
+            this.panel39.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel39.Location = new System.Drawing.Point(0, 38);
+            this.panel39.Name = "panel39";
+            this.panel39.Size = new System.Drawing.Size(578, 264);
+            this.panel39.TabIndex = 1;
             // 
             // panel38
             // 
@@ -2715,13 +2693,54 @@
             this.label61.TabIndex = 0;
             this.label61.Text = "预测心跳图";
             // 
-            // panel39
+            // panel35
             // 
-            this.panel39.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel39.Location = new System.Drawing.Point(0, 38);
-            this.panel39.Name = "panel39";
-            this.panel39.Size = new System.Drawing.Size(578, 264);
-            this.panel39.TabIndex = 1;
+            this.panel35.Controls.Add(this.listBox5);
+            this.panel35.Controls.Add(this.panel37);
+            this.panel35.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panel35.Location = new System.Drawing.Point(3, 57);
+            this.panel35.Name = "panel35";
+            this.panel35.Size = new System.Drawing.Size(280, 302);
+            this.panel35.TabIndex = 1;
+            // 
+            // listBox5
+            // 
+            this.listBox5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listBox5.FormattingEnabled = true;
+            this.listBox5.ItemHeight = 12;
+            this.listBox5.Location = new System.Drawing.Point(0, 38);
+            this.listBox5.Name = "listBox5";
+            this.listBox5.Size = new System.Drawing.Size(280, 264);
+            this.listBox5.TabIndex = 1;
+            // 
+            // panel37
+            // 
+            this.panel37.BackColor = System.Drawing.Color.LightGray;
+            this.panel37.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel37.Controls.Add(this.label60);
+            this.panel37.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel37.Location = new System.Drawing.Point(0, 0);
+            this.panel37.Name = "panel37";
+            this.panel37.Size = new System.Drawing.Size(280, 38);
+            this.panel37.TabIndex = 0;
+            // 
+            // label60
+            // 
+            this.label60.AutoSize = true;
+            this.label60.Location = new System.Drawing.Point(17, 11);
+            this.label60.Name = "label60";
+            this.label60.Size = new System.Drawing.Size(53, 12);
+            this.label60.TabIndex = 0;
+            this.label60.Text = "预测结果";
+            // 
+            // panel34
+            // 
+            this.panel34.Controls.Add(this.button20);
+            this.panel34.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel34.Location = new System.Drawing.Point(3, 3);
+            this.panel34.Name = "panel34";
+            this.panel34.Size = new System.Drawing.Size(858, 54);
+            this.panel34.TabIndex = 0;
             // 
             // button20
             // 
@@ -2732,24 +2751,6 @@
             this.button20.Text = "预测当期号码";
             this.button20.UseVisualStyleBackColor = true;
             this.button20.Click += new System.EventHandler(this.button20_Click);
-            // 
-            // label62
-            // 
-            this.label62.AutoSize = true;
-            this.label62.Location = new System.Drawing.Point(335, 17);
-            this.label62.Name = "label62";
-            this.label62.Size = new System.Drawing.Size(53, 12);
-            this.label62.TabIndex = 5;
-            this.label62.Text = "展示期数";
-            // 
-            // zsqs
-            // 
-            this.zsqs.Location = new System.Drawing.Point(395, 14);
-            this.zsqs.Name = "zsqs";
-            this.zsqs.Size = new System.Drawing.Size(41, 21);
-            this.zsqs.TabIndex = 6;
-            this.zsqs.Text = "50";
-            this.zsqs.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // Form1
             // 
@@ -2824,13 +2825,13 @@
             this.panel32.ResumeLayout(false);
             this.panel32.PerformLayout();
             this.tabPage12.ResumeLayout(false);
-            this.panel34.ResumeLayout(false);
-            this.panel35.ResumeLayout(false);
             this.panel36.ResumeLayout(false);
-            this.panel37.ResumeLayout(false);
-            this.panel37.PerformLayout();
             this.panel38.ResumeLayout(false);
             this.panel38.PerformLayout();
+            this.panel35.ResumeLayout(false);
+            this.panel37.ResumeLayout(false);
+            this.panel37.PerformLayout();
+            this.panel34.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

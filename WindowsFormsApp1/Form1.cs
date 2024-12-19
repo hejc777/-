@@ -228,6 +228,8 @@ namespace WindowsFormsApp1
 
         int[,] hm10 = new int[,]
         {
+            {1,3,16,22,23,30,3 },
+            {2,5,11,22,30,33,10 },
             {4,6,13,21,22,25,6 },
             {1,2,7,15,24,29,12 },
             {4,7,8,17,22,26,15 },
@@ -1845,9 +1847,9 @@ namespace WindowsFormsApp1
 
         public void zjhmgz(string hm, string info)
         {
-            if (hm == "4,5,11,15,20,32,13")
+            if (hm == "2,5,11,22,30,33,10")
             {
-                listBox3.Items.Add("进入号码验证4,5,11,15,20,32,13");
+                listBox3.Items.Add("进入号码验证2,5,11,22,30,33,10");
                 listBox3.Items.Add(info);
                 listBox3.TopIndex = listBox3.Items.Count - (int)(listBox3.Height / listBox3.ItemHeight);
             }
@@ -2147,13 +2149,13 @@ namespace WindowsFormsApp1
                                     new int[10]{10,11,12,13,14,15,16,17,18,19},
                                     new int[10]{20,21,22,23,24,25,26,27,28,29},
                                     new int[4]{30,31,32,33}
-                                };
-                        //if (Fzpcf(iirows, xm1[0], 1, 6) == false) result++;
-                        //if (Fzpcf(iirows, xm1[1], 3, 6) == false) result++;
-                        //if (Fzpcf(iirows, xm1[2], 1, 6) == false) result++;
-                        //if (Fzpcf(iirows, xm1[3], 1, 6) == false) result++;
+                         };
+                        //if (Fzpcf(iirows, xm1[0], 1, 6) == false) result++; else { ibTrueInfo += "[01-09出现数大于2]"; }
+                        //if (Fzpcf(iirows, xm1[1], 2, 6) == false) result++; else { ibTrueInfo += "[10-19出现数大于1]"; }
+                        //if (Fzpcf(iirows, xm1[2], 2, 6) == false) result++; else { ibTrueInfo += "[20-29出现数大于1]"; }
+                        //if (Fzpcf(iirows, xm1[3], 1, 6) == false) result++; else { ibTrueInfo += "[30-33出现数大于2]"; }
 
-                        if (AreApproxEqual(kjnum,currentNum,12.8)== true) { result++; }
+                        if (AreApproxEqual(kjnum,currentNum,11.15)== true) { result++; } else { ibTrueInfo += "[近似度没有通过]"; }
 
                         //判断:一组号码里有1-2个的热码，否则，取消
                         if (热温冷码判断(iirows, 热码.ToArray(), 热码数量, 6) == false) { result++; } else { ibTrueInfo += "[热码数量不足]"; }
@@ -2162,18 +2164,18 @@ namespace WindowsFormsApp1
                         //判断:一组号码里有2-4个的温码，否则，取消
                         if (热温冷码判断(iirows, 温码.ToArray(), 温码数量, 6) == false) { result++; } else { ibTrueInfo += "[温码数量不足]"; }
                         //判断：一组号码里有三个0-9小号的，取消
-                        //if (Fzpcf(iirows, xm1[0], 3, 6) == true) { result++; } else { ibTrueInfo += "[0-9有3个]"; }
+                        if (Fzpcf(iirows, xm1[0], 3, 6) == true) { result++; } else { ibTrueInfo += "[0-9有3个]"; }
                         //////判断：一组号码里有四个10-19号的，取消
-                        //if (Fzpcf(iirows, xm1[1], 4, 6) == true) { result++; } else { ibTrueInfo += "[10-19有4个]"; }
+                        if (Fzpcf(iirows, xm1[1], 4, 6) == true) { result++; } else { ibTrueInfo += "[10-19有4个]"; }
                         //////判断：一组号码里有四个20-29号的，取消
-                        //if (Fzpcf(iirows, xm1[2], 4, 6) == true) { result++; } else { ibTrueInfo += "[20-29有4个]"; }
+                        if (Fzpcf(iirows, xm1[2], 4, 6) == true) { result++; } else { ibTrueInfo += "[20-29有4个]"; }
                         //////判断：一组号码里有三个30-33号的，取消
-                        //if (Fzpcf(iirows, xm1[3], 3, 6) == true) { result++; } else { ibTrueInfo += "[30-33有3个]"; }
+                        if (Fzpcf(iirows, xm1[3], 3, 6) == true) { result++; } else { ibTrueInfo += "[30-33有3个]"; }
                         //////判断：一组号码里有三个或以上连续的号码，取消
-                        //if (ContinueNumLenth(iirows) < 3) { result++; } else { ibTrueInfo += "[三个或以上连续的号码]"; }
+                        if (ContinueNumLenth(iirows) < 3) { result++; } else { ibTrueInfo += "[三个或以上连续的号码]"; }
                         //判断：一组号码里有二组或以上连续的号码，取消
                         //如  1，2，4，5，16，18+11 ，1-2，4-5就是二组连续号码
-                        //if (QueueString(iirows) < 2) result++;
+                        if (QueueString(iirows) <= 2) result++;
 
                         //L012路判断
                         //只留123；312
@@ -2187,18 +2189,18 @@ namespace WindowsFormsApp1
                         string sL1 = "";
                         sL1 = L0.ToString() + ":" + L1.ToString() + ":" + L2.ToString();
 
-                        if (sL1 == "1:2:3" || sL1 == "3:1:2" || sL1 == "2:1:3" || sL1 == "2:3:1" || sL1 == "1:3:2") result++;
+                        if (sL1 == "1:2:3" || sL1 == "3:1:2" || sL1 == "2:1:3" || sL1 == "2:3:1" || sL1 == "1:3:2") result++; else { ibTrueInfo += "[L012路没通过]"; }
                         //号码相似度规则判断，用的规则表
-                        if (hmxsdArray(iirows, hmxsd, 5, int.Parse(cxcs.Text.ToString()), 6) == true) { result++; } else { ibTrueInfo += "号码相似度验证失败."; }
+                        if (hmxsdArray(iirows, hmxsd, 5, int.Parse(cxcs.Text.ToString()), 6) == false) { result++; } else { ibTrueInfo += "号码相似度验证失败."; }
 
                         //if (Fzpcf(iirows, left5w, 1, 6) == false) result++;   //前五位出现机率至少1个号码
                         //if (Fzpcf(iirows, right5w, 1, 6) == false) result++;  //后五位出现机率至少1个号码 
 
                         int hmsum = iirows[0] + iirows[1] + iirows[2] + iirows[3] + iirows[4] + iirows[5];
-                        if (hmsum > 70 && hmsum < 130) result++;
+                        if (hmsum > 70 && hmsum < 130) result++; else { ibTrueInfo += "[合值不在70-130之间]"; }
 
                         zjhmgz(string.Join(",", iirows), ibTrueInfo);
-                        if (result == 7) ibTrue = true; else ibTrue = false;
+                        if (result == 13) ibTrue = true; else ibTrue = false;
 
 
 
@@ -2318,8 +2320,8 @@ namespace WindowsFormsApp1
                 Application.DoEvents();
                 //取数据库到datatable
                 //string sql = "select num1,num2,num3,num4,num5,num6 from cpp_base where cf = "+cf.ToString()+" and js>70";
-                string sql = "select * from cpp_base where cf=" + io.ToString() + " order by id asc ";// (num1 =2 and num2=15 and num3=22 and num4=26 and num5=30 and num6=33)"; // cf = " + cf.ToString() 
-                                                                                                      //string sql = "select * from cpp_6hm ";
+                //string sql = "select * from cpp_base where cf=" + io.ToString() + " order by id asc ";// (num1 =2 and num2=15 and num3=22 and num4=26 and num5=30 and num6=33)"; // cf = " + cf.ToString() 
+                string sql = "select * from cpp_6hm";                                                                                     //string sql = "select * from cpp_6hm ";
                                                                                                       //Conn.Open();
                                                                                                       //ConnValue = Conn;
                                                                                                       // string sql = "select * from cpp_6hm";
@@ -2383,7 +2385,8 @@ namespace WindowsFormsApp1
                        iirows[3] = int.Parse(ds.Tables["cppbase"].Rows[ii]["num4"].ToString());
                        iirows[4] = int.Parse(ds.Tables["cppbase"].Rows[ii]["num5"].ToString());
                        iirows[5] = int.Parse(ds.Tables["cppbase"].Rows[ii]["num6"].ToString());
-                       iirows[6] = int.Parse(ds.Tables["cppbase"].Rows[ii]["num7"].ToString());
+                       //iirows[6] = int.Parse(ds.Tables["cppbase"].Rows[ii]["num7"].ToString());
+                       iirows[6] = 10;
 
                        //号码规则比较
                        iirows = hmgzfx(iirows, new int[] { 3, 3, 3, 1 });
@@ -2403,8 +2406,8 @@ namespace WindowsFormsApp1
                                            string.Format("{0:00}", iirows[2]) + "," + string.Format("{0:00}", iirows[3]) + "," +
                                            string.Format("{0:00}", iirows[4]) + "," + string.Format("{0:00}", iirows[5]) + "+" +
                                            string.Format("{0:00}", iirows[6]);
-                               dr["cf"] = ds.Tables["cppbase"].Rows[ii]["cf"].ToString();
-                               dr["id"] = ds.Tables["cppbase"].Rows[ii]["id"];
+                               dr["cf"] = 11;//ds.Tables["cppbase"].Rows[ii]["cf"].ToString();
+                               dr["id"] = 1; //ds.Tables["cppbase"].Rows[ii]["id"];
                                //dt_save1.Rows.Add(dr);
                                dt_save.Rows.Add(dr);
                                iicount++;
@@ -2597,16 +2600,17 @@ namespace WindowsFormsApp1
 
             int[][] xx = new int[][]
             {
-                new int[2]{13,14},
-                new int[2]{15,16},
-                new int[2]{17,18},
-                new int[2]{19,20},
-                new int[2]{21,24},
-                new int[2]{25,28},
-                new int[2]{29,30 },
-                new int[2]{31,38 },
-                new int[2]{39,46 },
-                new int[2]{1,12},
+                new int[2]{0,0}
+                //new int[2]{13,14},
+                //new int[2]{15,16},
+                //new int[2]{17,18},
+                //new int[2]{19,20},
+                //new int[2]{21,24},
+                //new int[2]{25,28},
+                //new int[2]{29,30 },
+                //new int[2]{31,38 },
+                //new int[2]{39,46 },
+                //new int[2]{1,12},
 
 
                 //new int[2]{106,107}
@@ -4666,6 +4670,7 @@ namespace WindowsFormsApp1
             public int 期数编号;
         }
 
+ 
         private void button20_Click(object sender, EventArgs e)
         {
             //重组开奖数据
@@ -4700,6 +4705,16 @@ namespace WindowsFormsApp1
             上期开奖号码.Add(hm10[1, 4]);
             上期开奖号码.Add(hm10[1, 5]);
             上期开奖号码.Add(hm10[1, 6]);
+
+            List<int> 上上期开奖号码 = new List<int>();
+            上上期开奖号码.Add(hm10[2, 0]);
+            上上期开奖号码.Add(hm10[2, 1]);
+            上上期开奖号码.Add(hm10[2, 2]);
+            上上期开奖号码.Add(hm10[2, 3]);
+            上上期开奖号码.Add(hm10[2, 4]);
+            上上期开奖号码.Add(hm10[2, 5]);
+            上上期开奖号码.Add(hm10[2, 6]);
+
 
             List<号码分析> 开奖分析1 = new List<号码分析>();
             List<号码分析> 开奖分析2 = new List<号码分析>();
@@ -4804,15 +4819,27 @@ namespace WindowsFormsApp1
 
             var ii =  开奖分析1.Where(n => n.上期号码 == 上期开奖号码[0]).Max(n=>n.下期号码);
 
-            var ii1 = 开奖分析1.Where(n => n.上期号码 == 上期开奖号码[0]).ToList();
-            var ii2 = 开奖分析2.Where(n => n.上期号码 == 上期开奖号码[1]).ToList();
-            var ii3 = 开奖分析3.Where(n => n.上期号码 == 上期开奖号码[2]).ToList().Count() == 1?
-                        开奖分析3.Where(n => n.上期号码 == 上期开奖号码[3]).ToList():
+            var ii1 = 开奖分析1.Where(n => n.上期号码 == 上期开奖号码[0]).ToList().Count() == 1 ?
+                        开奖分析1.Where(n => n.上期号码 == 上上期开奖号码[0]).ToList() :
+                        开奖分析1.Where(n => n.上期号码 == 上期开奖号码[0]).ToList();
+            var ii2 = 开奖分析2.Where(n => n.上期号码 == 上期开奖号码[1]).ToList().Count() == 1 ?
+                        开奖分析2.Where(n => n.上期号码 == 上上期开奖号码[1]).ToList() :
+                        开奖分析2.Where(n => n.上期号码 == 上期开奖号码[1]).ToList();
+            var ii3 = 开奖分析3.Where(n => n.上期号码 == 上期开奖号码[2]).ToList().Count() == 1 ?
+                        开奖分析3.Where(n => n.上期号码 == 上上期开奖号码[2]).ToList() :
                         开奖分析3.Where(n => n.上期号码 == 上期开奖号码[2]).ToList();
-            var ii4 = 开奖分析4.Where(n => n.上期号码 == 上期开奖号码[3]).ToList();
-            var ii5 = 开奖分析5.Where(n => n.上期号码 == 上期开奖号码[4]).ToList();
-            var ii6 = 开奖分析6.Where(n => n.上期号码 == 上期开奖号码[5]).ToList();
-            var ii7 = 开奖分析7.Where(n => n.上期号码 == 上期开奖号码[6]).ToList();
+            var ii4 = 开奖分析4.Where(n => n.上期号码 == 上期开奖号码[3]).ToList().Count() == 1 ?
+                        开奖分析4.Where(n => n.上期号码 == 上上期开奖号码[3]).ToList() :
+                        开奖分析4.Where(n => n.上期号码 == 上期开奖号码[3]).ToList();
+            var ii5 = 开奖分析5.Where(n => n.上期号码 == 上期开奖号码[4]).ToList().Count() == 1 ?
+                        开奖分析5.Where(n => n.上期号码 == 上上期开奖号码[4]).ToList() :
+                        开奖分析5.Where(n => n.上期号码 == 上期开奖号码[4]).ToList();
+            var ii6 = 开奖分析6.Where(n => n.上期号码 == 上期开奖号码[5]).ToList().Count() == 1 ?
+                        开奖分析6.Where(n => n.上期号码 == 上上期开奖号码[5]).ToList() :
+                        开奖分析6.Where(n => n.上期号码 == 上期开奖号码[5]).ToList();
+            var ii7 = 开奖分析7.Where(n => n.上期号码 == 上期开奖号码[6]).ToList().Count() == 1 ?
+                        开奖分析7.Where(n => n.上期号码 == 上上期开奖号码[6]).ToList() :
+                        开奖分析7.Where(n => n.上期号码 == 上期开奖号码[6]).ToList();
 
             //var ii1 = 开奖分析1.ToList();
             //var ii2 = 开奖分析2.ToList();
@@ -4829,8 +4856,60 @@ namespace WindowsFormsApp1
             List<int> d5 = new List<int>();
             List<int> d6 = new List<int>();
             List<int> d7 = new List<int>();
+            List<int> dd = new List<int>();
+            //取漏码
+            foreach (var v in ii1)
+            {
+                if (v.下期号码 > 0) { d1.Add(v.下期号码); dd.Add(v.下期号码); }
+            }
+
+            foreach (var v in ii2)
+            {
+                if (v.下期号码 > 0) { d2.Add(v.下期号码); dd.Add(v.下期号码); }
+            }
+            foreach (var v in ii3)
+            {
+                if (v.下期号码 > 0) { d3.Add(v.下期号码); dd.Add(v.下期号码); }
+            }
+            foreach (var v in ii4)
+            {
+                if (v.下期号码 > 0) { d4.Add(v.下期号码); dd.Add(v.下期号码); }
+            }
+            foreach (var v in ii5)
+            {
+                if (v.下期号码 > 0) { d5.Add(v.下期号码); dd.Add(v.下期号码); }
+            }
+            foreach (var v in ii6)
+            {
+                if (v.下期号码 > 0) { d6.Add(v.下期号码); dd.Add(v.下期号码); }
+            }
+            foreach (var v in ii7)
+            {
+                if (v.下期号码 > 0) d7.Add(v.下期号码);
+            }
+
+            d1 = d1.Distinct().ToList();
+            d2 = d2.Distinct().ToList();
+            d3 = d3.Distinct().ToList();
+            d4 = d4.Distinct().ToList();
+            d5 = d5.Distinct().ToList();
+            d6 = d6.Distinct().ToList();
+            d7 = d7.Distinct().ToList();
+
+            dd = dd.Distinct().ToList();
+
+            int[] xxf = dd.ToArray();
+            Array.Sort(xxf);
+
+
+            //取漏码
+            //int[] numbers = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33 };
+
+            //HashSet<int> dictionaryKeys = new HashSet<int>(dic.Keys);
+            //var numbersNotFound = numbers.Where(n => !dictionaryKeys.Contains(n)).ToList();
 
             List<int> 汇总 = new List<int>();
+
 
             foreach (var v in ii1)
             {
@@ -4841,6 +4920,7 @@ namespace WindowsFormsApp1
                 }
                 if (ibcf == false) 汇总.Add(v.下期号码);
             }
+
             foreach (var v in ii2)
             {
                 Boolean ibcf = false;
@@ -4898,6 +4978,9 @@ namespace WindowsFormsApp1
 
             汇总 = 汇总.Distinct().ToList();
 
+            Array.Sort(汇总.ToArray());
+            listBox1.Items.Add(string.Join(",", 汇总));
+
             List<int> 号码 = new List<int>();
 
             listBox1.Items.Add(开奖分析1.Where(n => n.上期号码 == 上期开奖号码[0]).Max(n=>n.下期号码));
@@ -4934,6 +5017,11 @@ namespace WindowsFormsApp1
             listBox1.Items.Add(开奖分析7.Where(n => n.上期号码 == 上期开奖号码[6]).Min(n => n.下期号码));
             listBox1.Items.Add(开奖分析7.Where(n => n.上期号码 == 上期开奖号码[6]).Average(n => n.下期号码));
             listBox1.Items.Add("---------------------------------");
+
+        }
+
+        private void button19_Click(object sender, EventArgs e)
+        {
 
         }
 
