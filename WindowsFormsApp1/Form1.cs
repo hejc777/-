@@ -228,6 +228,12 @@ namespace WindowsFormsApp1
 
         int[,] hm10 = new int[,]
         {
+            {5,10,16,19,29,32,4 },
+            {13,14,20,22,26,32,2 },
+            {3,9,16,17,18,22,16 },
+            {2,6,15,16,21,23,11 },
+            {5,11,13,16,21,30,10},
+            {2,4,11,22,27,32,10 },
             {1,3,16,22,23,30,3 },
             {2,5,11,22,30,33,10 },
             {4,6,13,21,22,25,6 },
@@ -2320,8 +2326,8 @@ namespace WindowsFormsApp1
                 Application.DoEvents();
                 //取数据库到datatable
                 //string sql = "select num1,num2,num3,num4,num5,num6 from cpp_base where cf = "+cf.ToString()+" and js>70";
-                //string sql = "select * from cpp_base where cf=" + io.ToString() + " order by id asc ";// (num1 =2 and num2=15 and num3=22 and num4=26 and num5=30 and num6=33)"; // cf = " + cf.ToString() 
-                string sql = "select * from cpp_6hm";                                                                                     //string sql = "select * from cpp_6hm ";
+                string sql = "select * from cpp_base where cf=" + io.ToString() + " order by id asc ";// (num1 =2 and num2=15 and num3=22 and num4=26 and num5=30 and num6=33)"; // cf = " + cf.ToString() 
+                //string sql = "select * from cpp_6hm";                                                                                     //string sql = "select * from cpp_6hm ";
                                                                                                       //Conn.Open();
                                                                                                       //ConnValue = Conn;
                                                                                                       // string sql = "select * from cpp_6hm";
@@ -2385,8 +2391,8 @@ namespace WindowsFormsApp1
                        iirows[3] = int.Parse(ds.Tables["cppbase"].Rows[ii]["num4"].ToString());
                        iirows[4] = int.Parse(ds.Tables["cppbase"].Rows[ii]["num5"].ToString());
                        iirows[5] = int.Parse(ds.Tables["cppbase"].Rows[ii]["num6"].ToString());
-                       //iirows[6] = int.Parse(ds.Tables["cppbase"].Rows[ii]["num7"].ToString());
-                       iirows[6] = 10;
+                       iirows[6] = int.Parse(ds.Tables["cppbase"].Rows[ii]["num7"].ToString());
+                       //iirows[6] = 10;
 
                        //号码规则比较
                        iirows = hmgzfx(iirows, new int[] { 3, 3, 3, 1 });
@@ -2406,8 +2412,8 @@ namespace WindowsFormsApp1
                                            string.Format("{0:00}", iirows[2]) + "," + string.Format("{0:00}", iirows[3]) + "," +
                                            string.Format("{0:00}", iirows[4]) + "," + string.Format("{0:00}", iirows[5]) + "+" +
                                            string.Format("{0:00}", iirows[6]);
-                               dr["cf"] = 11;//ds.Tables["cppbase"].Rows[ii]["cf"].ToString();
-                               dr["id"] = 1; //ds.Tables["cppbase"].Rows[ii]["id"];
+                               dr["cf"] = ds.Tables["cppbase"].Rows[ii]["cf"].ToString();
+                               dr["id"] = ds.Tables["cppbase"].Rows[ii]["id"];
                                //dt_save1.Rows.Add(dr);
                                dt_save.Rows.Add(dr);
                                iicount++;
@@ -2600,17 +2606,16 @@ namespace WindowsFormsApp1
 
             int[][] xx = new int[][]
             {
-                new int[2]{0,0}
-                //new int[2]{13,14},
-                //new int[2]{15,16},
-                //new int[2]{17,18},
-                //new int[2]{19,20},
-                //new int[2]{21,24},
-                //new int[2]{25,28},
-                //new int[2]{29,30 },
-                //new int[2]{31,38 },
-                //new int[2]{39,46 },
-                //new int[2]{1,12},
+                new int[2]{13,14},
+                new int[2]{15,16},
+                new int[2]{17,18},
+                new int[2]{19,20},
+                new int[2]{21,24},
+                new int[2]{25,28},
+                new int[2]{29,30 },
+                new int[2]{31,38 },
+                new int[2]{39,46 },
+                new int[2]{1,12},
 
 
                 //new int[2]{106,107}
